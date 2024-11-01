@@ -16,3 +16,9 @@ D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.dll
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.pdb

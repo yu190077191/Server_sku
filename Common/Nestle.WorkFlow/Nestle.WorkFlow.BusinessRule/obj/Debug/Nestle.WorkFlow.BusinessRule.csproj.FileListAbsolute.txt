@@ -37,3 +37,16 @@ D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.W.D16F7D08.Up2Date
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.dll
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.BusinessRule.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.BusinessRule.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.DataAccess.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.Framework.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.Model.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.DataAccess.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.Framework.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\bin\Debug\Nestle.WorkFlow.Model.pdb
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.W.D16F7D08.Up2Date
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.dll
+D:\NET8Server\SKU\20241101sku_git\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\obj\Debug\Nestle.WorkFlow.BusinessRule.pdb

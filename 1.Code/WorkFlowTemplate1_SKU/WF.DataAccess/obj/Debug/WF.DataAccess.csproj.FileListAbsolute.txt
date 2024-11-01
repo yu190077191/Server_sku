@@ -34,3 +34,15 @@ D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\W
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataA.9B3A89FD.Up2Date
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.dll
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.DataAccess.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.DataAccess.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.Framework.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.Model.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.Framework.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\bin\Debug\WF.Model.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataA.9B3A89FD.Up2Date
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.DataAccess\obj\Debug\WF.DataAccess.pdb

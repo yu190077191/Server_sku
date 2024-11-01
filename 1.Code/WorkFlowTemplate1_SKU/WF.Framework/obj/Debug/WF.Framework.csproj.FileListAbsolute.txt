@@ -28,3 +28,13 @@ D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\W
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Frame.31AB1EE0.Up2Date
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.dll
 D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Debug\WF.Framework.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Debug\WF.Framework.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Debug\WF.Model.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Debug\WF.Model.pdb
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Frame.31AB1EE0.Up2Date
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.dll
+D:\NET8Server\SKU\20241101sku_git\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Debug\WF.Framework.pdb
