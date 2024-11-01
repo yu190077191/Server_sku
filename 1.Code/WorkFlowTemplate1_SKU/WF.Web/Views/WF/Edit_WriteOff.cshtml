@@ -1,0 +1,557 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@model List<WriteOffItems>
+
+@{
+    ViewBag.Title = "Write Off";
+}
+@{
+    bool isDC = WF.Web.Controllers.WorkFlowAPIController.IsDC;
+    List<LanguageKeyValue> li = LanguagesRule.TranslateArray("Save,RequiredFieldEmpty,delete,confirmdelete");
+    ViewBag.Save = LanguagesRule.Translate("Save", li);
+    List<Attachment> commonAttachmentList = ViewBag.WriteOffAttachmentList as List<Attachment>;
+    WF.Model.RequestVersion rv = ViewBag.RequestVersion as WF.Model.RequestVersion;
+    string[] checkedArray = new string[2];
+    checkedArray[0] = rv != null && rv.Description != null && rv.Description.ToLower().IndexOf("finished") == 0 ? "checked=\"checked\"" : string.Empty;
+    checkedArray[1] = rv != null && rv.Description != null && rv.Description.ToLower().IndexOf("semi") == 0 ? "checked=\"checked\"" : string.Empty;
+    string department = string.Empty;
+    List<Nestle.WorkFlow.Model.DepartmentRole> myRoles = WorkFlowAPIController.MyRoles;
+    if(myRoles != null && myRoles.Count > 0)
+    {
+        department = myRoles[0].Department;
+    }
+}
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WF/uploadWriteOff.js?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))"></script>
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WF/BU.js?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))"></script>
+<input type="hidden" id="tableId" value="WriteOff" />
+<div class="main" style="padding:20px;color:black;">
+    <div style="margin-bottom:15px;">
+        <a href="@Url.Content("~/WF/RequestVersionList")">@Html.Lang("Go back to list")</a>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tbl">
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Standard Excel Template")
+            </td>
+            <td class="righttd" id="tdTemplate">
+                <a id="templateHref" href="@(Url.Content("~/" + (department.ToUpper().IndexOf("DC") != 0 ? "Factory/" : string.Empty) + "Stock Write-off Request Form Template.xlsx?v" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                    <span style="color:blue;">
+                        @Html.Lang("Click here to download the standard write-off Excel template")
+                    </span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Department")
+            </td>
+            <td class="righttd">
+                @if (myRoles != null && myRoles.Count > 0)
+                {
+                    if (myRoles.Count == 1)
+                    {
+                        <select id="DepartmentId">
+                            @foreach (Nestle.WorkFlow.Model.DepartmentRole item in myRoles)
+                            {
+                                <option value="@(item.DepartmentId.ToString())">@(item.Department)</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="DepartmentId" onchange="departmentChanged();">
+                            <option value="">Select</option>
+                            @foreach (Nestle.WorkFlow.Model.DepartmentRole item in myRoles)
+                            {
+                                <option value="@(item.DepartmentId.ToString())">@(item.Department)</option>
+                            }
+                        </select>
+                    }
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("BU")
+            </td>
+            <td class="righttd">
+                <select id="BU">
+                    <option value="">Select</option>
+                    <option value="Ice Cream">Ice Cream</option>
+                    <option value="Dairy">Dairy</option>
+                    <option value="Industrial">Industrial</option>
+                    <option value="Confectionery">Confectionery</option>
+                    <option value="Coffee & Beverage">Coffee & Beverage</option>
+                    <option value="NP">NP</option>
+                    <option value="Infant Nutrition">Infant Nutrition</option>
+                    <option value="Food">Food</option>
+                    <option value="CPW">CPW</option>
+                    <option value="NPP">NPP</option>
+                    <option value="NHS">NHS</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Type")
+            </td>
+            <td class="righttd">
+                @if (isDC)
+                {
+                    <input type="radio" id="goodsType0" name="goodsType" value="Finished Goods" checked="checked"/>
+                    <label for="goodsType0">@Html.Lang("Finished Goods")</label>
+                }
+                else
+                {
+                    <input type="radio" id="goodsType0" name="goodsType" value="Finished Goods" @(Html.Raw(checkedArray[0])) />
+                    <label for="goodsType0">@Html.Lang("Finished Goods")</label>
+                    <input type="radio" id="goodsType1" name="goodsType" value="Raw Material/Packing Material/Semi-finished Goods" @(Html.Raw(checkedArray[1])) />
+                    <label for="goodsType1">@Html.Lang("Raw Material/Packing Material/Semi-finished Goods")</label>
+                }
+            </td>
+        </tr>
+        @*<tr>
+            <td class="lefttd">
+                @Html.Lang("Name")
+            </td>
+            <td class="righttd">
+                <input type="text" id="Name" value="@ViewBag.Name" class="textbox" />
+            </td>
+        </tr>*@
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Upload Excel")
+            </td>
+            <td class="righttd">
+                <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left;margin-left:0px;margin-right:5px;">
+                    <input id="Type" type="hidden" value="ImportDataFromExcel" />
+                    <input type="file" id="file1" name="file1" style="float: left; height: 27px;
+                                margin-right: 5px;" />
+                    <button id="uploadButton1" style="float: left;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="upload();">
+                        @(Html.Lang("Upload"))
+                    </button>
+                    <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;">
+                    </label>
+                    <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
+                                width: 1px;" value="uploadButton" class="submit" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Upload supporting documents"):
+            </td>
+            <td class="righttd">
+                <div style="line-height:30px;padding-bottom:10px;">
+                    <form id="attachementUpload0" enctype="multipart/form-data" method="post" class="compareForm" style="width:95%;">
+                        <span style="float:left;margin-right:10px;">
+                            @Html.Lang("Description")
+                            <input type="text" class="input" id="AttachmentDescription0" style="height:22px;width:180px;" />
+                        </span>
+                        <input type="file" id="fileInputControl0" name="fileInputControl0"
+                               style="float: left; height: 27px;margin-right: 5px;" />
+                        <button id="uploadButton0" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                onmouseout="this.className='button'" onclick="upload2('0');">
+                            @(Html.Lang("Upload"))
+                        </button>
+                        <label id="lbl0" style="float: left; font-weight: normal; font-size: 12px;">
+                        </label>
+                        <input type="submit" id="uploadSubmitButton0" name="uploadSubmitButton0" style="visibility: hidden;
+                  width: 1px;" value="uploadSubmitButton0" class="submit" />
+                        <a style="cursor:pointer;" onclick="showMappingTips();">Show supporting documents mapping help 显示如何把支持文件与记录关联</a>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("Uploaded attachments")
+            </td>
+            <td class="righttd">
+                <table id="fileTableList" class="tbl">
+                    <tr>
+                        <th>@(Html.Lang("Select"))</th>
+                        <th>@(Html.Lang("Description"))</th>
+                        <th>@(Html.Lang("File Type"))</th>
+                        <th>@(Html.Lang("Download"))</th>
+                        <th>@(Html.Lang("Edit"))</th>
+                        <th>@(Html.Lang("Delete"))</th>
+                    </tr>
+                    @if (commonAttachmentList != null)
+                                {
+                                    bool isFirstRow = true;
+                                    foreach (Attachment item in commonAttachmentList)
+                                    {
+                            <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'"
+                                            id="trFile@(item.Id.ToString())">
+                                <td class="listtd" style="padding: 5px;">
+                                    @if(isFirstRow)
+                                    {
+                                        isFirstRow = false;
+                                        <span>&nbsp;</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="Attachment@(item.Id.ToString())" onchange="showMapping(this);"/>
+                                    }
+                                </td>
+                                <td id="AttachmentDescription@(item.Id.ToString())" class="listtd" style="padding: 5px;">
+                                    @(item.Description)
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:50px;">@(Path.GetExtension(item.FilePath).ToUpperInvariant())</td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="downloadFile('@(item.Id.ToString() + "','" + item.Description  + "','" + item.FilePath))');">
+                                        @(Html.Lang("Download"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="editAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Edit"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="deleteAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Delete"))
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div id="progressBarDiv" style="display:none;">
+        <div style="background:#efefef;height:18px;width:250px;">
+            <div id="progressBarId" style="background:Green;width:1%;height:100%;"></div>
+        </div>
+        <div>
+            <span id="timeCounter"></span>
+            <span id="progressBarMessageId">文件正在上传中，请稍候...</span>
+        </div>
+    </div>
+    <div style="clear:both;">&nbsp;</div>
+    <div id="searchResult">
+        @{ Html.RenderPartial("PartialWriteOffItems", Model);}
+    </div>
+    <div id="paddingDiv" style="height: 50px; clear: both;">
+        &nbsp;
+    </div>
+</div>
+<script type="text/javascript">
+    var rvId = $("#Id").val();
+    function save(callback, guid) {
+        rvId = $("#Id").val();
+        var obj = new Object();
+        obj.Id = rvId;
+        obj.DepartmentId = getValue("DepartmentId", true, "int");
+        obj.DepartmentName = $("#DepartmentId").find("option:selected").text();
+        obj.ProjectName = "";// $("#Name").val();
+        obj.BU = $("#BU").val();
+        obj.Description = $("input[name='goodsType']:checked").val();
+        obj.AttachmentIds = getSelectedIds("Attachment");
+        if (guid != null) {
+            obj.AttachmentIds = "," + guid + ",";
+        }
+
+        obj.MappingIds = getSelectedIds();
+
+        if (requiredIsEmpty()) {
+            alert("Required fields cannot be empty!");
+            return;
+        }
+
+        var json = $.toJSON(obj);
+        $.post(getRootUrl() + "WF/UpdateRequestVersion", { json: json }, function (json) {
+            if (json.Success) {
+                if (callback) {
+                    callback();
+                }
+                else {
+                    popOK();
+                    saveSelectStatus();
+                    reloadData();
+                    setTimeout(restoreSelectStatus, 200);
+                }
+            }
+        });
+    }
+
+    function reloadData() {
+        rvId = $("#Id").val();
+        $.post(getRootUrl() + "WF/LoadData", { id: rvId }, function (html) {
+            $("#searchResult").html(html);
+        });
+    }
+
+    function next() {
+        save(function () {
+            var html = $("#DataTable").html();
+            if (html.indexOf("Please upload!") > 0) {
+                showMappingTips();
+                alert("请上传必须的支持文件！\nPlease upload the related supporting documents!");
+                return;
+            }
+
+            location.href = getRootUrl() + "WF/Preview?id=" + rvId.toString();
+        });
+    }
+
+    var fileControlIds = "0";
+    $(document).ready(function () {
+        var array = fileControlIds.split('|');
+        for (var i = 0; i < array.length; i++) {
+            var idStr = array[i];
+            if (idStr != "") {
+                $('#attachementUpload' + idStr).submit(uploadAttachmentSubmit2);
+            }
+        }
+    });
+
+    var globalFileExtentionName = "";
+    var GlobalButtonId = "";
+    function upload2(buttonId) {
+        var rvId = $("#Id").val();
+        if (rvId != null && rvId != "") {
+            id = parseInt(rvId);
+        }
+
+        if (id <= 0) {
+            alert("Please upload the write-off Excel first!");
+            return;
+        }
+
+        if (buttonId == null) buttonId = "";
+        GlobalButtonId = buttonId;
+
+        var filePath = $("#fileInputControl" + GlobalButtonId).val();
+        var extentionName = filePath;
+        if (extentionName.indexOf(".") > 0) {
+            extentionName = extentionName.substr(extentionName.lastIndexOf("."));
+            extentionName = "," + extentionName.toLowerCase() + ",";
+            if (extentionName.length > 2 && ",@(Constants.UploadFileType),".indexOf(extentionName) >= 0) {
+                if (id == 0) {
+                    id = getModelId();
+                }
+
+                globalFileExtentionName = extentionName.replace(/\,/g, "").toUpperCase();
+                $("#uploadSubmitButton" + GlobalButtonId).submit();
+                $("#lbl" + GlobalButtonId).html("uploading...");
+                $("#uploadButton" + GlobalButtonId).css({ "display": "none" });
+                pop("The file is being uploaded and analyzed. Please wait...");
+            }
+            else alert("File type not allowed!");
+        }
+    }
+
+    function uploadAttachmentSubmit2() {
+        try {
+            var _vendorId = "";
+            var type = "CommonAttachment";
+            var description = getValue("AttachmentDescription" + GlobalButtonId, true, "string");
+            var param = ({
+                type: type
+                , typeCode: "Common"
+                , subCode: _vendorId
+                , id: id
+                , Description: description
+                , tableId: "BR_Attachment_" + GlobalButtonId
+            });
+
+            var options = {
+                url: getRootUrl() + 'Upload',
+                data: param,
+                success: function (guid) {
+                    $("#uploadButton" + GlobalButtonId).css({ "display": "" });
+
+                    if (guid != null && guid.indexOf("|") > 0) {
+                        var arr = guid.split('|');
+                        id = parseInt(arr[0]);
+                        guid = arr[1];
+                    }
+
+                    if (guid != null && guid.length != 36) {
+                        if (GlobalButtonId == "0" && guid.toLowerCase().indexOf("error") >= 0) {
+                            $.get(getRootUrl() + "Upload/GetUploadResultHtml", null, function (html) {
+                                $("#ResultTable").html(html);
+                                pop($("#uploadResult").html());
+                            });
+                        }
+                        else {
+                            if (guid.indexOf("TableName") > 0) {
+                                guid = "The uploaded file cannot be recognized. Please use the standard template!";
+                                pop(guid);
+                                return;
+                            }
+
+                            alert(guid);
+                        }
+                    }
+                    else {
+                        $("#lbl" + GlobalButtonId).html("");
+
+                        updateFileTable(description, guid, _vendorId);
+
+                        if ($("#AttachmentDescription" + GlobalButtonId).is(":visible") == true) {
+                            $("#AttachmentDescription" + GlobalButtonId).val("");
+                        }
+
+                        var file = $("#fileInputControl" + GlobalButtonId)
+                        file.after(file.clone().val(""));
+                        file.remove();
+
+                        popOK();
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            };
+
+            $(this).ajaxSubmit(options);
+        }
+        catch (e) {
+            alert(e.Message);
+        }
+        return false;
+    }
+
+    function updateFileTable(description, guid, subCode) {
+        var html = $("#fileTableList" + subCode).html();
+        var isFirstRow = html.indexOf("downloadFile") < 0;
+
+        var tr = $("<tr onmouseover=\"this.className='trFocused'\" onmouseout=\"this.className='trCommon'\" id=\"trFile" + guid + "\"></tr>");
+        tr.appendTo($("#fileTableList" + subCode));
+
+        if (isFirstRow) {
+            tr.append($("<td class=\"listtd\" style=\"padding:5px;\">&nbsp;</td>"));
+        }
+        else {
+            tr.append($("<td class=\"listtd\" style=\"padding:5px;\"><input type=\"checkbox\" id=\"Attachment" + guid + "\"/></td>"));
+        }
+
+        tr.append($("<td class=\"listtd\" style=\"padding:5px;\" id=\"AttachmentDescription" + guid + "\">" + description + "</td>"));
+        tr.append($("<td class=\"listtd\" style=\"padding:5px;width:50px;\">" + globalFileExtentionName + "</td>"));
+
+        var button = "";
+        button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+        button += " onclick=\"downloadFile('" + guid + "');\">@(Html.Lang("Download"))</button>";
+        tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+        button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+        button += " onclick=\"editAttachment('" + guid + "');\">@(Html.Lang("Edit"))</button>";
+        tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+        button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+        button += " onclick=\"deleteAttachment('" + guid + "');\">@(Html.Lang("Delete"))</button>";
+        tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+        var MappingIds = getSelectedIds();
+        if (MappingIds != "") {
+            save(null, guid);
+        }
+    }
+
+    function editAttachment(guid) {
+        var description = $.trim($("#AttachmentDescription" + guid).html());
+        closeDialogDiv();
+        popup("<div style='padding:10px;'> <label style=\"float:left;\">@(Html.Lang("Description")): </label> <input type='text' id=\"description" + guid
+         + "\" style=\"float:left;width:200px;height:22px;margin:0 5px;\"/> <button style=\"float:left;width:80px;\" type=\"button\" "
+         + "onclick=\"saveDescription('" + guid + "');\">@(Html.Lang("Save"))</button><div style='clear:both;'></div></div>", "popDiv" + guid);
+        $("#description" + guid).val(description);
+    }
+    function saveDescription(guid) {
+        var description = $.trim($("#description" + guid).val());
+        $.post(getRootUrl() + "Request/SaveDescription", { id: guid, description: description }, function (json) {
+            if (json.Success) {
+                $("#AttachmentDescription" + guid).html(description);
+                closeDialogDiv();
+            }
+        });
+    }
+    function deleteAttachment(guid) {
+        if (confirm(getConfirmDeleteMessage())) {
+            $.post(getRootUrl() + "Request/Delete", { id: guid }, function (json) {
+                if (json.Success) {
+                    $("#trFile" + guid).css({ "display": "none" });
+                    closeDialogDiv();
+                }
+            });
+        }
+    }
+
+    function uploadRequiredDoc(obj) {
+        $("#AttachmentDescription").val($.trim($(obj).html()));
+    }
+
+    function uploadThis(desc) {
+        $("#AttachmentDescription0").val($.trim(desc));
+        $("#fileInputControl0").click();
+        pop("Please click the \"Upload\" button after you select the file");
+    }
+
+    function saveAttachmentMapping(chk) {
+        //pop(chk.id + chk.checked)
+    }
+
+    function showMapping(chk) {
+        //pop(chk.id + chk.checked)
+    }
+
+    function showMappingTips() {
+        var html = "<div>";
+        html += "如下图所示，选择支持文件和对应的记录，然后点击“<b style=\"color:black;\">Save</b>”保存即可。";
+        html += "<br />As illustrated below, select the supporting documents and the related records, then click '<b style=\"color:black;\">Save</b>' to save the relationship.";
+        html += "<br /><img src='@(Url.Content("~/Help/AttachmentsMapping.PNG?" + DateTime.Now.ToString("yyyyMMddHHmmss")))'/></div>";
+        pop(html,800);
+    }
+
+    function downloadFile(guid, desc, path) {
+        var url = '@(Url.Content("~/Request/Download?id="))' + guid;
+        if (isWorkstationUser()) {
+            run("DownloadFile(\"" + url + "\")", true);
+            return;
+        }
+
+        window.open(url);
+    }
+
+    function run(method, isEval) {
+        if (!isWorkstationUser()) {
+            pop("请“下载平台”后使用此功能！");
+        }
+        else {
+            try {
+                if (isEval == null || isEval == false) {
+
+                    var result = window.external.ShowForm(method);
+                    closeDialogDiv();
+                    if (result != "ok") {
+                        pop(result);
+                    }
+                }
+                else if (isEval == true) {
+                    var runScript = "";
+                    runScript += "var result = window.external." + method + ";\r\n";
+                    runScript += "closeDialogDiv();\r\n";
+                    runScript += "if (result != \"ok\") {\r\n";
+                    runScript += "    pop(result);\r\n";
+                    runScript += "}";
+                    eval(runScript);
+                }
+            }
+            catch (error) {
+                alert(error);
+            }
+        }
+    }
+</script>
+
+@(ViewBag.Json)

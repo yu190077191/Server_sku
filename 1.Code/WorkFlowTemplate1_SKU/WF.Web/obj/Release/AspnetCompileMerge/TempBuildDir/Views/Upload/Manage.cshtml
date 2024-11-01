@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "upload";
+}
+
+<script type="text/javascript" src="@(Url.Content("~/Scripts/Common/upload.js?time=" + DateTime.Now.ToString()))"></script>
+<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
+    <div id="searchDiv" style="margin-top:10px;margin-bottom:5px;">
+        <select id="filterTableId" style="float: left;height:27px;line-height:27px;">
+            @(Html.Raw(WF.BusinessRule.CommonRule.GetSelectOption(
+                typeCode: "ImportExcelTable"
+                , isDictionary: false
+                , id : null
+                , insertPleaseSelectOption: true
+                , selectedValue : null
+                )))
+        </select>
+        <span style="float:left;margin-top:3px;margin-left:5px;">关键词：</span>
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left; margin-left: 5px; margin-right: 5px;">
+                <input id="Type" type="hidden" value="ImportDataFromExcel" />
+                <input type="file" id="file1" name="file1" style="height: 27px; float: left; margin-right: 5px; width: 250px;" />
+                <button id="uploadButton1" onclick="upload();" style="float: left; height: 27px; padding: 0px 15px 5px 15px;">
+                    上传
+                </button>
+                <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;">
+                </label>
+                <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
+                                width: 1px;" value="uploadButton" class="submit" />
+            </form>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"  style="float: left; height: 27px;  padding: 0px 15px 5px 15px;" onclick="exportToExcel();">导出</button>
+        <span id="templateDiv" style="float:left;margin-left:5px;"></span>
+    </div>
+    <div id="progressBarDiv" style="display:none;">
+        <div style="background:#efefef;height:18px;width:250px;">
+            <div id="progressBarId" style="background:Green;width:1%;height:100%;"></div>
+        </div>
+        <div>
+            <span id="timeCounter"></span>
+            <span id="progressBarMessageId">文件正在上传中，请稍候...</span>
+        </div>
+    </div>
+    <div style="clear:both;">&nbsp;</div>
+    <hr />
+    <div style="clear:both;">&nbsp;</div>
+    <div id="searchResult">
+    </div>
+    <div>&nbsp;</div>
+</div>
+<script type="text/javascript">
+
+</script>

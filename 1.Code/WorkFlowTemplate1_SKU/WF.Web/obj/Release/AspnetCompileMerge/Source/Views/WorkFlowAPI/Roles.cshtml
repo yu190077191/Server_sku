@@ -1,0 +1,100 @@
+﻿@using Nestle.WorkFlow.BusinessRule;
+@using Nestle.WorkFlow.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRole>
+@{
+    ViewBag.Title = "User Management";
+    List<Role> RoleList = ViewBag.RoleList as List<Role>;
+    bool IsAdmin = WF.Web.Controllers.WorkFlowAPIController.IsAdmin;
+}
+@section Header{
+    <script type="text/javascript" src="@(Url.Content("~/Scripts/WorkFlow.js?" + DateTime.Now.ToString()))"></script>
+}
+<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
+    @if (System.Configuration.ConfigurationManager.AppSettings["Debug"] == "true" && IsAdmin)
+    {
+        <div style="float:left;margin-bottom:5px;">
+            <input id="accountName" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+            <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="debugUser();">Simulate</button>
+        </div>
+    }
+    <div style="float:right;margin-bottom:5px;">
+        @if (ViewBag.DepartmentList != null)
+        {
+            List<Department> factoryList = ViewBag.DepartmentList as List<Department>;
+            <select id="departmentSelect" class="inputfl" style="width:100px;">
+                <option value="">Select</option>
+                @foreach (Department item in factoryList)
+                {
+                    <option value="@item.Id.ToString()">@item.Name</option>
+                }
+            </select>
+        }
+
+        @if (ViewBag.BUList != null)
+        {
+            List<Department> factoryList = ViewBag.BUList as List<Department>;
+            <select id="BUDepartmentId" class="inputfl" style="width:100px;display:none;">
+                <option value="0">Select</option>
+                @foreach (Department item in factoryList)
+                {
+                    <option value="@item.Id.ToString()">@item.Name</option>
+                }
+            </select>
+        }
+
+        @if (RoleList != null)
+        {
+            <select id="RoleSelect" class="inputfl" style="width:100px;">
+                <option value="">Select</option>
+                @foreach (Role item in RoleList)
+                {
+                    <option value="@item.Id.ToString()">@item.Name</option>
+                }
+            </select>
+        }
+
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="searchUser(1);">@(Html.Lang("Search"))</button>
+    </div>
+    <div style="clear:both;"></div>
+    <hr />
+    <div class="rightDiv" style="width:100%;padding-left:0;margin-left:0;">
+        <div id="searchResult">
+            @{ Html.RenderPartial("PartialRolesList", Model); }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function searchUser(pageIndex) {
+        var query = new Object();
+        query.PageIndex = pageIndex;
+        query.Keyword = $.trim($("#keyword").val());
+        query.Array = new Array();
+
+        var RoleId = $("#RoleSelect").val();
+        if (RoleId != "") {
+            query.Array.push(createParameter("RoleId", RoleId));
+        }
+
+        var department = $("#departmentSelect").val();
+        if (department != "") {
+            query.Array.push(createParameter("DepartmentId", department));
+        }
+
+        $.get(location.href, { json: $.toJSON(query) }, function (html) {
+            $("#searchResult").html(html);
+        });
+    }
+
+    function debugUser() {
+        $.post("@(Url.Content("~/WorkFlowAPI/DebugUser"))", { accountName: $.trim($("#accountName").val()) }, function (json) {
+        if (json.Success) {
+            location.href = getRootUrl();
+        }
+        else {
+            alert("Sorry, failed!");
+        }
+    });
+    }
+</script>

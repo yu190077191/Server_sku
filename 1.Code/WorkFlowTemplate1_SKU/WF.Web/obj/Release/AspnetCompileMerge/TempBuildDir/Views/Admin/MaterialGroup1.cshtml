@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "MaterialGroup1";
+}
+
+<div class="main">
+    <table>
+        <thead>
+            <tr>
+                <th colspan="4">
+                    @Html.Lang("MaterialGroup1")
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Name"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Name" class="input"/>
+            </td>
+        </tr>
+
+        <tr id='buttonTR'>
+            <td colspan="4" align="center" style="height: 60px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function getModel() {
+        var elementIds = ",Name";
+        if (checkElements(elementIds)) {
+            var model = new Object();
+            model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+            model.Name = getValue("Name", true, "string");
+
+            if (requiredIsEmpty()) {
+                alert("Required fields cannot be empty!");
+                return "";
+            }
+            else {
+                return $.toJSON(model);
+            }
+        }
+        else {
+            return "";
+        }
+    }
+
+    $.ajaxSetup({ cache: false });
+
+    var id = 0;
+    function save() {
+        saveModel(function () {
+            popOK(function () {
+                if (location.href.indexOf("?") > 0) {
+                    closeWindow();
+                }
+                else {
+                    location.href = getRootUrl() + "Admin/MaterialGroup1List";
+                }
+            });
+        });
+    }
+
+    function saveModel(callback) {
+        var model = getModel();
+        if (model == "") return;
+        $("#buttonTR").css({ "display": "none" });
+        $.post(getRootUrl() + "Admin/SaveMaterialGroup1", { json: model }, function (json) {
+            if (json.Success) {
+                id = json.Id;
+                if (callback) {
+                    callback();
+                }
+            }
+            else {
+                popFailure();
+                $("#buttonTR").css({ "display": "" });
+            }
+        });
+    }
+</script>
+@Html.Raw(ViewBag.Json)

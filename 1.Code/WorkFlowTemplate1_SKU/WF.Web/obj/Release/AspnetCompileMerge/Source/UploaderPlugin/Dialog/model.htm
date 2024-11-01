@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="content-type" content="text/html;charset=gb2312">
+<meta name="keywords" content="站长,网页特效,js特效,js脚本,脚本,广告代码,zzjs,zzjs.net,sky,www.zzjs.net,站长特效 网" />
+<meta name="description" content="www.zzjs.net,站长特效网，站长必备js特效及广告代码。大量高质量js特效，提供高质量广告代码下载,尽在站长特效网" />
+<title>QQ弹出层，记住用IE7渲染，不支持IE8</title>
+<style type="text/css">
+body{background:#ffffff;color:#444;}
+a{color:#09d;text-decoration:none;border:0;background-color:transparent;}
+body,div,iframe,form,h5{margin:0;padding:0;}
+img{border:none 0;}
+body,td,textarea{word-break:break-all;word-wrap:break-word;line-height:1.5;}
+body,input,textarea,select,button{margin:0;font-size:12px;font-family:Tahoma,SimSun,sans-serif;}
+div,p,table,th,td{font-size:1em;font-family:inherit;line-height:inherit;}
+</style>
+<script type="text/javascript" src="Dialog.js"></script>
+<script type="text/javascript">
+
+
+function Max(){alert("MAX");}
+function zOpenD(){
+ var diag = new Dialog("Diag1");
+ diag.Width = 900;
+ diag.Height = 400;
+ diag.Title = "站长特效窗口示例";
+ diag.URL = "http://www.zzjs.net";
+ diag.ShowMessageRow = true;
+ diag.MessageTitle = "站长特效窗口示例";
+ diag.Message = "您觉得站长特效网什么样？";
+ diag.OKEvent = zAlert;//点击确定后调用的方法
+ diag.show();
+}//欢迎来到站长特效网，我d们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+function zOpen(){
+ var diag = new Dialog("Diag2");
+ diag.Width = 900;
+ diag.Height = 400;
+ diag.Title = "弹出窗口示例";
+ diag.URL = "http://www.baidu.com/img/baidu_logo.gif";
+ diag.OKEvent = zAlert;//点击确定后调用的方法
+ diag.ShowButtonRow = false;
+ diag.show();
+}
+function zAlert(){
+  Dialog.alert("<a href='http://www.zzjs.net'>站长特效网</a>，国内最帅的网页特效站！");
+}//欢q迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+function zConfirm(){
+ Dialog.confirm('您喜欢sky吗？<br />您喜欢<a href="http://www.zzjs.net">站长特效网</a>吗？',function(){Dialog.alert("<a href='http://www.zzjs.net'>站长特效网</a>永远欢迎您。");});
+}//欢迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+</script>
+</head>
+<body>
+<a href="http://www.zzjs.net/">站长特效网</a>,站长必备的高质量网页特效和广告代码。zzjs.net，站长js特效。<hr>
+<!--欢迎来到站长特效网，我们网站收集大量高质量js特效，提供许多广告代码下载，网址：www.zzjs.net，zzjs@msn.com,用.net打造靓站-->需要加载js文件，请刷新后看效果。
+<p align="center">
+<input type="button" value="MAX弹出新窗口" onclick="Show(400,400,'http://www.baidu.com/img/baidu_logo.gif','我的标题')"> 
+
+<input type="button" value="弹出新窗口" onclick="zOpen()">  <input type="button" value="弹出带说明的新窗口" onclick="zOpenD()">  <input type="button" value="弹出信息提示对话框" onclick="zAlert()">  <input type="button" value="弹出选择对话框" onclick="zConfirm()"></p>
+
+<input type="button" value="MAX弹出新窗口" onclick="Dialog.alert('http://www.baidu.com/img/baidu_logo.gif',Max,100,100)"> 
+</body>
+</html>

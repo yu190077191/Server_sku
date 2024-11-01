@@ -1,0 +1,447 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@model ProjectRequirement
+
+@{
+    ViewBag.Title = "Business Requirement";
+
+    WorkFlowAPIController api = new WorkFlowAPIController();
+    Employee requester = Operation.Employee;
+
+    List<Nestle.WorkFlow.Model.ActionHistory> historyList = api.GetApprovers(Model.Id, Model.Id, (Guid)Model.CreatedBy);
+    List<Nestle.WorkFlow.Model.Errors> errors = api.GetErrors(Model.Id, Model.Id);
+    bool hasErrors = errors != null && errors.Count > 0;
+
+    List<Nestle.WorkFlow.Model.Button> buttonList = ViewBag.ButtonList as List<Nestle.WorkFlow.Model.Button>;
+    List<string> buttonNames = buttonList.Select(k => k.EventName).ToList();
+    int eventId = buttonList != null && buttonList.Count > 0 ? buttonList[0].EventId : 0;
+    int workFlowId = buttonList != null && buttonList.Count > 0 ? buttonList[0].WorkFlowId : 0;
+    List<Attachment> commonAttachmentList = ViewBag.commonAttachmentList as List<Attachment>;
+    if ((Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Rejected)
+    {
+        historyList = historyList.Where(k => k.Time != null).ToList();
+        buttonList = new List<Nestle.WorkFlow.Model.Button>();
+        buttonNames = new List<string>();
+    }
+    //if (Model.BusinessCaseOwner != null && historyList.Where(k => k.EmployeeId == Model.BusinessCaseOwner).Count() == 0 && buttonNames.Contains("Submit"))
+    //{
+    //    Response.Redirect("~/Request/ProjectRequirement?id=" + Model.Id.ToString());
+    //}
+}
+
+<div class="main">
+    <div style="font-size:16px;line-height:30px;margin-bottom:15px;">
+        Business Case NO. <b style="color:red;">@(Model.Id.ToString())</b>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    <h1>
+                        @Html.Lang("Business Requirement")
+                    </h1>
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initiative Name")
+            </td>
+            <td class="tdRight" id="InitiativeName">
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Prepared by")
+            </td>
+            <td class="tdRight" id="UserName">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Description")
+            </td>
+            <td class="tdRight2" colspan="3" id="Description">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Scope")
+            </td>
+            <td class="tdRight2" colspan="3" id="Scope">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("General Benefits and Risk of not doing")
+            </td>
+            <td class="tdRight2" colspan="3" id="GeneralBenefitsAndRiskOfNotDoingThisChange">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Business Case Owner")
+            </td>
+            <td class="tdRight" id="BusinessCaseOwnerName">
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Market / OPCO")
+            </td>
+            <td class="tdRight" id="Market_OPCOName">
+
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Desired Start Date")
+            </td>
+            <td class="tdRight" id="DesiredStartDate">
+                
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Desired Closure Date")
+            </td>
+            <td class="tdRight" id="DesiredClosureDate">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("NBE E2E Flow")
+            </td>
+            <td class="tdRight" id="NBE_E2E_FlowName">
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Additional Area")
+            </td>
+            <td class="tdRight" id="AdditionalAreaName"></td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Driving Business")
+            </td>
+            <td class="tdRight" id="DrivingBusinessName"></td>
+            <td class="tdLeft">
+                @Html.Lang("Currency")
+            </td>
+            <td class="tdRight" id="CurrencyName"></td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initial Cost Estimation")
+            </td>
+            <td class="tdRight" id="Cost">
+                
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Initial Capex Estimation")
+            </td>
+            <td class="tdRight" id="InitialCapexEstimation">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initial Benefits Estimation")
+            </td>
+            <td class="tdRight2" colspan="3" id="InitialBenefitsEstimation">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Contribution to NBE E2E Value drivers / KPI's")
+            </td>
+            <td class="tdRight2" colspan="3" id="ContributionKPI">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("E2E Lead")
+            </td>
+            <td class="tdRight" id="E2ELeadName">
+
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Endorsement Date")
+            </td>
+            <td class="tdRight" id="E2ELeadEndorsementDate">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Executive Sponsor")
+            </td>
+            <td class="tdRight" id="ExecutiveSponsorName">
+
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Endorsement Date")
+            </td>
+            <td class="tdRight" id="ExecutiveSponsorEndorsementDate">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("NPDI Identifier")
+            </td>
+            <td class="tdRight" id="NPDIIdentifier">
+                
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Nestool BR ID")
+            </td>
+            <td class="tdRight" id="Nestool_BR_ID">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Program / Project Manager")
+            </td>
+            <td class="tdRight2" colspan="3" id="ProgramProjectManagerName">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Estimations General Notes")
+            </td>
+            <td class="tdRight2" colspan="3" id="EstimationsGeneralNotes">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Attachments")
+            </td>
+            <td class="tdRight2" colspan="3">
+                <table id="fileTableList" class="tbl">
+                    <tr>
+                        <th>@(Html.Lang("Description"))</th>
+                        <th>@(Html.Lang("File Type"))</th>
+                        <th>@(Html.Lang("Download"))</th>
+                    </tr>
+                    @if (commonAttachmentList != null)
+                    {
+                        foreach (Attachment item in commonAttachmentList)
+                        {
+                            <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'"
+                                id="trFile@(item.Id.ToString())">
+                                <td id="AttachmentDescription@(item.Id.ToString())" class="listtd" style="padding: 5px;">
+                                    @(item.Description)
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:50px;">@(Path.GetExtension(item.FilePath).ToUpperInvariant())</td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="window.open('@(Url.Content("~/Request/Download?id=" + item.Id.ToString()))');">
+                                        @(Html.Lang("Download"))
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class ="main">
+    <div>
+        <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+            <thead>
+                <tr>
+                    <th colspan="7" align="left" style="font-size:14px;">
+                        @Html.Lang("E-approval record: (Current Status:")
+                        @if ((Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Approved)
+                        {
+                            <b style="color:green;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model.Status).ToString())</b>
+                        }
+                        else
+                        {
+                            <b style="color:red;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model.Status).ToString())</b>
+                        }
+
+                        )
+                    </th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    @Html.Lang("Sequence")
+                </td>
+                <td>
+                    @Html.Lang("Step Name")
+                </td>
+                <td>
+                    @Html.Lang("Title")
+                </td>
+                <td>
+                    @Html.Lang("Name")
+                </td>
+                <td>
+                    @Html.Lang("Review Result")
+                </td>
+                <td>
+                    @Html.Lang("Review Comment")
+                </td>
+                <td>
+                    @Html.Lang("Review Time")
+                </td>
+            </tr>
+
+            @{
+                bool someApproversMissing = false;
+                if (historyList != null)
+                {
+                    int sequence = 0;
+                    foreach (Nestle.WorkFlow.Model.ActionHistory approver in historyList)
+                    {
+                        if (approver.RowNumber > 1)
+                        {
+                            continue;
+                        }
+
+                        sequence++;
+
+                        if (approver.IsManuallyAdded)
+                        {
+                            if (!string.IsNullOrEmpty(approver.Remark))
+                            {
+                                approver.StepName += " (Message: <b style='font-weight:bold;'>" + approver.Remark + "</b>)";
+                                approver.Remark = string.Empty;
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(approver.Name))
+                        {
+                            someApproversMissing = true;
+                            approver.Name = "<b style='color:Red;'>Sorry, the approver with the title \"" + approver.Title + "\" cannot be found!,pls. raise approver role request via <a style='color:Blue;' target=\"_blank\" href='https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u'> SKU Registration MDR Role Application Form(office.com) </a> to fix the issue.</b>";
+                        }
+
+                        <tr id="tr@(approver.IsManuallyAdded ? approver.EmployeeId.ToString() : approver.Sequence.ToString())">
+                            <td>@(sequence.ToString() + ".")</td>
+                            <td>@(Html.Raw(approver.StepName))</td>
+                            <td>@(Html.Raw(approver.Title))</td>
+                            <td>@(Html.Raw(approver.Name))</td>
+                            <td>@(Html.Raw(approver.Action))</td>
+                            <td>@(approver.Remark)</td>
+                            <td>@(approver.Time)</td>
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+
+    @if (errors != null && errors.Count > 0)
+    {
+        <div id="ErrorsDiv" class="main" style="width:100%;padding:0;color:red;font-size:16px;">
+            <table>
+                <tr>
+                    <td width="10%" align="left">
+                        @Html.Lang("Error Type")
+                    </td>
+                    <td width="90%" align="left">
+                        @Html.Lang("Error Details")
+                    </td>
+                </tr>
+                @foreach (Nestle.WorkFlow.Model.Errors err in errors)
+                {
+                    <tr>
+                        <td>@(err.TypeCode)</td>
+                        <td>@(err.Error)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    <div class="buttonDiv">
+        @{
+            if (buttonNames.Contains("Submit"))
+            {
+                var submitButton = buttonList.Where(k => k.EventName == "Submit");
+                <button id="SubmitButton" onclick="api('Submit', @(submitButton.First().EventId.ToString()), @(submitButton.First().WorkFlowId.ToString()));">
+                    @(Html.Lang("Submit"))
+                </button>
+                <button onclick="edit(@(workFlowId.ToString()));">
+                    @(Html.Lang("Edit"))
+                </button>
+            }
+            else if (workFlowId > 0)
+            {
+                foreach (Nestle.WorkFlow.Model.Button b in buttonList)
+                {
+                    string buttonName = b.EventName;
+                    if(buttonName.ToLower() == "save")
+                    {
+                        buttonName = "Comment";
+                    }
+
+                    <button onclick="api('@(b.EventName)', @(b.EventId.ToString()), @(b.WorkFlowId.ToString()));">
+                        @(Html.Lang(buttonName))
+                    </button>
+                }
+
+                if (buttonList.Where(k => k.EventName.ToLower() == "approve").Count() > 0 || buttonList.Where(k => k.EventName.ToLower() == "save").Count() > 0)
+                {
+                    <button onclick="forward(@(Model.Id.ToString()));">
+                        @(Html.Lang("Forward"))
+                    </button>
+                }
+            }
+        }
+    </div>
+</div>
+    <div style="clear:both;">&nbsp;</div>
+
+@if (hasErrors || someApproversMissing)
+{
+    <script type="text/javascript">
+
+        $(function(){
+            $("#SubmitButton").hide();
+        });
+    </script>
+}
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WorkFlow.js?" + DateTime.Now.ToString("yyyyMMddhhmmss")))"></script>
+<script type="text/javascript">
+    var requestId = @(Model.Id.ToString());
+    var id =@(Model.Id.ToString());
+
+    function edit(workFlowId){
+        editSameVersion();
+    }
+
+    $(function(){
+        if(!$("#SubmitButton").is(":visible"))return;
+
+        var html = $("#fileTableList").html().toUpperCase();
+        if (html != null && html.indexOf(".PDF") > 0 && html.indexOf(".XLSM") > 0) {
+            return;
+        }
+
+        var tips = "Please upload the following attachment(s):";
+        if (html != null && html.indexOf(".XLSM") < 0) {
+            tips += "<br />Preliminary Business Case.xlsm";
+        }
+
+        if (html != null && html.indexOf(".PDF") < 0) {
+            tips += "<br />the PDF (Preliminary Business Case.xlsm) signed by the functional head";
+        }
+
+        $("#SubmitButton").hide();
+
+        pop(tips);
+    });
+</script>
+
+@Html.Raw(ViewBag.Json)

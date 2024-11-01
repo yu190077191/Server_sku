@@ -1,0 +1,34 @@
+﻿@using Nestle.WorkFlow.BusinessRule;
+@using Nestle.WorkFlow.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRoleDeputy>
+@{
+    ViewBag.Title ="Delegation Setting";
+}
+@{
+}
+<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
+    <div style="padding-bottom: 30px">
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="search(1);">@Html.Lang("Search")</button>
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="reset();">@Html.Lang("Reset")</button>
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="addDelegate();">@Html.Lang("Add Delegate")</button>
+
+    </div>
+
+    <div id="searchResult">
+        @{ Html.RenderPartial("PartialDelegateRoleList", Model); }
+    </div>
+
+    <div id="paddingDiv" style="height: 50px; clear: both;">
+        &nbsp;</div>
+</div>
+<script type="text/javascript">
+    function editDelegate(id) {
+        location.href = getRootUrl() + "API_LargerOrder/AddDelegateRole?id=" + id.toString();
+    }
+
+    function addDelegate() {
+        location.href = getRootUrl() + "API_LargerOrder/AddDelegateRole";
+    }
+</script>

@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Help";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
+}
+<style type="text/css">
+    p{
+        text-indent:2em;
+        margin-top:10px;
+        line-height:30px;
+    }
+    h2 {
+        background-image: url(@(Url.Content("~/Images/arrow.png")));
+        background-repeat: no-repeat;
+        padding-left:20px;
+        margin-left:10px;
+        line-height:20px;
+	    height:20px;
+    }
+    ul{
+        margin-left:30px;
+        font-size:14px;
+    }
+    li {
+        list-style-type: square;
+    }
+</style>
+<div style="padding:30px 40px;">
+    <h2 style="margin-top:20px;">General Information Web-form</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/QRC - SKU Data Management Web-form.pdf?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                QRC - SKU Data Management Web-form
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Requester Training Material</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Registration Training PPT.pptx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Registration Training PPT
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Registration Training video.mp4?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Registration Training video
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Data Reference Material</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/Data Introduction - Parent Product Code.ppt?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Data Introduction - Parent Product Code
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/Nestec Code List.xlsx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Nestec Code List
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/Nestle abbreviations.xls?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Nestle abbreviations
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Paper Registration Form with Notes.pdf?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Paper Registration Form with Notes
+            </a>
+        </li>
+    </ul>
+
+
+
+
+    <h2 style="margin-top:20px;">Approvers List</h2>
+    <ul>
+        <li>
+            <a style="cursor:pointer;" onclick="exportCSV('Approver')">
+                Approver List
+            </a>
+        </li>
+        <li>
+            <a style="cursor:pointer;" onclick="exportCSV('SAP Steps')">
+                SAP Steps
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Product Hierarchy/Brand Hierarchy F-Group (MG1) Application Guideline:</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/Brand Hierarchy.docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Brand Hierarchy
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/Product Hierarchy.docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Product Hierarchy
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/F-Group (MG1).docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                MG1
+            </a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    function exportCSV(type) {
+        $.post(getRootUrl() + "Common/ExportToCSV", { type:type, keyword: "", status: 0 }, function (filePath) {
+            if (filePath.toLowerCase().indexOf(".csv") > 0) {
+                location.href = getRootUrl() + filePath;
+            }
+            else {
+                alert(filePath);
+            }
+        });
+    }
+</script>

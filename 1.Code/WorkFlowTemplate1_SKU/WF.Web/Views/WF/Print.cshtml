@@ -1,0 +1,247 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@model List<WriteOffItems>
+
+@{
+    Layout = null;
+    ViewBag.Title = Model[0].ProjectName;
+    RequestVersion rv = ViewBag.RequestVersion as RequestVersion;
+    string isApproverEdit = "false";// rv.ModifiedBy != Operation.OperationBy ? "true" : "false";
+    WorkFlowAPIController api = new WorkFlowAPIController();
+    Employee requester = Operation.Employee;
+    List<Nestle.WorkFlow.Model.ActionHistory> historyList = api.GetApprovers(rv.RequestId, rv.Id);
+    List<Nestle.WorkFlow.Model.Button> buttonList = ViewBag.ButtonList as List<Nestle.WorkFlow.Model.Button>;
+    List<string> buttonNames = buttonList.Select(k => k.EventName).ToList();
+    int eventId = buttonList != null && buttonList.Count > 0 ? buttonList[0].EventId : 0;
+    int workFlowId = buttonList != null && buttonList.Count > 0 ? buttonList[0].WorkFlowId : 0;
+    List<Attachment> commonAttachmentList = ViewBag.WriteOffAttachmentList as List<Attachment>;
+}
+
+    <link href="@(Url.Content("~/Content/themes/requester.css?" + DateTime.Now.ToString()))" rel="stylesheet" media="screen"
+          type="text/css" />
+<style media="print" type="text/css">
+    .Noprint {
+        display: none;
+    }
+
+    .hide {
+        display: block;
+    }
+
+    .PageNext {
+        page-break-after: always;
+    }
+</style>
+<style type="text/css">
+    .hide {
+        display: none;
+    }
+
+    .preview {
+        padding: 15px 80px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .print {
+        width: 631px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .tbl {
+        border-left: 1px solid black;
+        border-top: 1px solid black;
+        font-size: 12px;
+        line-height: 30px;
+        width: 100%;
+    }
+
+        .tbl td {
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            padding-left: 3px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .tbl .leftTd {
+            background-color: Gray;
+            width: 12%;
+        }
+
+        .tbl .gray {
+            background-color: Gray;
+            text-align: center;
+        }
+
+    .mid {
+        text-align: center;
+    }
+
+    .tbl .header {
+        background-color: Gray;
+        font-weight: bold;
+    }
+
+    .tbl .rightTd {
+        width: 21%;
+    }
+
+    .tbl .td1 {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .tbl .signature {
+        width: 16%;
+    }
+
+    .tbl .signature2 {
+        width: 24%;
+    }
+</style>
+
+<div class="print" style="padding:0;color:black;">
+    <div style="width:100%;">
+        <div style="width:100%;height:49px;margin-bottom:5px;">
+            <img src="@(Url.Content("~/Nestle/logo.png"))" style="float:left;"/>
+            <span style="float:left;font-size:30px;margin-top:8px;margin-left:50px;color:#AA5566;">
+                Stock Write Off
+            </span><img id="qrCode" class="barcode" style="height:49px;float:right;" src="@(Url.Content("~/Common/QRcode?data=") + Request.Url.ToString().Replace("Print", "Preview"))" alt="" />
+        </div>
+
+        <div style="clear:both;"></div>
+    </div>
+    @{ Html.RenderPartial("PartialWriteOffItems", Model);}
+
+    <div style="clear:both;">&nbsp;</div>
+    <div class="print" style="width:100%;padding:0;">
+        <table cellpadding="0" cellspacing="0" class="tbl">
+            <thead>
+                <tr>
+                    <td colspan="7" align="left" style="background:#efefef;font-size:14px;">
+                        @Html.Lang("E-approval record: (Current Status:")
+                        @if ((Nestle.WorkFlow.Model.RequestStatus)rv.State == Nestle.WorkFlow.Model.RequestStatus.Approved)
+                        {
+                            <b style="color:green;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)rv.State).ToString())</b>
+                        }
+                        else
+                        {
+                            <b style="color:red;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)rv.State).ToString())</b>
+                        }
+
+                        )
+                    </td>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    @Html.Lang("NO.")
+                </td>
+                <td>
+                    @Html.Lang("Step Name")
+                </td>
+                <td>
+                    @Html.Lang("Title")
+                </td>
+                <td>
+                    @Html.Lang("Name")
+                </td>
+                <td>
+                    @Html.Lang("Review Result")
+                </td>
+                <td>
+                    @Html.Lang("Review Comment")
+                </td>
+                <td style="width:100px;">
+                    @Html.Lang("Review Time")
+                </td>
+            </tr>
+
+            @{
+                bool someApproversMissing = false;
+                bool needAutoFixWorkFlow = false;
+                if (historyList != null)
+                {
+                    int sequence = 0;
+                    foreach (Nestle.WorkFlow.Model.ActionHistory approver in historyList)
+                    {
+                        string checkResult = string.Empty;
+                        if (!string.IsNullOrEmpty(approver.CheckResult))
+                        {
+                            if (approver.CheckResult.Contains("Add"))
+                            {
+                                checkResult = " <b style='color:green;'>" + approver.CheckResult + "</b>";
+                                needAutoFixWorkFlow = true;
+                            }
+                            else if (approver.CheckResult.Contains("Delete"))
+                            {
+                                checkResult = " <b style='color:red;'>" + approver.CheckResult + "</b>";
+                                needAutoFixWorkFlow = true;
+                            }
+                            else
+                            {
+                                checkResult = approver.CheckResult;
+                            }
+                        }
+
+                        if (approver.RowNumber > 1)
+                        {
+                            continue;
+                        }
+
+                        sequence++;
+
+                        if (approver.IsManuallyAdded)
+                        {
+                            if (!string.IsNullOrEmpty(approver.Remark))
+                            {
+                                approver.StepName += " (Message: <b style='font-weight:bold;'>" + approver.Remark + "</b>)";
+                                approver.Remark = string.Empty;
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(approver.Name))
+                        {
+                            someApproversMissing = true;
+                            approver.Name = "<b style='color:Red;'>Sorry, the approver with the title \"" + approver.Title + "\" cannot be found!,pls. raise approver role request via <a style='color:Blue;' target=\"_blank\" href='https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u'> SKU Registration MDR Role Application Form(office.com) </a> to fix the issue.</b>";
+                        }
+
+                        <tr id="tr@(approver.IsManuallyAdded ? approver.EmployeeId.ToString() : approver.Sequence.ToString())">
+                            <td>@(sequence.ToString() + ".") @(Html.Raw(checkResult))</td>
+                            <td>@(Html.Raw(approver.StepName))</td>
+                            <td>@(Html.Raw(approver.Title))&nbsp;</td>
+                            <td>@(Html.Raw(approver.Name))</td>
+                            <td>@(Html.Raw(approver.Action))</td>
+                            <td>@(approver.Remark)&nbsp;</td>
+                            <td>@(approver.Time)</td>
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+
+    <div class="Noprint" style="width:100%;margin:0 auto;text-align:center;margin-top:15px;">
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="window.print();">
+            Print
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    var requestId = @(rv.RequestId.ToString());
+    var id =@(rv.Id.ToString());
+    function edit(workFlowId){
+        location.href = "@(Url.Content("~/WriteOff?id=" + rv.Id.ToString()))";
+    }
+    window.onload = function() {
+        window.print();
+    }
+</script>

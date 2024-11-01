@@ -1,0 +1,154 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+@model List<WriteOffItems>
+
+@{ 
+    string url = Request.Url.ToString();
+    bool isEdit = url.ToLower().IndexOf("/preview") < 0 && url.ToLower().IndexOf("/print") < 0;
+    bool isPrint = url.ToLower().IndexOf("/print") > 0;
+    bool isDC = WF.Web.Controllers.WorkFlowAPIController.IsDC;
+    string department = string.Empty;
+    List<Nestle.WorkFlow.Model.DepartmentRole> myRoles = WorkFlowAPIController.MyRoles;
+    if (myRoles != null && myRoles.Count > 0)
+    {
+        department = myRoles[0].Department;
+    }
+}
+
+@if (Model != null && Model.Count > 0 && !string.IsNullOrEmpty(Model[0].ProjectName))
+{
+    <div style="line-height:24px;margin-bottom:8px;">
+        <span style="float:left;width:60px;">Name:</span><span style="float:left;width:500px;font-weight:bold;">@(Model[0].ProjectName)</span>
+        <div style="clear:both;"></div>
+        @*<span style="float:left;width:100px;">Department:</span><span style="float:left;width:500px;">@(department)</span> 
+        <div style="clear:both;"></div>*@
+        <span style="float:left;width:60px;">BU:</span><span style="float:left;width:500px;">@(Model[0].BU)</span> 
+        <div style="clear:both;"></div>     
+    </div>
+}
+    <table id="DataTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+        @{
+                    decimal total = 0;
+                    if (Model != null)
+                    {
+                <thead>
+                    <tr style="height:60px;">
+                        @if (isEdit)
+                        {
+                            <td style="line-height:20px;" align="center">
+                                <input type="checkbox" id="selectall" value="Select All" onclick="selectAll(this);"  onchange="saveAttachmentMapping(this);"/>
+                            </td>
+                        }
+                        <td style="line-height:20px;" align="center">Code<br />序号</td>
+                        <td style="line-height:20px;" align="center">Stock Code<br />产品代码</td>
+                        <td style="line-height:20px;" align="center">Item Description<br />产品描述</td>
+                        <td style="line-height:20px;" align="center">Quantity<br />数量</td>
+                        <td style="line-height:20px;" align="center">Unit<br />单位</td>
+                        @if (!isDC)
+                        {
+                            <td style="line-height:20px;" align="center">Total Cost(RMB)<br />总成本(元)</td>
+                        }
+                        <td style="line-height:20px;" align="center">Expiry Date<br />过保质期日</td>
+                        <td style="line-height:20px;" align="center">Batch No.<br />批号</td>
+                        @if (!isPrint)
+                        {
+                            <td style="line-height:20px;" align="center">Reason for Write Off<br />报废原因</td>
+                        <td style="line-height:20px;" align="center">Action taken to minimize written-off<br />减少报废的措施</td>
+                        <td style="line-height:20px;" align="center">Action taken to avoid situation recurring<br />避免报废措施</td>
+                        <td style="line-height:20px;" align="center">Supporting Documents<br />支持文件</td>
+                        }
+                        @*@if (isEdit)
+                        {
+                            <td style="line-height:20px;" align="center">Delete<br />删除</td>
+                        }*@
+                    </tr>
+                </thead>
+
+                foreach (WF.Model.WriteOffItems item in Model)
+                {
+                    total += item.NestleNBV != null ? (decimal)item.NestleNBV : 0;
+                    <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+                        @if (isEdit)
+                        {
+                            <td class="listtd" align="center">
+                                <input type="checkbox" id="checkbox@(item.Id.ToString())" onchange="saveAttachmentMapping(this);"/>
+                            </td>
+                        }
+                        <td class="listtd">@(item.Code)</td>
+                        <td class="listtd">@(item.MaterialNumber)</td>
+                        <td class="listtd">@(item.MaterialName)</td>
+                        <td class="listtd">@(item.Quantity.ToString("N"))</td>
+                        <td class="listtd">@(item.Unit)</td>
+                        @if (!isDC)
+                        {
+                            <td class="listtd">@(item.TotalCost.ToString("N"))</td>
+                        }
+                        <td class="listtd">@(item.ExpiryDate.ToShortDateString())</td>
+                        <td class="listtd">@(item.BatchNo)</td>
+                        
+@if (!isPrint)
+{
+    <td class="listtd">@(item.ReasonforWriteOff)</td>
+                        <td class="listtd">@(item.ActionTakenToMinimizeWrittenoff)</td>
+                        <td class="listtd">@(item.ActionTakenToAvoidSituationRecurring)</td>
+                        <td class="listtd" id="TdHasSupportingDocuments@(item.Id.ToString())">
+                        @(Html.Raw(item.HasSupportingDocuments))
+                        </td>
+}
+                        @*@if (isEdit)
+                        {
+                            <td class="listtd">
+                                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                                        onclick="deleteItem('WriteOffItems', @(item.Id.ToString()));">
+                                    @(Html.Lang("Delete"))
+                                    </button>
+                            </td>
+                        }*@
+                    </tr>
+                }
+
+                if (!isDC)
+                {
+                    <tr>
+                        <td class="listtd" colspan="5" align="right">Total Cost 总计：</td>
+                        @if (isPrint)
+                        {
+                            <td class="listtd" colspan="@(isEdit ? "8" : "7")" align="left">@(Model.Select(k => k.TotalCost).Sum().ToString("N"))</td>
+                        }
+                        else
+                        {
+                            <td class="listtd" colspan="@(isEdit ? "8" : "7")" align="left">@(Model.Select(k => k.TotalCost).Sum().ToString("N"))</td>
+                        }
+                    </tr>
+                }
+            }
+
+            @*if (total > 0)
+            {
+                <tr>
+                    <td colspan="6" align="right" style="padding-right:10px;">Total Nestle NBV 净值(雀巢账面)共计 </td>
+                    <td colspan="7" align="left" style="padding-left:8px;">@(total.ToString("N"))</td>
+                </tr>
+            }*@
+        }
+    </table>
+
+@if (!isPrint && Model != null && Model.Count > 0 && !Request.Url.ToString().ToLower().Contains("preview"))
+{
+    <input type="hidden" id="Id" value="@(Model[0].RequestVersionId.ToString())" />
+    <table cellpadding="0" cellspacing="0" width="100%" style="line-height:50px;font-size:14px;" border="0">
+        <tr>
+            <td style="padding:16px;" align="center">
+                <button onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                <button onclick="next();">
+                    @(Html.Lang("Next"))
+                </button>
+            </td>
+        </tr>
+    </table>
+}

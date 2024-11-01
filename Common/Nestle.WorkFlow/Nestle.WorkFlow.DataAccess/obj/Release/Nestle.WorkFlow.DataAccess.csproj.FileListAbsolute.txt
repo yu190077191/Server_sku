@@ -1,0 +1,22 @@
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.DataAccess.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.DataAccess.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Framework.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.csproj.AssemblyReference.cache
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.csproj.CopyComplete
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.DataAccess.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.DataAccess.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\bin\Release\Nestle.WorkFlow.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.W.708BF015.Up2Date
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\obj\Release\Nestle.WorkFlow.DataAccess.pdb

@@ -1,0 +1,63 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.RequestVersionData>
+
+<table cellpadding="0" cellspacing="0" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null)
+        {
+            <thead>
+                    <tr>
+                        <th>@(Html.Lang("Material Description"))</th>
+                        <th>@(Html.Lang("Chinese Description"))</th>
+                        <th>@(Html.Lang("Corporate Brand"))</th>
+                        <th>@(Html.Lang("Range Brand"))</th>
+                        <th>@(Html.Lang("Product Hierarchy Code"))</th>
+
+                        <th>@(Html.Lang("View"))</th>
+                    </tr>
+            </thead>
+            foreach (WF.Model.RequestVersionData item in Model)
+            {
+                <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+                    <td class="listtd">@(item.MaterialDescription)</td>
+                    <td class="listtd">@(item.ChineseDescription)</td>
+                    <td class="listtd">@(item.CorporateBrand)</td>
+                    <td class="listtd">@(item.RangeBrand)</td>
+                    <td class="listtd">@(item.ProductHierarchy)</td>
+
+                    <td align="center" style="width:100px;padding:3px;">
+                        <button type="button" style="font-size: 16px; font-weight: 600;" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                                onclick="returnThisData(@(item.dataInfo));">
+                            @(Html.Lang("Select"))
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

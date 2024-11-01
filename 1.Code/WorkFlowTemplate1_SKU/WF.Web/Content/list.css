@@ -1,0 +1,16 @@
+﻿.up
+{
+   padding-left:8px;
+   padding-right:8px;
+   background:url(../Images/up.png) no-repeat;
+   background-position:right;
+   cursor:pointer;
+}
+.down
+{
+   padding-left:8px;
+   padding-right:8px;
+   background:url(../Images/down.png);
+
+   cursor:pointer;
+}

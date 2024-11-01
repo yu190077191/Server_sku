@@ -1,0 +1,228 @@
+.styleValue { height:43px; background:url(../images/newNavEnds_a_hover.jpg) no-repeat; font-weight:bold;}
+.popupDiv
+{
+    position:absolute; 
+    display:block;
+    z-index:992;
+    background:#FFF;
+    display:none;  
+}
+button, .button
+{
+	background: url(../images/Button.gif) no-repeat;
+	width: 80px;
+	height: 27px;
+	border: none;
+	cursor: pointer;
+	font-weight:normal;
+	font-size:12px;
+	padding:0;
+	line-height:27px;
+}
+.buttonPressed
+{
+	background: url(../images/ButtonB.gif) no-repeat;
+	width: 80px;
+	height: 27px;
+	border: none;
+	cursor: pointer;
+	font-weight:normal;
+	font-size:12px;
+	padding:0;
+	line-height:27px;
+}
+.button120
+{
+	background: url(../images/Button120.gif) no-repeat;
+	width: 120px;
+	height: 27px;
+	border: none;
+	cursor: pointer;
+	font-weight:normal;
+	font-size:12px;
+	padding:0;
+	line-height:27px;
+}
+.buttonPressed120
+{
+	background: url(../images/ButtonB120.gif) no-repeat;
+	width: 120px;
+	height: 27px;
+	border: none;
+	cursor: pointer;
+	font-weight:normal;
+	font-size:12px;
+	padding:0;
+	line-height:27px;
+}
+.leftColumn
+{
+    width: 315px; 
+    line-height: 24px; 
+    padding: 8px 0 0 15px; 
+    float: left;
+}
+.newsDiv
+{
+    margin-bottom:8px;
+}
+.newsTitle {
+	background: none repeat scroll 0 0 #F5F5F5;
+	border: 1px solid #e2e2e2;
+	overflow: hidden;
+	padding: 5px 15px;
+	font-size:14px;
+	font-weight:600;
+	color:#666;
+	cursor:pointer;
+}
+.newsList {
+	border-color: #e2e2e2;
+	border-style: solid;
+	border-width: 0 1px 1px;
+	height: auto;
+	overflow: hidden;
+	padding: 10px 15px 15px;
+}
+.newsList a
+{
+    background-image:url(../images/arrow.png);
+    background-position:left center; 
+    background-repeat: no-repeat;
+	line-height:32px;
+	font-size:12px;
+    padding-left:15px;
+	border-bottom: 1px dotted #E5E5E5;
+	width:270px;
+	height:32px;
+	overflow: hidden;
+	float:left;
+	cursor:pointer;
+}
+.adminLeftColumn
+{
+    width: 225px; 
+    line-height: 24px; 
+    padding: 8px 0 0 15px; 
+    float: left;
+}
+.adminNewsList {
+	border-color: #e2e2e2;
+	border-style: solid;
+	border-width: 0 1px 1px;
+	height: auto;
+	overflow: hidden;
+	padding: 10px 15px 15px;
+}
+.adminNewsList a
+{
+    background-image:url(../images/arrow.png);
+    background-position:left center; 
+    background-repeat: no-repeat;
+	line-height:32px;
+	font-size:12px;
+    padding-left:15px;
+	border-bottom: 1px dotted #E5E5E5;
+	width:180px;
+	height:32px;
+	overflow: hidden;
+	float:left;
+	cursor:pointer;
+}
+.adminRightColumn
+{ 
+    width:750px; 
+    height:auto; 
+    padding-top:6px; 
+    overflow:hidden;
+    float:left;
+}
+.emptyBox {
+	border-color: #e2e2e2;
+	border-style: solid;
+	border-width: 0 1px 1px;
+	height: auto;
+	overflow: hidden;
+	padding: 10px 15px 15px;
+}
+.rightColumn
+{
+    width: 640px; 
+    line-height: 24px; 
+    padding: 8px 0 0 15px; 
+    float: left;
+}
+
+.table{ 
+	border-left:1px solid #CCC; 
+	border-top:1px solid #CCC;
+	font-size:12px;
+}
+.table td{
+	border-right:1px solid #CCC; 
+	border-bottom:1px solid #CCC;
+	height:30px;
+	vertical-align:middle;
+	padding-left:5px;
+}
+.table th{
+	border-right:1px solid #CCC; 
+	border-bottom:1px solid #CCC;
+	height:35px;
+	vertical-align:middle;
+	background:#F7F7F7;
+}
+.trCommon
+{
+    background:#FFF;
+}
+.trFocused
+{
+    background:#F7F7F7;
+}
+.textbox
+{
+    border:1px solid #CCC;
+    height:20px;
+    line-height:20px;
+    padding-left:3px; 
+    width:300px;
+}
+.textarea
+{
+    border:1px solid #CCC;
+    line-height:20px;
+    padding:3px; 
+    width:300px;
+}
+tr, td
+{
+    padding:0;   
+}
+.inputfl
+{
+    margin-top:3px;
+    margin-right:4px;
+    float:left;
+    height:22px;
+    line-height:22px;
+    font-weight:normal;
+}
+.radio
+{
+    margin-top:3px;
+    margin-right:4px;
+    float:left;
+    height:24px;
+    line-height:24px;
+    width:18px;
+    border:0;
+}
+.money
+{
+    margin-top:3px;
+    margin-right:4px;
+    float:left;
+    height:22px;
+    line-height:22px;
+}

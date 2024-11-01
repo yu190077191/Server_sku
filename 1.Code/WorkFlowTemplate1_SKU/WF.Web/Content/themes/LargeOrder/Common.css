@@ -1,0 +1,57 @@
+﻿    label {
+        float: left;
+        font-weight: normal;
+    }
+
+    .tip {
+        float: left;
+        font-weight: normal;
+        margin-left: 12px;
+    }
+
+    .emphasized {
+        font-weight: bold;
+        color: Red;
+    }
+
+    .mandatory {
+        line-height: 30px;
+    }
+
+    .yellow {
+        border: 1px solid #F5DEB3;
+        background-color: #F5DEB3;
+    }
+
+    .yellowBold {
+        border: 1px solid #F5DEB3;
+        background-color: #F5DEB3;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .tab {
+        float: left;
+        padding: 0 20px;
+        border-right: 1px solid #ccc;
+        background: #FFFFFF;
+        font-weight: normal;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .tabFocused {
+        float: left;
+        padding: 0 20px;
+        border-right: 1px solid #ccc;
+        background: #efefef;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .tag {
+        padding: 0 20px;
+        cursor: pointer;
+        text-decoration: underline;
+    }

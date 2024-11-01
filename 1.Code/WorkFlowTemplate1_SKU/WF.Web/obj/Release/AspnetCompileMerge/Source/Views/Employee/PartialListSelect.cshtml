@@ -1,0 +1,58 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.Employee>
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null)
+        {
+            <thead>
+            <tr>
+                <th>@(Html.Lang("Name"))</th>
+                <th>@(Html.Lang("Title"))</th>
+                <th>@(Html.Lang("Personnel Sub Area"))</th>
+                <th>@(Html.Lang("Cost Center"))</th>
+            <th>@(Html.Lang("Select"))</th>
+            </tr>
+            </thead>
+            foreach (WF.Model.Employee item in Model)
+            {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+            <td class="listtd">@(item.DisplayName)</td>
+            <td class="listtd">@(item.Title)</td>
+            <td class="listtd">@(item.PersonnelSubArea)</td>
+            <td class="listtd">@(item.CostCenter)</td>
+<td align="center" style="width:100px;padding:3px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="returnThis('@(item.Id.ToString() + "|" + item.DisplayName + "|" + item.Title)');">@(Html.Lang("Select"))
+    </button>
+</td>
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

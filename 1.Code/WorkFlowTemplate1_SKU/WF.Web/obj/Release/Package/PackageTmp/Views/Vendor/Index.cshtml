@@ -1,0 +1,111 @@
+﻿@using WF.Model;
+@using System.Data.SqlClient;
+@model List<Field>
+
+@{
+    string fileIds = string.Empty;
+}
+
+@section Header
+{
+    <link href="@Url.Content("~/Content/themes/Requester.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.bgiframe.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.ajaxQueue.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox-compressed.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ServiceDesk/upload.js?v" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+}
+
+<style type="text/css">
+    .tdLeft3{
+        width:40%;
+    }
+    .tdRight3{
+        width:60%;
+    }
+    .input {
+        width: 200px;
+    }
+    textarea {
+        width: 450px;
+        height:100px;
+    }
+    .selectControl {
+        width: 200px;
+    }
+    .file{
+        height:24px;
+        width:350px;
+        margin-right:10px;
+    }
+    .tip{
+    }
+    .bankdata2{
+        display:none;
+    }
+</style>
+
+<div class="main" style="padding-top:10px;">
+    @if(Model == null)
+    { 
+    <div style="margin-bottom:15px;">
+        Type:
+        <input type="radio" id="type1" name="vendorType" onclick="loadForm('Main Vendor Creation');"/>
+        <label for="type1" onclick="loadForm('Main Vendor Creation');">Main Vendor</label>
+        <input type="radio" id="type2" name="vendorType" onclick="loadForm('Vendor Site Creation');" />
+        <label for="type2" onclick="loadForm('Vendor Site Creation');">Vendor Site</label>
+    </div>
+    }
+    <div id="formDiv">
+        @{ Html.RenderPartial("PartialVendor", Model); }
+    </div>
+    
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/field.js?" + DateTime.Now.ToString())"></script>
+<input type="hidden" id="UploadType" />
+<input type="hidden" id="loadData" />
+
+<script type="text/javascript">
+    function loadForm(type) {
+        var url = getRootUrl() + "Vendor/Create";
+        $.post(url, { type: type }, function (id) {
+            location.href = getRootUrl() + "Vendor?id=" + id.toString();
+        });
+    }
+
+    function showControl(className) {
+        $("." + className).show();
+    }
+    function selectedIndexChanged(obj) {
+        var text = $(obj).val();
+        if (text.toLowerCase().indexOf("other") == 0) {
+            if (text.toLowerCase().indexOf("site code") >= 0) {
+                $(obj).parent().append("site code: <input type=\"text\" class=\"input\" style='width:100px;'/>site name: <input type=\"text\" class=\"input\" style='width:130px;'/>");
+            }
+            else {
+                $(obj).parent().append("<input type=\"text\" class=\"input\" />");
+            }
+        }
+    }
+</script>
+
+@if(Model == null)
+    {
+    <script type="text/javascript">
+        $(function () {
+        var html = "";
+        html += "Does the vendor exist in SAP?";
+        html += "<BR />";
+        html += "Please check first before you create the new one.";
+        html += "<BR />";
+        html += "<a href='#' style='text-decoration:underline;color:blue;' onclick='window.open(\"@(Url.Content("~/Help/Index"))\");'>Please click here for QRC: How to search vendor in SAP</a>";
+
+        pop(html);
+        });
+    </script>
+    }
+
+@Html.Raw(ViewBag.Json)

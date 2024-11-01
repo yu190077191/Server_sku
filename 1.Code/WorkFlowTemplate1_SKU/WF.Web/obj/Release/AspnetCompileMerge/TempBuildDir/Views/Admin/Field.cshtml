@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Field";
+}
+<style type="text/css">
+    .input{width:300px;}
+    .tdLeft{width:100px;}
+</style>
+
+<div class="main">
+    <table style="width:100%;">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    @Html.Lang("Field")
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Type"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Type" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Category"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Category" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Name"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Name" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("InputType"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="InputType" class="input"/>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("TypeCode"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="TypeCode" class="input"/>
+            </td>
+        </tr>
+        <tr style="display:none;">
+            <td class="tdLeft">
+                @Html.Lang("Colspan"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Colspan" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Priority"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Priority" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Values"):
+            </td>
+            <td class="tdRight2">
+                <textarea id="Values" style="width:100%;height:300px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Description"):
+            </td>
+            <td class="tdRight2">
+                <textarea id="Description" style="width:100%;height:300px;"></textarea>
+            </td>
+        </tr>
+
+        <tr id='buttonTR'>
+            <td colspan="4" align="center" style="height: 60px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function getModel() {
+        var elementIds = ",Type,Category,Name,InputType,Values,TypeCode,Colspan,Priority";
+        elementIds += ",Description";
+        if (checkElements(elementIds)) {
+            var model = new Object();
+            model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+            model.Type = getValue("Type", true, "string");
+            model.Category = getValue("Category", true, "string");
+            model.Name = getValue("Name", true, "string");
+            model.InputType = getValue("InputType", true, "string");
+            model.Values = getValue("Values", false, "string");
+            model.TypeCode = getValue("TypeCode", false, "string");
+            model.Colspan = 1;//getValue("Colspan", false, "int");
+            model.Priority = getValue("Priority", true, "double");
+            model.Description = getValue("Description", false, "string");
+
+            if (requiredIsEmpty()) {
+                alert("Required fields cannot be empty!");
+                return "";
+            }
+            else {
+                return $.toJSON(model);
+            }
+        }
+        else {
+            return "";
+        }
+    }
+
+    $.ajaxSetup({ cache: false });
+
+    var id = 0;
+    function save() {
+        saveModel(function () {
+            popOK(function () {
+                if (location.href.indexOf("?") > 0) {
+                    closeWindow();
+                }
+                else {
+                    location.href = getRootUrl() + "Admin/FieldList";
+                }
+            });
+        });
+    }
+
+    function saveModel(callback) {
+        var model = getModel();
+        if (model == "") return;
+        $("#buttonTR").css({ "display": "none" });
+        $.post(getRootUrl() + "Admin/SaveField", { json: model }, function (json) {
+            if (json.Success) {
+                id = json.Id;
+                if (callback) {
+                    callback();
+                }
+            }
+            else {
+                popFailure();
+                $("#buttonTR").css({ "display": "" });
+            }
+        });
+    }
+</script>
+@Html.Raw(ViewBag.Json)

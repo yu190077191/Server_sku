@@ -1,0 +1,73 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<ApproverItem>
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null)
+        {
+            <thead>
+            <tr>
+                <th>BC Number</th>
+            <th>Requester</th>
+            <th>Name</th>
+            <th>Created Time</th>
+            <th>My Action</th>
+            <th>Review</th>
+            </tr>
+            </thead>
+            foreach (ApproverItem item in Model)
+            {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="listtd" style="padding:5px;">BC@(item.Id.ToString().PadLeft(5, '0'))</td>
+            <td class="listtd" style="padding:5px;">@(item.Requester)</td>
+            <td class="listtd" style="padding:5px;">@(item.Name)</td>
+            <td class="listtd" style="padding:5px;">@(item.CreatedTime.ToString())</td>
+            <td class="listtd" style="padding:5px;">
+                @if (item.IsPending)
+                {
+                    <b style="color:red;">Pending for my approval</b>
+                }
+                else
+                {
+                    <b>&nbsp;</b>
+                }
+            </td>
+            <td class="listtd" style="padding:5px;text-align:center;"><a href="@(Url.Content("~/Request/Preview?id=" + item.Id.ToString()))" target="_blank">Review</a></td>
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>
+@if (Model == null || Model.Count == 0)
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+        show("You do not have any requests to review for the moment!");
+    });
+</script>
+}

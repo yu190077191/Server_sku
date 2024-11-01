@@ -1,0 +1,442 @@
+﻿* { margin: 0; padding: 0; border: 0; outline: 0; font-style: inherit; font-size: 100%;font-family: inherit; vertical-align:middle; font-family:"宋体",verdana, arial, sans-serif; font-size:12px;
+}
+ul,li{list-style-type:none; }
+a { color:#000; text-decoration:none;}
+a:hover{ color:#000; text-decoration:underline;}
+
+#all{margin:0 auto; width:960px; background-image: url(cn_images/footer_bg2.gif);background-repeat: no-repeat;background-position: bottom;}
+
+#news_banner ul li,#banner ul li, #home_banner ul li {display:inline; padding:0 4px; }
+.nav_sub ul li a {font-size:13px;}
+/****************************************
+**************index_header***************
+****************************************/
+#header { width:960px;  background:url(cn_images/head_bj.gif) repeat-x 50% 0;}
+#header .box { width:960px; margin:0 auto; position:relative; }
+#logo { width:648px;margin:0;}
+
+#top_nav { float:left;position:absolute; width:290px; height:77px; top:0px; right:5px; }
+#top_nav a {color:white;}
+#top_nav #search { height:19px; padding-top:15px; padding-bottom:10px;}
+#top_nav .searchinp { width:232px; height:18px; border:1px solid #af1716;font-size:16px;padding-top:3px;}
+#top_nav #text { width:180px; height:25px; margin-left:100px; color:white;background:url(cn_images/top_bj.gif) no-repeat;}
+#top_nav #text span { padding-left:15px; line-height:20px; font-size:11px;}
+#top_nav #use  { width:122px; height:19px; position:absolute; top:42px; left:75px; } 
+#top_nav #use input { width:122px; height:17px; border:1px solid #000; line-height:20px; }
+#top_nav #password  { width:75px; height:19px; position:absolute; top:42px; right:68px;}
+#top_nav #password input { width:75px; height:17px; border:1px solid #000; line-height:20px; }
+#top_nav #button_2 { width:58px; height:21px; position:absolute; top:42px; right:0px;}
+
+#nav { width:960px; height:32px; background:url(cn_images/nav_bj.gif)}
+#nav .farmework { position:absolute;width:916px; padding:0 22px; height:32px;}
+#nav .farmework ul { height:32px;}
+#nav .farmework ul li { float:left; font-size:14px; font-weight:bold; line-height:32px; }
+#nav .farmework ul li a { padding:0px 17px; color:#f9eff0; text-decoration:none; font-size:14px;}
+#nav .farmework ul li a:hover{ color:#f9eff0; text-decoration:underline; font-size:14px;}
+/****************************************
+**************index_content**************
+****************************************/
+#content  {width:960px; margin:0 auto; height:auto;}
+
+#home_banner { background:transparent url(cn_images/banner.gif) no-repeat scroll 5px 0; height:230px; width:960px; margin:0px auto;}
+#list_banner { background:transparent url(cn_images/about_banner.jpg) no-repeat scroll 5px 0; height:172px; width:960px; margin:0px auto;}
+#main { width:960px;}
+
+#main .left { width:213px; float:left; }
+
+#main .left .services { width:205px; float:left; margin:0px 0px 3px 8px; _display:inline;}
+
+#menu_top_bar { background: url(cn_images/menu_bar11.gif) no-repeat; width:205px; height: 10px;}
+
+#menu_middle li,#link_inner li {padding:6px 0px 0px 40px;text-align: left;background: url(cn_images/li_back1.gif); height: 26px;list-style-image: none;color:white;}
+
+#inner_services { cursor: pointer;background: url(cn_images/inner_service.gif);width:205px;height:30px;}
+
+#ad_1 {background: url(cn_images/special.gif); width: 208px;height:49px;float:left;margin-left: 9px;_display:inline;}
+
+#link {cursor:pointer;background: url(cn_images/link.gif);width:205px;height:30px;}
+
+#menu_middle li a,#link_inner li a { height: 29px;list-style-image: none;color:#F3E0E2; font-family:"";font-size: 10pt;}
+
+#menu_top_bottom { background: url(cn_images/menu_bar22.gif); width:205px;height:10px; background-repeat:no-repeat;}
+
+.left .services .title { width:197px; height:31px; float:left; padding:0px; background:url(cn_images/index_title_1.gif) no-repeat;}
+
+.left .services .menu       { width:193px; height:302px; float:left; padding:0px; border-left:2px solid #94080a; border-right:2px solid #94080a; background:url(cn_images/index_left_a_content.gif) no-repeat; overflow:hidden; }
+
+.left .services .menu ul { margin:0px; padding:0px;} 
+
+.left .services .menu ul li { list-style-type:none; padding:11px 0px 14px 50px; font-size:14px; font-weight:bold; line-height:12px; text-align:left;}
+
+.left .services .bg1 { width:20px; height:20px; float:left; padding:0px; background:url(cn_images/index_inco_2.gif) no-repeat; }
+
+.left .services .bg2 { width:175px; height:20px; float:left; padding:0px; border-right:2px solid #94080a; background:url(cn_images/index_inco_3.gif) repeat-x; }
+
+
+.left .link { width:197px; height:248px; float:left; padding:0px 0px 15px 8px; }                            
+.left .link .title { width:197px; height:31px; float:left; padding:0px; background:url(cn_images/index_title_2.gif) no-repeat;}
+.left .link .menu { width:192px; height:197px; float:left; padding:0px; border-left:2px solid #94080a; border-right:2px solid #94080a; background:url(cn_images/index_left_b_content.gif) no-repeat; overflow:hidden;}
+.left .link .menu ul { margin:0px; padding:0px;}
+
+.left .link .menu ul li{ list-style-type:none; padding:13px 0px 13px 50px;  *padding:13px 0px 14px 50px; font-size:14px; font-weight:bold; line-height:12px; text-align:left;}
+.left .link .bg1 { width:20px; height:20px; float:left; padding:0px; background:url(cn_images/index_inco_2.gif) no-repeat; }
+
+.left .link .bg2 { width:174px; height:20px; float:left; padding:0px; border-right:2px solid #94080a; background:url(cn_images/index_inco_3.gif) repeat-x; }
+
+.left .weather { width:209px; height:122px; float:left; padding:0px 0px 0px 12px; }
+
+.middle { width:486px; float:left; margin:5px 0px 0px 22px;_display:inline;}
+.middle .news { width:486px; float:left;  }
+.middle .news .title { width:486px; height:40px; float:left; padding:0px;background: url(cn_images/middle_navbj.gif)}
+.middle .news .title li a { font-size:10px; color:#9c0000;font-family:Arial;}
+.middle .news .title .pic { width:112px; height:44px; float:left; padding:0px; background:url(cn_images/index_title_3.gif) no-repeat;}
+.middle .news .title .bg { width:335px; height:44px; float:left; padding:0px; background:url(cn_images/index_title_bg_1.gif) repeat-x;}
+
+.middle .news .bg1 { width:447px; height:4px; float:left; padding:0px; background:url(cn_images/index_content_bg_2.gif) no-repeat; overflow:hidden;}                            
+.middle .news .farmework { width:470px; float:left; margin:0px 0px 0px 4px; _margin:0px 0px 0px 2px; overflow:hidden; }
+.middle .news .farmework .text1 { width:455px; height:96px; float:left; padding:0px 0px 0px 16px; text-align:left; }
+.middle .news .farmework .text1 span { color:#433a6f;}
+.middle .news .farmework .text1 ul { margin:0px; padding:0px; }
+.middle .news .farmework .text1 ul li { list-style-type:none; padding:8px 0px 0px 0px;  line-height:18px; }
+.middle .news .farmework .text2  { width:320px; float:left; padding:3px 0px 0px 16px; text-align:left; }
+.middle .news .farmework .text2 ul  { margin:0px; padding:0px; }
+.middle .news .farmework .text2 ul li { list-style-type:none; padding:8px 0px 0px 0px;  line-height:18px; text-align:left;}   
+.middle .news .farmework .text2 a  { color:#433a6f; text-decoration:none;}
+.middle .news .farmework .text2 a:hover  { color:#433a6f; text-decoration:underline;}
+.middle .news .farmework .text3 { width:80px; float:right; padding:3px 12px 0px 0px; text-align:left; }
+.middle .news .farmework .text3 ul { margin:0px; padding:0px; }
+#content #main .middle .news .farmework .text3 ul li { list-style-type:none; padding:8px 0px 0px 0px;  line-height:18px; text-align:left;}   
+.middle .news .farmework .text3 a { color:#433a6f; text-decoration:none;}
+.middle .news .farmework .text3 a:hover { color:#433a6f; text-decoration:underline;}
+.middle .news .farmework .text4  { width:423px; height:35px; float:left; padding:0px 13px 0px 0px; text-align:right; line-height:30px;}
+.middle .news .farmework .text4 a { color:#960c0e; text-decoration:none;}
+#content #main .middle .news .farmework .text4 a:hover { color:#960c0e; text-decoration:underline;}
+#content #main .middle .news .bg2 { width:447px; height:4px; float:left; padding:0px; background:url(cn_images/index_content_bg_1.gif) no-repeat; overflow:hidden;}
+
+.middle .announcement { width:447px; float:left; }
+.middle .announcement .title { width:461px; height:43px; float:left; padding:0px;background: url(cn_images/info.gif)}
+.middle .announcement .title .pic                       { width:114px; height:44px; float:left; padding:0px; background:url(cn_images/index_title_4.gif) no-repeat;}
+.middle .announcement .title .bg                        { width:333px; height:44px; float:left; padding:0px; background:url(cn_images/index_title_bg_1.gif) repeat-x;}
+.middle .announcement .bg1                              { width:447px; height:4px; float:left; padding:0px; background:url(cn_images/index_content_bg_2.gif) no-repeat; overflow:hidden;}
+.middle .announcement .farmework                        { width:436px; float:left; margin:0px 0px 0px 4px; _margin:0px 0px 0px 2px;overflow:hidden; }
+.middle .announcement .farmework .text1                 { width:100%;float:left; padding:0px 0px 0px 16px; text-align:left; }
+.middle .announcement .farmework .text1 ul              { margin:0px; padding:0px; }
+.middle .announcement .farmework .text1 ul li           { list-style-type:none; padding:8px 0px 0px 0px;  line-height:18px; text-align:left;}
+.middle .announcement .farmework .text1 ul li a         { color:#433a6f; text-decoration:none;}
+.middle .announcement .farmework .text1 ul li a:hover   { color:#433a6f; text-decoration:underline;}
+.middle .announcement .farmework .text2                 { width:88px; float:right; padding:0px 12px 0px 0px; text-align:left; }
+.middle .announcement .farmework .text2 ul              { margin:0px; padding:0px; }
+.middle .announcement .farmework .text2 ul li           { list-style-type:none; padding:8px 0px 0px 0px;  line-height:18px; text-align:left;}
+.middle .announcement .farmework .text2 ul li a         { color:#433a6f; text-decoration:none;}
+.middle .announcement .farmework .text2 ul li a:hover   { color:#433a6f; text-decoration:underline;}              
+.middle .announcement .farmework .text3                 { width:424px; height:20px; float:left; padding:14px 12px 0px 0px; text-align:right; line-height:24px;}
+.middle .announcement .farmework .text3 a               { color:#960c0e; text-decoration:none;}
+.middle .announcement .farmework .text3 a:hover         { color:#960c0e; text-decoration:underline;}
+.middle .announcement .bg2                              { width:447px; height:4px; float:left; padding:0px; background:url(cn_images/index_content_bg_1.gif) no-repeat; overflow:hidden;}
+
+.middle .advertising_1                                  { width:440px; height:74px; float:left; padding:0px 0px 16px 19px; }
+.middle .advertising_2                                  { width:443px; height:52px; float:left; padding:0px 0px 16px 19px; }
+#bot_nav ul                           { width:460px; height:34px;margin:0px; padding:0px; padding-left:10px;}
+#bot_nav ul li                        { list-style-type:none; padding-left:9px;padding-right:10px; float:left; font-size:10pt; font-weight:bold;  line-height:34px; }
+#bot_nav ul li a                      { color:#02070A; text-decoration:none; font-size:14px;}
+#bot_nav ul li a:hover                { color:#02070A; text-decoration:underline; font-size:14px;}
+
+.right                                                  { width:224px; float:right;margin-top: 5px; }
+.right .registration                                    { width:224px;  float:right; margin:0px 0px 0px 0px;}
+.right .registration .title                             { cursor: pointer; width:224px; height:32px; float:left; padding:0px; overflow:hidden;background: url(cn_images/baoming.gif)}
+.right .registration .farmework                         { width:224px; float:left; padding:0px;overflow:hidden;}
+.right .registration .farmework ul                      { padding:0;margin:0}
+.right .registration .farmework ul li                   { list-style-type:none; height:27px; padding:5px 22px 0px 30px;  text-align:left;background: url(cn_images/right_bj.gif);}
+.right .registration .farmework ul li a                 { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:none;}
+.right .registration .farmework ul li a:hover           { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:underline;}
+#related_inner {float:left; width:224px; height: 200px;}
+.right .related                                         { float:right; margin-left: 0px;width:224px;}
+.right .related .title                                  { cursor: pointer;width:224px; height:32px; float:left; padding:0px; overflow:hidden;background:url(cn_images/xglink.gif);}
+.right .related .farmework                              { width:224px;float:left; padding:0px;overflow:hidden;}
+.right .related .farmework ul                           { padding:0;margin:0;}
+.right .related .farmework ul li                        { list-style-type:none; height:25px; padding:5px 0px 0px 30px;  text-align:left;background: url(cn_images/right_bj.gif);}
+.right .related .farmework ul li a                      { color:#F3E0E2; font-family: "";font-size: 10pt; text-decoration:none;}
+.right .related .farmework ul li a:hover                { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:underline;}
+#ad_2 {width:224px;height:49px; float: right;}
+
+.adminLeft                                                  { width:224px; float:left;margin-top: 10px; }
+.adminLeft .adminLeftTop                                    { width:224px;  float:left; margin:0px 0px 0px 0px;}
+.adminLeft .adminLeftTop .title                             
+{ 
+    cursor: pointer; width:224px; height:32px; float:left; 
+    padding:0px; overflow:hidden;background: url(cn_images/baoming.gif)
+}
+.whiteTitle
+{
+   color:White;
+   font-weight:bold;
+   font-size:14px;
+   line-height:32px;
+   margin-top:3px; 
+   margin-left:20px; 
+}
+
+.adminLeft .adminLeftTop .framework                         { width:224px; float:left; padding:0px;overflow:hidden;display:none;}
+.adminLeft .adminLeftTop .framework ul                      { padding:0;margin:0}
+.adminLeft .adminLeftTop .framework ul li                   { list-style-type:none; height:27px; padding:5px 22px 0px 30px;  text-align:left;background: url(cn_images/right_bj.gif);}
+.adminLeft .adminLeftTop .framework ul li a                 { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:none;}
+.adminLeft .adminLeftTop .framework ul li a:hover           { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:underline;}
+#adminLeft_related_inner {float:left; width:224px; height: 200px;}
+.adminLeft .adminLeftMiddle                                         { float:left; margin-left: 0px;width:224px;}
+.adminLeft .adminLeftMiddle .title                                  { cursor: pointer;width:224px; height:32px; float:left; padding:0px; overflow:hidden;background:url(cn_images/xglink.gif);}
+.adminLeft .adminLeftMiddle .framework                              { width:224px;float:left; padding:0px;overflow:hidden;display:none;}
+.adminLeft .adminLeftMiddle .framework ul                           { padding:0;margin:0;}
+.adminLeft .adminLeftMiddle .framework ul li                        { list-style-type:none; height:25px; padding:5px 0px 0px 30px;  text-align:left;background: url(cn_images/right_bj.gif);}
+.adminLeft .adminLeftMiddle .framework ul li a                      { color:#F3E0E2; font-family: "";font-size: 10pt; text-decoration:none;}
+.adminLeft .adminLeftMiddle .framework ul li a:hover                { color:#F3E0E2; font-family:"";font-size: 10pt; text-decoration:underline;}
+#adminLeft_ad_2 {width:224px;height:49px; float:left;}
+
+/****************************************
+**************index_footer***************
+****************************************/
+#footer                                   { width:960px; height:60px; float:left;margin:0 auto;}
+#footer .text                             { width:960px; height:30px;  padding:20px 0px 0px 0px; line-height:30px; text-align:center;}
+#footer .text span                        { color:#94080a;}
+
+
+/****************************************
+*******dynamic information content*******
+****************************************/
+#second_content                                                      { width:960px; margin:0 auto; height:auto; }
+#second_content #main                                                { width:960px; height:auto; }
+#second_content #main .left                                          { width:209px; float:left; padding:0px; }
+#second_content #main .left .admissions                              { width:209px; height:auto;  padding:0px 0px 9px 0px;}
+#second_content #main .left .admissions .title                       { width:209px; height:43px;  padding:0px; background:url(cn_images/about_title_11.gif) no-repeat;}
+#second_content #main .left .admissions .line_1                      { width:2px; height:auto;  padding:0px; background:url(cn_images/index_inco_1.gif) repeat-y;}
+#second_content #main .left .admissions .farmework                   { width:201px; height:auto; float:left; padding:0px; border-left:2px solid #C95659; border-right:2px solid #C95659; background:#f3f2ed; text-align:left; overflow:hidden;}
+#second_content #main .left .farmework ul                { width:75px; height:auto; padding:0px 0px 0px 20px; float:left;}
+#second_content #main .left  .farmework ul li             {height:20px;text-align:left;padding-top: 5px;}
+#second_content #main .left .admissions .bg1                         { width:4px; height:auto; float:left; padding:0px; background:url(cn_images/about_left_bg_1.gif) repeat-y; }
+#second_content #main .left .admissions .bg2                         { width:16px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_2.gif) no-repeat; }
+#second_content #main .left .admissions .bg3                         { width:187px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_3.gif) repeat-x; }
+#second_content #main .left .admissions .bg4                         { width:6px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_4.gif) no-repeat; }
+
+#second_content #main .left .link                                    { width:209px; height:140px; float:left; padding:0px 0px 11px 0px; }
+#second_content #main .left .link .title                             { width:209px; height:37px; float:left;  padding:0px; background:url(cn_images/about_title_2.gif) no-repeat;}
+#second_content #main .left .link .line_1                            { width:2px; height:87px; float:left; padding:0px; background:url(cn_images/index_inco_1.gif) repeat-y;}
+#second_content #main .left .link .farmework                         { width:201px; height:87px; float:left; padding:0px; border-left:2px solid #C95659; border-right:2px solid #C95659; background:#f3f2ed; text-align:left; overflow:hidden;}
+#second_content #main .left .link .bg1                               { width:4px; height:87px; float:left; padding:0px; background:url(cn_images/about_left_bg_1.gif) repeat-y;}
+#second_content #main .left .link .bg2                               { width:16px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_2.gif) no-repeat;}
+#second_content #main .left .link .bg3                               { width:187px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_3.gif) repeat-x;}
+#second_content #main .left .link .bg4                               { width:6px; height:18px; float:left; padding:0px; background:url(cn_images/about_left_bg_4.gif) no-repeat;}
+
+#second_content #main .left .related                                 { width:207px; height:282px; float:left; padding:0px 0px 0px 1px; background:url(cn_images/about_left_bg_6.gif) no-repeat;}
+#second_content #main .left .related ul                              { float: left;height:224px;padding:40px 0 0 0px;text-align:left;  margin-left: 10px; width:180px;}
+#second_content #main .left .related ul li{
+    padding-left: 15px;
+    line-height:28px;
+    background:url(cn_images/icon_li.png) no-repeat 0px 8px;
+    list-style-type:none;
+    width:150px; }
+#second_content #main .left .related ul li a                         { color:#fff; text-decoration:none;}
+#second_content #main .left .related ul li a:hover                   { color:#fff; text-decoration:underline;}
+
+#second_content #main .right                                         { width:710px; height:auto; float:left; padding:6px 0px 0px 30px;}
+#second_content #main .right .title                                  { width:700px; height:33px; float:left; padding:0px 0px 20px 0px;}
+#second_content #main .right .title .pic                             { width:260px; height:23px; float:left; padding:0px 0px 7px 0px; background:url(cn_images/about_title_3.gif) no-repeat;}
+#second_content #main .right .title .pic .text                       { padding-left:28px; padding-top:3px;font-size:16px;font-weight:bold;color:#333333;} 
+#second_content #main .right .title .nav                             { width:290px; height:20px; float:right;  padding:4px 0px 0px 0px;}
+#second_content #main .right .title .nav .inco                       { width:13px; height:13px; float:left; padding:1px 0px 0px 14px; overflow:hidden;}
+#second_content #main .right .title .nav .text                       { width:280px; height:20px; float:right; text-align:right; color:#8b0012; padding:0px;}
+#second_content #main .right .title .dotted                          { width:710px; height:16px; float:left; margin:0px; background:url(cn_images/about_right_line.gif) repeat-x; overflow:hidden;}
+
+#second_content #main .right .farmework                              { width:680px; height:auto; float:left; padding:0px 0px 0px 20px; text-align:left;}
+#second_content #main .right .farmework ul                           { width:670px; height:auto; padding-top:5px; }
+#second_content #main .right .farmework ul li                        { list-style-type:none; width:670px; height:26px; text-align:left; }
+#second_content #main .right .farmework ul li .inco                  { width:14px; height:14px; float:left; padding:2px 0px 0px 0px; }
+#second_content #main .right .farmework ul li .text                  { width:610px; height:14px; float:left; padding:0px 0px 0px 10px; }
+
+
+.navlist{position:absolute;background:url(cn_images/menu_overbj.gif);filter:alpha(opacity=85);-moz-opacity:0.8; opacity:0.8;width:960px; margin-top:16px;height:45px;display:none;}
+.navlist li{ float:left;padding:4px 7px;}
+.navlist li a:link{color:#FEF2F2;}
+.navlist li a:visited{color:#FEF2F2;}
+.navlist li a:hover{color:#FEF2F2;}
+.navlist li a:active{color:#FEF2F2;}
+
+.menudiv {
+	DISPLAY: none; background:url(cn_images/menu_overbj.gif); float:left;position:absolute;filter:alpha(opacity=70); -moz-opacity:0.7; opacity:0.7;margin:-16px 0 0 0;WIDTH: 960px; PADDING:22px 0 0 0; HEIGHT: 25px;
+}
+
+.menudiv A:link {
+	COLOR: #ffffff;
+}
+.menudiv A:visited {
+	COLOR: #ffffff
+}
+.menudiv A:hover {
+	COLOR: #ffffff
+}
+.menudiv A:active {
+	COLOR: #ffffff
+}
+
+.tdrt001 {
+	FONT-WEIGHT: bold; height:30px;padding:2px -1px 0 -1px; border:#990000 1px solid; background-color:#F03D3F;COLOR: #ffffff; TEXT-ALIGN: center
+}
+
+.jScrollPaneContainer {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.jScrollPaneTrack {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #aaa;
+}
+.jScrollPaneDrag {
+    position: absolute;
+    background: black;
+    cursor: pointer;
+    overflow: hidden;
+}
+.jScrollPaneDragTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.jScrollPaneDragBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+a.jScrollArrowUp {
+    width: 10px; top: 0px;
+    background:transparent url(cn_images/basic_arrow_up.gif) repeat-x scroll 0 0;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    text-indent: -2000px;
+    overflow: hidden;
+    height: 9px;
+}
+a.jScrollArrowUp:hover {
+    /*background-color: #f60;*/
+}
+
+a.jScrollArrowDown {
+    background:transparent url(cn_images/basic_arrow_down.gif) repeat-x scroll 0 0;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    text-indent: -2000px;
+    overflow: hidden;
+    /*background-color: #666;*/
+    height: 9px;
+}
+a.jScrollArrowDown:hover {
+    /*background-color: #f60;*/
+}
+a.jScrollActiveArrowButton, a.jScrollActiveArrowButton:hover {
+    /*background-color: #f00;*/
+}
+
+#special{
+    display:block;
+    float:left;
+    margin:170px 0px 0px 10px;
+    cursor:pointer;
+    width:140px;
+    height:30px;
+}
+
+.backgray{
+    background:#D7D7D7;
+    color:#8B0012;
+    float:left;
+    height:27px;
+    padding:0;
+    width:66px;
+}
+
+.backgray2{
+    background:#D7D7D7;
+    float:left;
+    height:27px;
+    padding:0;
+    width:130px;
+}
+
+.current2{
+    background:transparent url(cn_images/e_index_middle_title_bg2.gif) no-repeat scroll 0 0;
+    color:#8B0012;
+    float:left;
+    height:27px;
+    padding:0;
+    width:106px;
+}
+.hide{display: none;}
+.news_story {text-align:left;float:left;width:100%;}
+
+#sub_nav_container{text-align:left;}
+#more{color:white;clear:both;text-align: center;width:100%;padding: 0;margin:0;}
+#more a{color:white; font-size:13px; font-weight:bold;cursor: pointer;}
+
+#news                                                          { width:960px; min-height:600px; margin:0 auto; position:relative;}
+#news .box                                                     { margin-bottom:10px;width:914px; min-height:1492px; float:left; padding:0px 0px 0px 61px; }
+#news_banner                                            { width:914px; height:197px; float:left;  background:url(cn_images/news_banner.jpg) no-repeat;}
+#news .box .farmework                                          { width:914px; min-height:1295px; float:left;}
+#news .box .farmework .column                                  { width:914px; height:29px; float:left; }
+#news .box .farmework .column .pic                             { width:200px; height:29px; float:left; background:url(cn_images/news_content_title.gif) no-repeat;}
+#news .box .farmework .column .bg                              {text-align:right; width:714px; height:26px; float:left; border-bottom:3px solid #b7b7b7;}
+#news .box .farmework .title                                   { width:914px;float:left; padding:0px; }
+#news .box .farmework .title .big_text                         { width:454px; height:38px; *height:34px; float:left; font-size:20px; font-weight:bold; margin:42px 0px 0px 230px; _margin:42px 0px 0px 115px; border-bottom:2px solid #b5b5b5; overflow:hidden;}
+#news .box .farmework .title .small_text                       { width:454px; height:14px; float:left; margin:5px 0px 0px 230px; _margin:5px 115px 0px 115px; color:#b5b5b5; font-weight:normal;}
+#intro{padding-left: 100px;}
+#rewards{padding-left: 480px;}
+#degree{padding-left: 145px;}
+#info{padding-left: 500px;}
+#lecture{
+    float:right;
+    width:213px;
+    height:50px;
+    background: url(cn_images/lecture.gif) no-repeat;
+}
+
+.righttext p{text-indent:2em;font-size:14px;line-height:26px;}
+ .righttext table,.righttext td,.righttext span,.righttext a,.righttext strong{font-size:14px;}
+ .righttext table,td{border:1px; line-height:22px;}
+.righttext table p{text-indent:0;}
+
+.popupDiv
+{
+    position:absolute; 
+    display:block;
+    z-index:992;
+    background:#FFF;
+    display:none;  
+}
+
+.button 
+{ 
+    display: inline-block; 
+    position: relative; 
+    padding: 0; 
+    margin-right: .1em; 
+    text-decoration: none !important; 
+    cursor: pointer; 
+    text-align: center; 
+    zoom: 1; 
+    overflow: visible; 
+    background-image:url(cn_images/Button.PNG);
+    width:107px;
+    height:27px;
+    line-height:27px;
+    font-size:14px;
+}

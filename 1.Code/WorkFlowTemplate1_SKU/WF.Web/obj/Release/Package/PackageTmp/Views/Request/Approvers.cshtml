@@ -1,0 +1,196 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@using MVC4Pager;
+@model List<Nestle.WorkFlow.Model.ActionHistory>
+
+@{
+    ViewBag.Title = "Approvers";
+
+    bool someApproversMissing = true;
+    System.Text.StringBuilder approverPositionSelect = new System.Text.StringBuilder();
+    bool canSubmit = true;
+    string errors = string.Empty;
+    MvcHtmlString addApproverDisplay = MvcHtmlString.Create(" style=\"display:none;\"");
+    List<Nestle.WorkFlow.Model.Button> buttonList = ViewBag.ButtonList as List<Nestle.WorkFlow.Model.Button>;
+    bool isForward = (buttonList.Where(k => k.EventName.ToLower() == "approve").Count() > 0);
+    if (isForward)
+    {
+        addApproverDisplay = null;
+    }
+
+    int addApproverStartSequence = 0;
+    int rowOffSet = 0;
+}
+
+@section Header{
+<link href="@Url.Content("~/Content/themes/requester.css?" + DateTime.Now.ToString())" rel="stylesheet" media="screen"
+        type="text/css" />
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WorkFlow.js?" + DateTime.Now.ToString("yyyyMMddhhmmss")))"></script>
+}
+
+<div class="main">
+    <table id="approversTable">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    Approvers
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                @Html.Lang("Sequence")
+            </td>
+            <td>
+                @Html.Lang("Step Name")
+            </td>
+            <td>
+                @Html.Lang("Title")
+            </td>
+            <td>
+                @Html.Lang("Name")
+            </td>
+        </tr>
+
+        @{
+            if (Model == null || Model.Count == 0)
+            {
+                canSubmit = false;
+                errors += "Sorry, the approvers cannot be found!";
+            }
+
+            if (Model != null)
+            {
+                int sequence = 0;
+                if (Model.Count > 0)
+                {
+                    rowOffSet = Model[0].Sequence - 1;
+                    someApproversMissing = false;
+                }
+
+                bool canAddPosition = false;
+
+                foreach (Nestle.WorkFlow.Model.ActionHistory approver in Model)
+                {
+                    if (approver.RowNumber > 1)
+                    {
+                        continue;
+                    }
+                    
+                    sequence++;
+
+                    if (!canAddPosition)
+                    {
+                        canAddPosition = approver.EmployeeId == Operation.OperationBy;
+                    }
+
+                    if (canAddPosition && approver.Sequence > 1)
+                    {
+                        if (addApproverStartSequence == 0)
+                        {
+                            addApproverStartSequence = approver.Sequence - 1;
+                        }
+                        
+                        if (approver.IsManuallyAdded)
+                        {
+                            approverPositionSelect.Append("<option value=\"" + approver.EmployeeId.ToString() + "\"  style=\"height:24px;line-height:24px;\">Before " + approver.Name + "</option>\r\n");
+                            approverPositionSelect.Append("<option value=\"" + approver.EmployeeId.ToString() + "\"  style=\"height:24px;line-height:24px;\">After " + approver.Name + "</option>\r\n");
+                        }
+                        else
+                        {
+                            approverPositionSelect.Append("<option value=\"" + approver.Sequence.ToString() + "\"  style=\"height:24px;line-height:24px;\">Before " + approver.StepName + "</option>\r\n");
+                            approverPositionSelect.Append("<option value=\"" + approver.Sequence.ToString() + "\"  style=\"height:24px;line-height:24px;\">After " + approver.StepName + "</option>\r\n");
+                        }
+                    }
+
+                    if (approver.IsManuallyAdded && (approver.StepName == null || !approver.StepName.ToLower().Contains("Business Case Owner".ToLower())))
+                    {
+                        if (!string.IsNullOrEmpty(approver.Remark))
+                        {
+                            approver.Name += "(Message: <span>" + approver.Remark + "</span>)";
+                        }
+
+                        if (approver.AddedByWho == Operation.Employee.DisplayName || (canAddPosition && approver.EmployeeId != Operation.OperationBy))
+                        {
+                            approver.Name += "<button style='margin-left:5px;' type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" onclick=\"deleteApprover('" + approver.EmployeeId.ToString() + "');\">Delete</button></td></tr>";
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(approver.Name))
+                    {
+                        someApproversMissing = true;
+                        approver.Name = "<b style='color:Red;'>Sorry, the approver with the title \"" + approver.Title + "\" cannot be found!,pls. raise approver role request via <a style='color:Blue;' target=\"_blank\" href='https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u'> SKU Registration MDR Role Application Form(office.com) </a> to fix the issue.</b>";
+                    }
+
+                    <tr id="tr@(approver.IsManuallyAdded ? approver.EmployeeId.ToString() : approver.Sequence.ToString())">
+                        <td id="Sequence@(approver.WorkFlowPatternEventContainerId.ToString() + "_" + approver.Sequence.ToString() + "_" + approver.EmployeeId.ToString())">
+                            @(sequence.ToString() + ".")
+                        </td>
+                        <td>@(approver.StepName)</td>
+                        <td>@(approver.Title)</td>
+                        <td>@(Html.Raw(approver.Name))</td>
+                    </tr>
+                }
+            }
+            if (!someApproversMissing)
+            {
+                <tr id="TempTr">
+                    <td colspan="4" style="height:60px;">
+                        <a style="cursor:pointer;font-size:14px;" onclick="$('#AddApproverTr').show();$('#TempTr').hide();">Please click here to add more approvers <b>if necessary</b></a>
+                    </td>
+                </tr>
+                <tr id="AddApproverTr" @(addApproverDisplay)>
+                    <td colspan="4" style="height:150px;">
+                        <div style="margin-bottom:15px;">
+                            Message to the approver:<br />
+                            <textarea style="width: 750px; height: 100px;" id="Justification" title="i.e., please help review the request"></textarea>
+                        </div>
+                        <span style="float:left;margin-right:8px;">
+                            The approver will review the request
+                        </span>
+                        <select id="position" style="height:24px;line-height:24px;float:left;margin-right:8px;">
+                            @(MvcHtmlString.Create(approverPositionSelect.ToString()))
+                        </select>
+                        <select id="AllowActions" style="height:24px;line-height:24px;float:left;margin-right:8px;">
+                            <option value="1">For Information</option>
+                            <option value="0">Approve or Reject</option>
+                        </select>
+                        <button type="button" class="button" onmousedown="this.className = 'buttonPressed'" onmouseout="    this.className = 'button'" style="float:left;" onclick="addApprover();">Select Approver</button>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <input type="hidden" id="Id" />
+</div>
+
+<div style="clear:both;">&nbsp;</div>
+
+<div class="buttonDiv">
+@if (!isForward)
+{
+    <button id="goBackButton" onmousedown="saveApprovers(goback);">
+        @(Html.Lang("Previous"))
+    </button>
+}
+    <button onclick="saveApprovers(next);">
+        @(Html.Lang("Next"))
+    </button>
+</div>
+<div style="clear:both;">&nbsp;</div>
+
+<script type="text/javascript">
+    var rowOffSet = @(rowOffSet.ToString());
+    var addApproverStartSequence = @(addApproverStartSequence.ToString());
+    function goback() {
+        var href = getRootUrl() + "Request/ProjectRequirement" + location.href.substr(location.href.indexOf("?"));
+        location.href = href;
+    }
+
+    function next() {
+        var href = getRootUrl() + "Request/Preview" + location.href.substr(location.href.indexOf("?"));
+        location.href = href;
+    }
+</script>

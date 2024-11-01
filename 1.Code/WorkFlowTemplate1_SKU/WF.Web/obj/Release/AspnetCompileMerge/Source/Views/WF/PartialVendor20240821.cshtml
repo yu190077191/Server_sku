@@ -1,0 +1,537 @@
+﻿@using WF.Model;
+@model List<Field>
+
+@{
+    Layout = null;
+    string fileIds = string.Empty;
+    string autoCompleteIds = "";
+    string autoCompleteNames = "Material Group 1,Product Hierarchy Code,Corporate Brand,Range Brand,Brand Denomination,";// "Corporate Brand,Range Brand,Brand Denomination,Material Group 1,Product Hierarchy Code,";
+    List<string> groups = new List<string>();
+    string timeControls = "";
+    string mandatory = ",";
+    if (Model != null)
+    {
+        for (int k = 0; k < Model.Count; k++)
+        {
+            Field f = Model[k];
+            if (f.TypeCode == "mandatory")
+            {
+                mandatory += f.Id.ToString() + ",";
+            }
+
+            if (!groups.Contains(f.Category) && f.Type != "Common")
+            {
+                if (f.Type == "Creation")
+                {
+                    if (groups.Count == 0)
+                    {
+                        groups.Add(f.Category);
+                    }
+                    else if (groups.Contains("Business Justification") && !groups.Contains("Master Data of Material"))
+                    {
+                        groups.Insert(groups.IndexOf("Business Justification") + 1, "Master Data of Material");
+                    }
+                    else if (groups.Contains("Master Data of Material") && !groups.Contains("Copy From Reference SKU"))
+                    {
+                        groups.Insert(groups.IndexOf("Master Data of Material") + 1, "Copy From Reference SKU");
+                    }
+                    else if (groups.Contains("Copy From Reference SKU") && !groups.Contains("Master Data of MaterialNew"))
+                    {
+                        groups.Insert(groups.IndexOf("Copy From Reference SKU") + 1, "Master Data of MaterialNew");
+                    }
+                    else if (groups.Contains("Master Data of MaterialNew") && !groups.Contains("Sales Data"))
+                    {
+                        groups.Insert(groups.IndexOf("Master Data of MaterialNew") + 1, "Sales Data");
+                    }
+                    else if (groups.Contains("Sales Data") && !groups.Contains("GTIN Code"))
+                    {
+                        groups.Insert(groups.IndexOf("Sales Data") + 1, "GTIN Code");
+                    }
+                    else if (groups.Contains("GTIN Code") && !groups.Contains("Quality Data"))
+                    {
+                        groups.Insert(groups.IndexOf("GTIN Code") + 1, "Quality Data");
+                    }
+                    else if (groups.Contains("Quality Data") && !groups.Contains("NHW Data"))
+                    {
+                        groups.Insert(groups.IndexOf("Quality Data") + 1, "NHW Data");
+                    }
+                    else if (groups.Contains("NHW Data") && !groups.Contains("Freshness Data"))
+                    {
+                        groups.Insert(groups.IndexOf("NHW Data") + 1, "Freshness Data");
+                    }
+
+                }
+                else
+                {
+                    groups.Add(f.Category);
+                }
+            }
+        }
+    }
+}
+@if (Model != null)
+{
+    @*<table id="buttonTableData">
+        <tr id='buttonTRData'>
+            <td colspan="2" align="center" style="height: 60px;">
+                <button type="button" class="button" onclick="CopyRequestData();" style="background-size: 260px 40px; font-size: 18px; width: 260px; height: 40px;">
+                    Copy From Reference SKU
+                </button>
+            </td>
+        </tr>
+    </table>*@
+<table id="fieldTable" class="tbl" border="0" cellpadding="0" cellspacing="0">
+
+
+    @for (int g = 0; g < groups.Count; g++)
+    {
+        string groupName = groups[g];
+        // List<Field> li = Model.Where(k => k.Category == groupName).ToList().OrderBy(k => k.Id).ToList();
+        List<Field> li = Model.Where(k => k.Category == groupName).ToList();
+        MvcHtmlString className = MvcHtmlString.Create(string.Empty);
+        if (groupName.ToLower().Contains("Secondary Bank Data".ToLower()))
+        {
+            var bank2 = Model.Where(k => k.Category == groupName && !string.IsNullOrEmpty(k.Value));
+            if (bank2 == null || bank2.Count() == 0)
+            {
+                className = MvcHtmlString.Create(" class='bankdata2' ");
+            }
+        }
+
+        if (ViewData["ListType"].ToString() == "CreationCopy" && groupName.ToLower().Contains("Copy From Reference SKU".ToLower()))
+        {
+            <thead @(className)>
+                <tr>
+                    <th colspan="2" style="background-color:#efefef;line-height:24px;">
+                        <h2>@(groupName.Replace(" 2", string.Empty))</h2>
+                    </th>
+                </tr>
+            </thead>
+            if (groupName.ToLower().Contains("Copy From Reference SKU".ToLower()))
+            {
+                <tr @(className)>
+                    <td style="text-align: center;" colspan="2">
+                        <button type="button" class="button" onclick="CopyRequestData();" style="background-size: 260px 40px; font-size: 18px; width: 260px; height: 40px; margin: 16px 0px;">
+                            Copy From Reference SKU
+                        </button>
+                    </td>
+                </tr>
+                continue;
+            }
+        }
+        else if (!groupName.ToLower().Contains("Copy From Reference SKU".ToLower()))
+        {
+            if (ViewData["ListType"].ToString() == "Creation" && groupName.ToLower().Contains("Master Data of MaterialNew".ToLower())) { }
+            else
+            {
+                <thead @(className)>
+                    <tr>
+                        <th colspan="2" style="background-color:#efefef;line-height:24px;">
+                            <h2>@(groupName.Replace(" 2", string.Empty).Replace("MaterialNew", "Material"))</h2>
+                        </th>
+                    </tr>
+                </thead>
+            }
+        }
+
+        for (int i = 0; i < li.Count; i++)
+        {
+            Field item = li[i];
+            if (item.Name == "Copy From Reference SKU")
+            {
+                continue;
+            }
+            if (!string.IsNullOrEmpty(item.Specification) && item.Specification.ToLower() == "calendar")
+            {
+                timeControls += "," + item.Id.ToString();
+            }
+
+            List<string> options = new List<string>();
+            if (!string.IsNullOrEmpty(item.Values))
+            {
+                string[] array = item.Values.Replace("，", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                if (item.InputType.ToLower().IndexOf("drop down list") == 0)
+                {
+                    options.Add("Select");
+                }
+
+                options.AddRange(array);
+                if (!string.IsNullOrEmpty(item.Value) && !options.Contains(item.Value) && item.InputType.ToLower().IndexOf("check") != 0)
+                {
+                    options.Add(item.Value);
+                }
+            }
+
+            if (("," + autoCompleteNames + ",").IndexOf(("," + item.Name + ",")) >= 0)
+            {
+                autoCompleteIds += ",Control_" + item.Id.ToString();
+            }
+
+
+            if (item.Name == "Business")
+            {
+                // className = MvcHtmlString.Create("style=\"display:none\"");
+                className = MvcHtmlString.Create(string.Empty);
+            }
+            else
+            {
+                className = MvcHtmlString.Create(string.Empty);
+            }
+
+            <tr @(className)>
+
+                <td class="tdLeft3" id="Name@(item.Id.ToString())">
+                    @if (item.TypeCode == "mandatory")
+                    {
+                        <span style="color:red;">*</span>
+                    }
+                    else
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    @Html.Raw(item.Name.Replace("\n", "<br />")):
+                </td>
+                <td class="tdRight3" id="td_@(item.Id.ToString())">
+                    @if (item.InputType.ToLower().IndexOf("text box") == 0)
+                    {
+                        string maxlength = string.Empty;
+                        if (!string.IsNullOrEmpty(item.Specification) && item.Specification.ToLower().IndexOf("maximum") == 0)
+                        {
+                            maxlength = " maxlength=\"" + item.Specification.ToLower().Replace("maximum", string.Empty).Replace("characters", string.Empty).Trim() + "\"";
+                        }
+
+                        <input type="text" id="Control_@(item.Id.ToString())" class="input" value="@(item.Value)" @(Html.Raw(maxlength)) />
+                        if (item.Name.ToLower().IndexOf("material group 1") == 0)
+                        {
+                            <span>New MG1 application, please refer to <a href="~/Help/F-Group (MG1).docx?20191105154440" target="_blank">here</a></span>
+                        }
+                        if (item.Name.ToLower().IndexOf("product hierarchy code") == 0)
+                        {
+                            <span>New Product Hierarchy application, please refer to <a href="~/Help/Product Hierarchy.docx?20191105163328" target="_blank">here</a></span>
+                        }
+                        if (item.Name.ToLower().IndexOf("corporate brand") == 0 || item.Name.ToLower().IndexOf("range brand") == 0 || item.Name.ToLower().IndexOf("brand denomination") == 0)
+                        {
+                            <span>New Brand Hierarchy application, please refer to <a href="~/Help/Brand Hierarchy.docx?20191105161125" target="_blank">here</a></span>
+                        }
+                        if (!string.IsNullOrEmpty(item.Values))
+                        {
+                            <input type="hidden" id="Control_@(item.Id.ToString())Selected" />
+                            <input type="hidden" value="@(item.Values)" id="Control_@(item.Id.ToString())Values" class="textboxValues" />
+                        }
+                    }
+                    else if (item.InputType.ToLower().IndexOf("big text box") == 0)
+                    {
+                        <textarea id="Control_@(item.Id.ToString())" style="margin-top:5px;">@(item.Value)</textarea>
+                    }
+                    else if (item.InputType.ToLower().IndexOf("ajax munu") == 0)
+                    {
+                        <input type="hidden" id="Control_@(item.Id.ToString())Selected" value="@(item.Value)" />
+                        <select id="Control_@(item.Id.ToString())" class="selectControl">
+                            <option value="Select">Select</option>
+                            options.Add("Select");
+                            if (!string.IsNullOrEmpty(item.Values))
+                            {
+                            <option selected="selected" value="@(item.Value)">@(item.Value)</option>
+                            }
+
+
+                        </select>
+                    }
+                    //button
+                    else if (item.InputType.ToLower().IndexOf("button") == 0)
+                    {
+
+                        <button type="button" class="btn yes" id="manager">ADD Packaging</button>
+                    }
+                    else if (item.InputType.ToLower().IndexOf("ztree") == 0)
+                    {
+
+                        <input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu();" class="input" />
+                        <div id="menuContent" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                            <ul id="treeDemo" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                        </div>
+                    }
+                    else if (item.InputType.ToLower().IndexOf("2tree") == 0)
+                    {
+
+                        <select id="Control_@(item.Id.ToString())" class="selectControl" value="@(item.Value)" onclick="showMenu2(this);"></select>
+                        @*<input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu2();" class="input" />
+                            <div id="menuContent2" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                                <ul id="treeDemo2" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                            </div>*@
+                    }
+                    else if (item.InputType.ToLower().IndexOf("3tree") == 0)
+                    {
+
+                        <input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu3();" class="input" />
+                        <div id="menuContent3" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                            <ul id="treeDemo3" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                        </div>
+                    }
+                    else if (item.InputType.ToLower().IndexOf("4tree") == 0)
+                    {
+
+                        <input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu4();" class="input" />
+                        <div id="menuContent4" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                            <ul id="treeDemo4" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                        </div>
+                    }
+                    else if (item.InputType.ToLower().IndexOf("5tree") == 0)
+                    {
+
+                        <select id="Control_@(item.Id.ToString())" class="selectControl" value="@(item.Value)" onclick="showMenu5(this);"></select>
+                        @*<input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu5();" class="input" />
+                            <div id="menuContent5" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                                <ul id="treeDemo5" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                            </div>*@
+                    }
+                    else if (item.InputType.ToLower().IndexOf("6tree") == 0)
+                    {
+
+                        <select id="Control_@(item.Id.ToString())" class="selectControl" value="@(item.Value)" onclick="showMenu6(this);"></select>
+                        @*<input id="Control_@(item.Id.ToString())" type="text" readonly value="@(item.Value)" onclick="showMenu6();" class="input" />
+                            <div id="menuContent6" class="menuContent" style="display:none; position: absolute;margin-top:-15px;z-index: 1000000;">
+                                <ul id="treeDemo6" class="ztree" style="margin-top:0; width:208px; height: 300px;"></ul>
+                            </div>*@
+                    }
+
+                    else if (item.InputType.ToLower().IndexOf("check") == 0)
+                    {
+                        for (int o = 0; o < options.Count; o++)
+                        {
+                            <input type="checkbox" id="Control_@(item.Id.ToString())_@(o.ToString())" value="@(options[o])" @(item.Value != null && item.Value.Contains(options[o]) ? Html.Raw(" checked=\"checked\"") : Html.Raw(string.Empty)) />
+                            <label for="Control_@(item.Id.ToString())_@(o.ToString())">@(options[o])</label>
+                            <br />
+                        }
+                    }
+                    else if (item.InputType.ToLower().IndexOf("drop down list") == 0)
+                    {
+                        <select id="Control_@(item.Id.ToString())" class="selectControl" onchange="selectedIndexChanged(this);">
+                            @foreach (string s in options)
+                            {
+                                if (s == "Select")
+                                {
+                                    <option value="">@(s)</option>
+                                }
+                                else if (s == item.Value)
+                                {
+                                    <option selected="selected" value="@(s)">@(s)</option>
+                                }
+                                else
+                                {
+                                    <option value="@(s)">@(s)</option>
+                                }
+                            }
+                        </select>
+
+                        if (item.Name.ToLower().Contains("payment terms"))
+                        {
+                            string reason = Model.Where(k => k.Id == 243).FirstOrDefault().Value;
+                            MvcHtmlString hidden = MvcHtmlString.Create(!string.IsNullOrEmpty(reason) ? "" : "display:none;");
+                            <div id="DivPaymentTerms" style="@(hidden)">
+                                Please specify reasons to select payment terms shorter than 60 days, this will be passed to Head of Procurement for approval:
+                                <br />
+                                <textarea id="Control_243" style="width:90%;height:100px;">@(reason)</textarea>
+                            </div>
+                        }
+                        else if (item.Name.ToLower().Contains("linked vendor"))
+                        {
+                            <div id="DivLinkedVendor" style="display:none;">
+                                Vendor Site Code:
+                                <input type="text" id="Control_244" value="@(Model.Where(k => k.Id == 244).FirstOrDefault().Value)" />
+                                Vendor Site Name:
+                                <input type="text" id="Control_245" value="@(Model.Where(k => k.Id == 245).FirstOrDefault().Value)" />
+                            </div>
+                        }
+                    }
+                    else if (item.InputType.ToLower().IndexOf("attach") == 0)
+                    {
+                        <form id="attachementUpload@(item.Id.ToString())" enctype="multipart/form-data" method="post" class="attachmentForm">
+                            <input type="file" id="File_@(item.Id.ToString())" name="File_@(item.Id.ToString())" class="file" />
+                            <button type="button" class="button" onmousedown="this.className='buttonPressed'" id="fileButton@(item.Id.ToString())"
+                                    onmouseout="this.className='button'" onclick="uploadFile('@(item.Id.ToString())');">
+                                @(Html.Lang("Upload"))
+                            </button>
+                            <label id="lbl@(item.Id.ToString())" style="font-weight: normal; font-size: 12px;">
+                                @if (item.Files != "")
+                                {
+                                    string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
+                                    foreach (string line in array)
+                                    {
+                                        string[] arr = line.Split('|');
+                                        string guid = arr[0];
+                                        string name = arr[1];
+
+                                        <div id='trFile@(guid)'>
+                                            <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                                @(name) [download]<a>
+
+                                                    <a style='cursor:pointer;color:red;' onclick='deleteAttachment("@(guid)");'>[delete]</a>
+
+                                        </div>
+                                    }
+                                }
+                            </label>
+                            <input type="submit" id="uploadButton@(item.Id.ToString())" name="uploadButton@(item.Id.ToString())" style="visibility: hidden;
+                        width: 1px;" value="uploadButton@(item.Id.ToString())" class="submit" />
+                            @*@if (!string.IsNullOrEmpty(item.Description))
+                                {
+                                    int dot = item.Description.LastIndexOf(".");
+                                    if (dot == item.Description.Length - 4 || dot == item.Description.Length - 5)
+                                    {
+                                        <span class="tip">
+                                        <a href="@(Url.Content("~/templates/" + item.Description + "?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                                            download template
+                                        </a>
+                                    </span>
+                                    }
+                                    else
+                                    {
+                                        if (item.Description.Length > 20)
+                                               {
+                                                   <br />
+                                               }
+                                        <span class="tip">@(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))</span>
+                                    }
+                                }*@
+                        </form>
+                    }
+
+                    @if (!string.IsNullOrEmpty(item.Description))
+                    {
+                        int dot = item.Description.LastIndexOf(".");
+                        if (dot == item.Description.Length - 4 || dot == item.Description.Length - 5)
+                        {
+                            if (item.Name.IndexOf("Local Attribute 1") == 0)
+                            {
+                                <span class="tip">
+                                    <a href="@(Url.Content("~/templates/" + item.Description + "?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                                        SKU Optimization分类标准
+                                    </a>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="tip">
+                                    <a href="@(Url.Content("~/templates/" + item.Description + "?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                                        download template
+                                    </a>
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            if (item.Description.Length > (item.InputType.ToLower().IndexOf("attach") == 0 ? 20 : 60))
+                            {
+                                <!--<br />-->
+                            }
+
+                            if (item.Description.Trim().Replace("\n", "<br />").Length >= 39)
+                            {
+                                @* <label title="@(Html.Raw(item.Description != null ? item.Description.Trim() : string.Empty))">
+                                        @(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />").Substring(0, 25) : string.Empty))
+                                        @(Html.Raw("..."))
+                                    </label> *@
+
+                                if (item.Name == "Origin")
+                                {
+                                    <label>
+                                        @(Html.Raw(item.Description != null ? item.Description.Trim() : string.Empty))
+
+                                    </label>
+                                }
+                                else
+                                {
+                                    <div style="display: inline-table;">
+                                        <label style=" line-height: 5px;" class="tip" data-tip="@(Html.Raw(item.Description != null ? item.Description.Trim() : string.Empty))" data-mode="top">
+                                            @if (item.Description != null && item.Description.Contains("<br />"))
+                                            {
+                                                string strBeforeDescription = item.Description.Substring(0, item.Description.IndexOf("<br />"));
+                                                string strAfterDescription = item.Description.Replace(strBeforeDescription + "<br />", "");
+                                                if (item.Name == "Base UoM")
+                                                {
+                                                    <span>@(Html.Raw(strBeforeDescription))</span><br />
+                                                    <span>@(Html.Raw(strAfterDescription.Length > 38 ? strAfterDescription.Substring(0, 37) + "..." : strAfterDescription))</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@(Html.Raw(strBeforeDescription.Length > 82 ? strBeforeDescription.Substring(0, 81) + "..." : strBeforeDescription))</span><br />
+                                                    <span>@(Html.Raw(strAfterDescription.Length > 38 ? strAfterDescription.Substring(0, 37) + "..." : strAfterDescription))</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))
+                                            }
+                                        </label>
+                                    </div>
+                                }
+
+                            }
+                            else
+                            {
+                                <label>
+                                    @(Html.Raw(item.Description != null ? item.Description.Trim().Replace("<br />", "").Replace("\n", "<br />") : string.Empty))
+                                </label>
+
+                                @* <div class="tip" data-tip="@(Html.Raw(item.Description != null ? item.Description.Trim() : string.Empty))" data-mode="top"> @(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))</div> *@
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+    <table id="buttonTable">
+        <tr id='buttonTR'>
+            <td colspan="2" align="center" style="height: 60px;">
+                <button type="button" style="display:none;" class="button" onclick="CopyRequest();">
+                    @(Html.Lang("Copy"))
+                </button>
+                <button type="button" class="button" onclick="submitThis(this);">
+                    @(Html.Lang("Next"))
+                </button>
+                @*@if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                    {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                    }*@
+            </td>
+        </tr>
+    </table>
+}
+<input type="hidden" id="autoCompleteIds" value="@(autoCompleteIds)" />
+<script type="text/javascript">
+    var mandatory = "@(mandatory)";
+    $(function () {
+        var timeControls = "@(timeControls)";
+        if (timeControls != null) {
+            var arr = new Array();
+            arr = timeControls.split(",");
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] != "") {
+                    $("#Control_" + arr[i]).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy-mm-dd"
+                    });
+                }
+            }
+        }
+
+        debugger;
+        if ($("#hidListType").val() == "Creation" || $("#hidListType").val() == "CreationCopy") {
+            $("#autoCompleteIds").val("");
+        }
+        //if ($("#hidListType").val() != "CreationCopy") {
+        //    debugger;
+        //    $("#thCopy From Reference SKU").html("");
+        //    $("#trCopy From Reference SKU").html("");
+        //}
+    });
+</script>

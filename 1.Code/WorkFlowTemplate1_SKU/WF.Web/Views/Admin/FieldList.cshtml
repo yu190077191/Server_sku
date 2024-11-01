@@ -1,0 +1,19 @@
+﻿@using MVC4Pager;
+@using WF.Model;
+@model PagedList<WF.Model.Field>
+@{
+    ViewBag.Title = "Field List";
+}
+
+<div class="listClass">
+    <div id="searchDiv">
+    <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;"/>
+    <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="search(1);">@(Html.Lang("Search"))</button>
+    <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="javascript:location.href='@Url.Content("~/Admin/Field")';">@(Html.Lang("Add"))</button>
+</div>
+<div style="clear:both;"></div>
+<hr style="margin:5px auto;"/>
+    <div id="searchResult">
+        @{ Html.RenderPartial("FieldListPartial", Model); }
+    </div>
+</div>

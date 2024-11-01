@@ -1,0 +1,61 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.ProjectRequirement>
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null)
+        {
+            <thead>
+            <tr>
+                <th>@(Html.Lang("BC Number"))</th>
+                <th>@(Html.Lang("Status"))</th>
+                <th>@(Html.Lang("Initiative Name"))</th>
+                @*<th>@(Html.Lang("Business Case Owner"))</th>*@
+                <th>@(Html.Lang("Prepared by"))</th>
+                <th>@(Html.Lang("Created Time"))</th>
+            <th>@(Html.Lang("View"))</th>
+            </tr>
+            </thead>
+            foreach (WF.Model.ProjectRequirement item in Model)
+            {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+            <td class="listtd">BC@(item.Id.ToString().PadLeft(5, '0'))</td>
+            <td class="listtd">@(item.StatusName)</td>
+            <td class="listtd">@(item.InitiativeName)</td>
+            @*<td class="listtd">@(item.BusinessCaseOwnerName)</td>*@
+            <td class="listtd">@(item.UserName)</td>
+            <td class="listtd">@(item.CreatedTime)</td>
+<td align="center" style="width:100px;padding:3px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="javascript:window.open('@Url.Content("~/Request/Preview?id=" + item.Id.ToString())');">@(Html.Lang("View"))</button>
+</td>
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

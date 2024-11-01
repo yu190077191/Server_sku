@@ -1,0 +1,126 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Model", "WF.Model\WF.Model.csproj", "{3F5582C2-5B30-4788-A33E-5A9FBA5045F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Framework", "WF.Framework\WF.Framework.csproj", "{82E5EB92-A336-48C4-84CB-01B69119E23E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.DataAccess", "WF.DataAccess\WF.DataAccess.csproj", "{2EF64E5B-1759-4274-9B4B-798100D458BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.BusinessRule", "WF.BusinessRule\WF.BusinessRule.csproj", "{F96EE103-A051-4AFC-9985-990877E8BEBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF.Web", "WF.Web\WF.Web.csproj", "{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{CA99DD4F-4B2F-4A94-A35B-390058F594D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestle.WorkFlow.Model", "..\..\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\Nestle.WorkFlow.Model.csproj", "{37C76148-253B-4B29-BEDC-143976D445A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestle.WorkFlow.Framework", "..\..\Common\Nestle.WorkFlow\Nestle.WorkFlow.Framework\Nestle.WorkFlow.Framework.csproj", "{C27E15DA-6C48-4E13-8B5C-99F0AA3F59E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestle.WorkFlow.DataAccess", "..\..\Common\Nestle.WorkFlow\Nestle.WorkFlow.DataAccess\Nestle.WorkFlow.DataAccess.csproj", "{FF32D2D0-1569-4F42-A32C-31393F45765E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestle.WorkFlow.BusinessRule", "..\..\Common\Nestle.WorkFlow\Nestle.WorkFlow.BusinessRule\Nestle.WorkFlow.BusinessRule.csproj", "{AD1E78A4-6BBC-4D8B-84EC-DEC983DF0832}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestle.WriteOff.Tool", "Nestle.WriteOff.Tool\Nestle.WriteOff.Tool.csproj", "{9C264BBE-E926-4E28-935B-FD4C65F4D01E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F5582C2-5B30-4788-A33E-5A9FBA5045F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F5582C2-5B30-4788-A33E-5A9FBA5045F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F5582C2-5B30-4788-A33E-5A9FBA5045F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F5582C2-5B30-4788-A33E-5A9FBA5045F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E5EB92-A336-48C4-84CB-01B69119E23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E5EB92-A336-48C4-84CB-01B69119E23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E5EB92-A336-48C4-84CB-01B69119E23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E5EB92-A336-48C4-84CB-01B69119E23E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF64E5B-1759-4274-9B4B-798100D458BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF64E5B-1759-4274-9B4B-798100D458BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF64E5B-1759-4274-9B4B-798100D458BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF64E5B-1759-4274-9B4B-798100D458BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F96EE103-A051-4AFC-9985-990877E8BEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F96EE103-A051-4AFC-9985-990877E8BEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F96EE103-A051-4AFC-9985-990877E8BEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F96EE103-A051-4AFC-9985-990877E8BEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA99DD4F-4B2F-4A94-A35B-390058F594D3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{37C76148-253B-4B29-BEDC-143976D445A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37C76148-253B-4B29-BEDC-143976D445A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37C76148-253B-4B29-BEDC-143976D445A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37C76148-253B-4B29-BEDC-143976D445A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C27E15DA-6C48-4E13-8B5C-99F0AA3F59E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C27E15DA-6C48-4E13-8B5C-99F0AA3F59E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C27E15DA-6C48-4E13-8B5C-99F0AA3F59E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C27E15DA-6C48-4E13-8B5C-99F0AA3F59E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF32D2D0-1569-4F42-A32C-31393F45765E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF32D2D0-1569-4F42-A32C-31393F45765E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF32D2D0-1569-4F42-A32C-31393F45765E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF32D2D0-1569-4F42-A32C-31393F45765E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1E78A4-6BBC-4D8B-84EC-DEC983DF0832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1E78A4-6BBC-4D8B-84EC-DEC983DF0832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1E78A4-6BBC-4D8B-84EC-DEC983DF0832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1E78A4-6BBC-4D8B-84EC-DEC983DF0832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C264BBE-E926-4E28-935B-FD4C65F4D01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C264BBE-E926-4E28-935B-FD4C65F4D01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C264BBE-E926-4E28-935B-FD4C65F4D01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C264BBE-E926-4E28-935B-FD4C65F4D01E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72118D0C-14FE-47B2-AC43-BEBEEFF79747}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 12
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.nestlechinese.com/tfs/nestle_lgo
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.Model\\Nestle.WorkFlow.Model.csproj
+		SccProjectName1 = ../../Common/Nestle.WorkFlow/Nestle.WorkFlow.Model
+		SccLocalPath1 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.Model
+		SccProjectUniqueName2 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.Framework\\Nestle.WorkFlow.Framework.csproj
+		SccProjectName2 = ../../Common/Nestle.WorkFlow/Nestle.WorkFlow.Framework
+		SccLocalPath2 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.Framework
+		SccProjectUniqueName3 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.DataAccess\\Nestle.WorkFlow.DataAccess.csproj
+		SccProjectName3 = ../../Common/Nestle.WorkFlow/Nestle.WorkFlow.DataAccess
+		SccLocalPath3 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.DataAccess
+		SccProjectUniqueName4 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.BusinessRule\\Nestle.WorkFlow.BusinessRule.csproj
+		SccProjectName4 = ../../Common/Nestle.WorkFlow/Nestle.WorkFlow.BusinessRule
+		SccLocalPath4 = ..\\..\\Common\\Nestle.WorkFlow\\Nestle.WorkFlow.BusinessRule
+		SccProjectUniqueName5 = Nestle.WriteOff.Tool\\Nestle.WriteOff.Tool.csproj
+		SccProjectName5 = Nestle.WriteOff.Tool
+		SccLocalPath5 = Nestle.WriteOff.Tool
+		SccProjectUniqueName6 = WF.BusinessRule\\WF.BusinessRule.csproj
+		SccProjectName6 = WF.BusinessRule
+		SccLocalPath6 = WF.BusinessRule
+		SccProjectUniqueName7 = WF.DataAccess\\WF.DataAccess.csproj
+		SccProjectName7 = WF.DataAccess
+		SccLocalPath7 = WF.DataAccess
+		SccProjectUniqueName8 = WF.Framework\\WF.Framework.csproj
+		SccProjectName8 = WF.Framework
+		SccLocalPath8 = WF.Framework
+		SccProjectUniqueName9 = WF.Model\\WF.Model.csproj
+		SccProjectName9 = WF.Model
+		SccLocalPath9 = WF.Model
+		SccProjectUniqueName10 = WF.Web\\WF.Web.csproj
+		SccProjectName10 = WF.Web
+		SccLocalPath10 = WF.Web
+		SccProjectUniqueName11 = Database\\Database.sqlproj
+		SccProjectName11 = Database
+		SccLocalPath11 = Database
+	EndGlobalSection
+EndGlobal

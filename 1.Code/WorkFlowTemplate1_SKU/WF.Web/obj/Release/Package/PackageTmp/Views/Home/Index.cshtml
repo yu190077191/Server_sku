@@ -1,0 +1,238 @@
+﻿@using WF.Web.Controllers;
+@{
+    ViewBag.Title = "SKU Registration";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
+    bool isRequester = WorkFlowAPIController.IsInRole("Requester");
+    WF.Web.Controllers.WorkFlowAPIController api = new WF.Web.Controllers.WorkFlowAPIController();
+    bool IsHaveRole = api.IsHaveRole();
+}
+<style type="text/css">
+    p{
+        text-indent:2em;
+        margin-top:10px;
+        line-height:30px;
+    }
+    h2 {
+        background-image: url(@(Url.Content("~/Images/arrow.png")));
+        background-repeat: no-repeat;
+        padding-left:20px;
+        margin-left:40px;
+        line-height:20px;
+	    height:20px;
+    }
+    ul{
+        margin-left:60px;
+        font-size:14px;
+    }
+    li {
+        list-style-type: square;
+    }
+
+    .muButton {
+        width: 125px;
+        background-size: 125px 27px;
+    }
+</style>
+<div class="main" style="font-size:14px;text-align:center;">
+    @if (IsHaveRole)
+    {
+        if (isRequester)
+        {
+            @*<p style="padding-top: 15px; padding-bottom: 15px; width: 40%; background: #e2e2e2; display: inline-block; float: left; margin-left: 5%; border-style: outset; ">*@
+            <p style="padding-top: 30px;">
+                @*<label style="font-size: large; font-family: cursive;">SKU Registration System</label><br>*@
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="loadForm('Creation');">
+                    @(Html.Lang("Creation"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="loadForm('CreationCopy');">
+                    @(Html.Lang("Creation Copy"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="create(2);">
+                    @(Html.Lang("Extension"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="create(3);">
+                    @(Html.Lang("Update"))
+                </button>
+            </p>
+        }
+        else
+        {
+            <p style="padding-top: 30px;">
+                @*<label style="font-size: large; font-family: cursive;">SKU Registration System</label><br>*@
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="showNoAccessError();">
+                    @(Html.Lang("Creation"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="showNoAccessError();">
+                    @(Html.Lang("Creation Copy"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="showNoAccessError();">
+                    @(Html.Lang("Extension"))
+                </button>
+                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                        onmouseout="this.className = 'button muButton'" onclick="showNoAccessError();">
+                    @(Html.Lang("Update"))
+                </button>
+            </p>
+        }
+        @*<p style="padding-top: 15px; padding-bottom: 15px; margin-left: 5%; width: 40%; background: #e2e2e2; display: inline-block; border-style: outset; ">
+                <label style="font-size: large; font-family: cursive;">SKU Discontinuation System</label><br>
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className = 'button'" onclick="create(4);" style="WIDTH: 160px; background: url(../SKURegistrationTest/Nestle/Themes/Blue/images/buttonlager.gif) no-repeat;">
+                    SKU Plant Stauts Z3-Z4
+                </button>
+            </p>*@
+    }
+    else
+    {
+        <p style="padding-top:30px;padding-left:70px;text-align:left;">
+            You are not authorization, pls. follow below steps to apply the role as requestor:<br />
+            Step1: Pls. learn the training materials <a href="@(Url.Content("~/Help/Index"))" target="_blank"><font color="blue">here</font></a><br />
+            Step2: Complete the <a href="@(Url.Content("~/Help/Quiz.xlsx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank"><font color="blue">quiz</font></a>.<br />
+            Step3: Fill our the below online forms <br />
+            <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u" target="_blank"><font color="blue">SKU Registration MDR Role Application Form (office.com)</font></a>
+            <br /> <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UOFBENDZJR0JTOFZZS1ZIWDRSMU9SV1dUVS4u" target="_blank"><font color="blue">SKU Registration SDR Role Application Form (office.com)</font></a>.<br />
+        </p>
+    }
+    @*<div style="padding-top:60px;">
+            <img src="@(Url.Content("~/Images/1.png?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" style="width:90%;" />
+        </div>*@
+
+</div>
+<hr>
+<div style="padding: 0px 40px; font-style: italic;">
+    <h1 style="margin-top: 20px; font-size: x-large; text-align: center; ">Help</h1>
+    <h2 style="margin-top:20px;">General Information Web-form</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/QRC - SKU Data Management Web-form.pdf?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                QRC - SKU Data Management Web-form
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Requester Training Material</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Registration Training PPT.pptx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Registration Training PPT
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Registration Training video.mp4?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Registration Training video
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Data Reference Material</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/Data Introduction - Parent Product Code.ppt?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Data Introduction - Parent Product Code
+            </a>
+        </li>
+        @*<li>
+            <a href="@(Url.Content("~/Help/Nestec Code List.xlsx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Nestec Code List
+            </a>
+        </li>*@
+        <li>
+            <a href="@(Url.Content("~/Help/Nestle abbreviations_EN.xlsx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Nestle abbreviations
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/SKU Paper Registration Form with Notes.pdf?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                SKU Paper Registration Form with Notes
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/GMA.zip?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Global Attribute 1&4 Guideline
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/Origin.zip?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Origin
+            </a>
+        </li>
+    </ul>
+
+
+
+
+    <h2 style="margin-top:20px;">Approvers List</h2>
+    <ul>
+        <li>
+            <a style="cursor:pointer;" onclick="exportCSV('Approver')">
+                Approver List
+            </a>
+        </li>
+        <li>
+            <a style="cursor:pointer;" onclick="exportCSV('SAP Steps')">
+                SAP Steps
+            </a>
+        </li>
+    </ul>
+
+    <h2 style="margin-top:20px;">Product Hierarchy/Brand Hierarchy F-Group (MG1) Application Guideline:</h2>
+    <ul>
+        <li>
+            <a href="@(Url.Content("~/Help/Brand Hierarchy.docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Brand Hierarchy
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/Product Hierarchy.docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Product Hierarchy
+            </a>
+        </li>
+        <li>
+            <a href="@(Url.Content("~/Help/F-Group (MG1).docx?" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                MG1
+            </a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    function create(type) {
+        if (type == 4) {
+            location.href = "https://web.purview.azure.com/resource/glbl-pr-nestledatacatalog-euwe-001-pvw/main/catalog/glossary?glossary=8389b42c-96a6-4048-b556-37dcb6f3aaa7&pivot=terms&feature.tenant=12a3af23-a769-4654-847f-958f3d479f4a";
+        } else {
+            location.href = getRootUrl() + "WF/?type=" + type.toString();
+        }
+    }
+</script>
+<script type="text/javascript">
+    function loadForm(type) {
+        var url = getRootUrl() + "WF/Create";
+        $.post(url, { type: type.replace("Copy","") }, function (id) {
+            if (type == "CreationCopy") {
+                location.href = getRootUrl() + "WF/EditCopy?id=" + id.toString() + "&listType=" + type;
+            } else {
+                location.href = getRootUrl() + "WF/Edit?id=" + id.toString() + "&listType=" + type;
+            }
+            
+        });
+    }
+    function showNoAccessError() {
+        var html = "<span style='font-size:14px;'>Only the nominated requesters from each BU can submit a request</span>";
+        pop(html);
+    }
+    function exportCSV(type) {
+        $.post(getRootUrl() + "Common/ExportToCSV", { type: type, keyword: "", status: 0 }, function (filePath) {
+            if (filePath.toLowerCase().indexOf(".csv") > 0) {
+                location.href = getRootUrl() + filePath;
+            }
+            else {
+                alert(filePath);
+            }
+        });
+    }
+</script>

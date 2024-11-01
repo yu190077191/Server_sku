@@ -1,0 +1,149 @@
+﻿@using WF.Model;
+@model List<Field>
+
+@{
+    Layout = null;
+    string fileIds = string.Empty;
+    List<string> groups = new List<string>();
+    if (Model != null)
+    {
+        for (int k = 0; k < Model.Count; k++)
+        {
+            Field f = Model[k];
+            if (!groups.Contains(f.Category))
+            {
+                groups.Add(f.Category);
+            }
+        }
+    }
+}
+@if (Model != null)
+{
+    <table id="fieldTable" class="tbl" border="0" cellpadding="0" cellspacing="0">
+
+
+        @for (int g = 0; g < groups.Count; g++)
+        {
+            string groupName = groups[g];
+            List<Field> li = Model.Where(k => k.Category == groupName).ToList().OrderBy(k => k.Id).ToList();
+            MvcHtmlString className = MvcHtmlString.Create(string.Empty);
+            if (groupName.ToLower().Contains("Bank Data of Vendor 2".ToLower()))
+            {
+                className = MvcHtmlString.Create(" class='bankdata2' ");
+            }
+
+            <thead @(className)>
+                <tr>
+                    <th colspan="2" style="background-color:#efefef;line-height:24px;">
+                        <h2>@(groupName.Replace(" 2", string.Empty))</h2>
+                    </th>
+                </tr>
+            </thead>
+            for (int i = 0; i < li.Count; i++)
+            {
+                Field item = li[i];
+                List<string> options = new List<string>();
+                if (!string.IsNullOrEmpty(item.Values))
+                {
+                    string[] array = item.Values.Replace("，", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    options.Add("Select");
+                    options.AddRange(array);
+                }
+                <tr @(className)>
+                    <td class="tdLeft3" id="Name@(item.Id.ToString())">
+                        @Html.Lang(item.Name):
+                    </td>
+                    <td class="tdRight3">
+                        @if (item.InputType.ToLower().IndexOf("text box") == 0)
+                        {
+                            <input type="text" id="Control_@(item.Id.ToString())" class="input" value="@(item.Value)" />
+                        }
+                        else if (item.InputType.ToLower().IndexOf("big text box") == 0)
+                        {
+                            <textarea id="Control_@(item.Id.ToString())" style="margin-top:5px;">@(item.Value)</textarea>
+                        }
+                        else if (item.InputType.ToLower().IndexOf("drop down list") == 0)
+                        {
+                            <select id="Control_@(item.Id.ToString())" class="selectControl" onchange="selectedIndexChanged(this);">
+                                @foreach (string s in options)
+                            {
+                                if (s == "Select")
+                                {
+                                        <option value="">@(s)</option>
+                                    }
+                                    if (s == item.Value)
+                                    {
+                                        <option selected="selected" value="@(s)">@(s)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(s)">@(s)</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (item.InputType.ToLower().IndexOf("attach") == 0)
+                        {
+                            <form id="attachementUpload@(item.Id.ToString())" enctype="multipart/form-data" method="post" class="attachmentForm">
+                                <input type="file" id="File_@(item.Id.ToString())" name="File_@(item.Id.ToString())" class="file" />
+                                <button type="button" class="button" onmousedown="this.className='buttonPressed'" id="fileButton@(item.Id.ToString())"
+                                        onmouseout="this.className='button'" onclick="uploadFile('@(item.Id.ToString())');">
+                                    @(Html.Lang("Upload"))
+                                </button>
+                                <label id="lbl@(item.Id.ToString())" style="font-weight: normal; font-size: 12px;">
+                                    @if (item.Files != "")
+                                    {
+                                        string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
+                                        foreach (string line in array)
+                                        {
+                                            string[] arr = line.Split('|');
+                                            string guid = arr[0];
+                                            string name = arr[1];
+
+                                            <div id='trFile@(guid)'>
+                                                <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                                    @(name) [download]<a>
+                                                        <a style='cursor:pointer;color:red;' onclick='deleteAttachment("@(guid)");'>[delete]</a>
+                                            </div>
+                                        }
+                                    }
+                                </label>
+                                <input type="submit" id="uploadButton@(item.Id.ToString())" name="uploadButton@(item.Id.ToString())" style="visibility: hidden;
+                                width: 1px;" value="uploadButton@(item.Id.ToString())" class="submit" />
+                            </form>
+                        }
+
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            <span class="tip">@(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))</span>
+                        }
+                    </td>
+                </tr>
+            }
+            if (groupName.ToLower() == ("Bank Data of Vendor".ToLower()))
+            {
+                <tr onclick="$(this).remove();showControl('bankdata2');">
+                    <td colspan="2" align="center">
+                        <a style="text-decoration:underline;color:blue;">Click here to add the second bank data if applicable</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <table id="buttonTable">
+        <tr id='buttonTR'>
+            <td colspan="2" align="center" style="height: 60px;">
+                <button type="button" class="button" onclick="submitThis(this);">
+                    @(Html.Lang("Submit"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+}

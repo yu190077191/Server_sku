@@ -1,0 +1,136 @@
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.dll.config
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Antlr3.Runtime.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\EntityFramework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.Edm.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.OData.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Web.Infrastructure.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\MVC4Pager.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.Internet.SSO.Client.Helper.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.Uploader.Helper.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.BusinessRule.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.DataAccess.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Newtonsoft.Json.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.Formatting.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.WebRequest.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Spatial.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Helpers.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.OData.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.WebHost.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Mvc.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Optimization.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Razor.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Deployment.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Razor.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\ThoughtWorks.QRCode.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WebGrease.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.BusinessRule.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.DataAccess.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\ICSharpCode.SharpZipLib.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.BusinessRule.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.DataAccess.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Framework.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.BusinessRule.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.DataAccess.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Framework.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\EntityFramework.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Newtonsoft.Json.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.Formatting.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.WebRequest.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Helpers.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.WebHost.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Mvc.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Razor.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Deployment.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Razor.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.OData.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.Edm.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.OData.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Spatial.xml
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.CopyComplete
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.dll.config
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Web.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Antlr3.Runtime.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\EntityFramework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.Edm.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.OData.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Web.Infrastructure.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\MVC4Pager.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.Internet.SSO.Client.Helper.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.Uploader.Helper.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.BusinessRule.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.DataAccess.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Newtonsoft.Json.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.Formatting.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.WebRequest.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Spatial.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Helpers.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.OData.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.WebHost.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Mvc.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Optimization.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Razor.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Deployment.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Razor.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\ThoughtWorks.QRCode.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WebGrease.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.BusinessRule.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.DataAccess.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\ICSharpCode.SharpZipLib.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.BusinessRule.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.DataAccess.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Nestle.WorkFlow.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.BusinessRule.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.DataAccess.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\WF.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\EntityFramework.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Newtonsoft.Json.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.Formatting.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Net.Http.WebRequest.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Helpers.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.WebHost.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Mvc.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Razor.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Deployment.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.WebPages.Razor.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Web.Http.OData.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.Edm.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\Microsoft.Data.OData.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\bin\System.Spatial.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.csproj.Up2Date
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Web\obj\Release\WF.Web.pdb

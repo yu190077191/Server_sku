@@ -1,0 +1,108 @@
+﻿@{
+    bool IsAdmin = WF.Web.Controllers.WorkFlowAPIController.IsAdmin;
+    WF.Web.Controllers.WorkFlowAPIController api = new WF.Web.Controllers.WorkFlowAPIController();
+    bool IsApprover = api.IsApprover();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Nestle/favicon.ico")" />
+    <link rel="Bookmark" href="@Url.Content("~/Nestle/favicon.ico")" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/bluediamond/style.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery-1.8.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.form.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/nestle.json.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.watermark.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.ui.datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.ui.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/layout.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/Dialog/popup.js?v2.0")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/admin.js")"></script>
+    <script type="text/javascript">
+        function getRootUrl() {
+            return "@(Url.Content("~/"))";
+        }
+        function getLanguage() {
+            return "English";
+        }
+    </script>
+
+    @RenderSection("Header", required: false)
+</head>
+<body>
+    <div class="main" id="container">
+        <div class="header">
+            <div class="header_resize">
+                <div class="logo"><h1><a href="@(Url.Content("~/"))" class="nobg">Business Requirement</a></h1></div>
+                <div class="menu_nav">
+                    <ul>
+                        <li class="active"><a href="@(Url.Content("~/"))">Home</a></li>
+                        @if (IsApprover)
+                        {
+                            <li><a href="@(Url.Content("~/Request/Approver"))">Requests</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@(Url.Content("~/Request/ProjectRequirementList"))">Project Requests</a></li>
+                        }
+
+                        @if (IsAdmin)
+                        {
+                            <li><a href="@(Url.Content("~/WorkFlowAPI/Roles"))">Roles</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content_resize">
+                @RenderBody()
+                <div class="clr"></div>
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <div class="footer_resize">
+                <p class="lf">&copy; &nbsp;Copyright Nestlé (China) Ltd.</p>
+                <ul class="fmenu">
+                    <li class="active"><a href="@(Url.Content("~/"))">Home</a></li>
+                    @if (IsApprover)
+                    {
+                        <li><a href="@(Url.Content("~/Request/Approver"))">Requests</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@(Url.Content("~/Request/ProjectRequirementList"))">Project Requests</a></li>
+                    }
+
+                    @if (IsAdmin)
+                    {
+                        <li><a href="@(Url.Content("~/WorkFlowAPI/Roles"))">Roles</a></li>
+                    }
+                </ul>
+                <div class="clr"></div>
+            </div>
+        </div>
+    </div>
+    <div id="loadingTip">
+        <img src="@Url.Content("~/Nestle/Themes/Blue/images/loading.gif")" alt="loading..." />
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (document.getElementById("searchResult") == null) {
+            ajustBodyHeight();
+        }
+    });
+</script>

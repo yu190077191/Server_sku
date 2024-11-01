@@ -1,0 +1,136 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<CommonSearchResult>
+
+@{
+    ViewBag.Title = "Employee List";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<div class="listClass" style="padding-top:20px;">
+    <div id="searchDiv">
+        <input type="hidden" id="QueryUrl" value="" />
+        <input type="hidden" id="filterViewName" value="" />
+        <input type="hidden" id="filterId" value="" />
+        <input id="selectedIds" type="hidden"/>
+        <input id="selectedNames" type="hidden"/>
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <button style="float:left;" type="button" class="button" onmousedown="this.className = 'buttonPressed'" onmouseout="    this.className = 'button'" onclick="searchList();">@(Html.Lang("Search"))</button>
+        <button id="confirmButton" style="float:left;margin-left:5px;display:none;" type="button" class="button" onmousedown="this.className = 'buttonPressed'" onmouseout="    this.className = 'button'" onclick="returnThis();">确认并返回</button>
+        <span id="selectedNamesSpan" style="margin-left: 5px;"></span>
+    </div>
+    <div style="clear:both;"></div>
+    <hr style="margin-top:10px;" />
+    <div class="rightDiv" style="width:100%;padding-left:0;margin-left:0;margin-top:15px;">
+        <div id="searchResult">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function checkThis(obj) {
+        var ids = $("#selectedIds").val();
+        var names = $("#selectedNames").val();
+        var arr = ids.split('|');
+        var namesArr = names.split('|');
+        if (obj.checked) {
+            if (("|" + ids + "|").indexOf("|" + obj.value + "|") < 0) {
+                if(ids != ""){
+                    ids += "|";
+                    names += "|";
+                }
+
+                ids += obj.value;
+                names += obj.alt;
+                $("#confirmButton").css({ "display": "" });
+            }
+        }
+        else {
+            ids = "";
+            names = "";
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == obj.value) {
+                    continue;
+                }
+
+                if (ids != "") {
+                    ids += "|";
+                    names += "|";
+                }
+
+                ids += arr[i];
+                names += namesArr[i];
+            }
+        }
+
+        $("#selectedIds").val(ids);
+        $("#selectedNames").val(names);
+        $("#selectedNamesSpan").html("已选择：" + names.replace(/\|/g, "，"));
+    }
+
+    function showCachedSelection() {
+        var ids = $("#selectedIds").val();
+        $("input[type='checkbox']").each(function () {
+            if (("|" + ids + "|").indexOf("|" + this.value + "|") >= 0) {
+                this.checked = true;
+            }
+        });
+    }
+
+    $(function () {
+        var obj = window.dialogArguments;
+        $("#QueryUrl").val(obj.url);
+        $("#filterViewName").val(obj.viewName);
+        $("#filterId").val(obj.id);
+        if (obj.SelectedIds != null) {
+            $("#selectedIds").val(obj.SelectedIds);
+        }
+    });
+
+    var done = false;
+    $(document).ready(function () {
+            if (done) return;
+            done = true;
+            var obj = window.dialogArguments;
+            if (obj.AutoLoad == true) {
+                searchList();
+            }
+    });
+
+    function returnThis(str) {
+        if (str == null) {
+            str = $("#selectedIds").val();
+            if (str == "") {
+                alert("请选择后再确认并返回，如需直接关闭，请点击右上角关闭！");
+                return;
+            }
+
+            str += "{SPLITMARK}" + $("#selectedNamesSpan").html();
+        }
+
+        window.returnValue = str;
+        window.close();
+    }
+
+    function searchList() {
+        var query = new Object();
+        query.PageIndex = 1;
+        query.PageSize = 15;
+        query.Keyword = $.trim($("#keyword").val());
+        if ($("#RecordStatus").val() == "2") {
+            query.RecordStatus = $("#RecordStatus").val();
+        }
+
+        var arr = getSearchDivParameters();
+        if (arr != null && arr.length > 0) {
+            query.Array = arr;
+        }
+
+        var url = getRootUrl() + $("#QueryUrl").val();
+        $.get(url, { json: $.toJSON(query) }, function (html) {
+            $("#searchResult").html(html);
+        });
+    }
+</script>

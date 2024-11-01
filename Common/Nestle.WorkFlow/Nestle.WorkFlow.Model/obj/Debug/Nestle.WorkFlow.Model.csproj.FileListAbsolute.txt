@@ -1,0 +1,18 @@
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.pdb
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.dll
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Debug\Nestle.WorkFlow.Model.pdb
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.dll
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Debug\Nestle.WorkFlow.Model.pdb

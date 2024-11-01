@@ -1,0 +1,60 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@model List<WriteOffItems>
+
+@{
+    ViewBag.Title = "Write Off";
+}
+@{
+    List<LanguageKeyValue> li = LanguagesRule.TranslateArray("Save,RequiredFieldEmpty,delete,confirmdelete");
+    ViewBag.Save = LanguagesRule.Translate("Save", li);
+}
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WriteOff/upload.js?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))"></script>
+<div class="main" style="padding:20px;color:black;">
+    <table cellpadding="0" cellspacing="0" class="tbl">
+        
+        <tr>
+            <td class="lefttd">
+                文件校验
+            </td>
+            <td class="righttd">
+                <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left;margin-left:5px;margin-right:5px;">
+                    <input id="Type" type="hidden" value="MD5" />
+                    <input type="file" id="file1" name="file1" style="float: left; height: 27px;
+                                margin-right: 5px;" />
+                    <button id="uploadButton1" style="float: left;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="upload();">
+                        @(Html.Lang("上传"))
+                    </button>
+                    <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;">
+                    </label>
+                    <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
+                                width: 1px;" value="uploadButton" class="submit" />
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div id="progressBarDiv" style="display:none;">
+        <div style="background:#efefef;height:18px;width:250px;">
+            <div id="progressBarId" style="background:Green;width:1%;height:100%;"></div>
+        </div>
+        <div>
+            <span id="timeCounter"></span>
+            <span id="progressBarMessageId">文件正在上传中，请稍候...</span>
+        </div>
+    </div>
+    <div style="clear:both;">&nbsp;</div>
+    <div id="searchResult">
+    </div>
+    <div id="paddingDiv" style="height: 50px; clear: both;">
+        &nbsp;
+    </div>
+</div>
+
+<input type="hidden" id="tableId" value="StandardCost" />
+<script type="text/javascript">
+    function uploadCallback() {
+        $("#searchResult").html("MD5=" + uploadResult.replace('|',' SHA1='));
+    }
+</script>

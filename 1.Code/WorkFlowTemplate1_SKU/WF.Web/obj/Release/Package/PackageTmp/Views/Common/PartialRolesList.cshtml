@@ -1,0 +1,101 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRole>
+@{
+    List<DepartmentRole> fullList = Model as List<DepartmentRole>;
+    bool multiUsers = false;
+    MvcHtmlString checkedStr = MvcHtmlString.Create(" checked=\"checked\"");
+    if (fullList != null && fullList.Count > 0 && fullList.Select(k=>k.AccountName).Distinct().Count() > 1)
+    {
+        multiUsers = true;
+        checkedStr = MvcHtmlString.Create(string.Empty);
+    }
+    //List<string> userNameList = fullList.OrderBy(k => k.AccountName).Select(k => k.AccountName).Distinct().ToList();
+    //List<DepartmentRole> fullRoleList = ViewBag.FullRoleList as List<DepartmentRole>;
+}
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl">
+    @{
+        if (Model != null && Model.Count > 0)
+        {
+            int count = 0;
+            <thead>
+            <tr style="text-align:center;">
+                <th style="text-align:center;">
+                    <input type="checkbox" id="selectall" @(checkedStr) onclick="selectAll(this);"/>
+                </th>
+                <th style="text-align:center;">System Name</th>
+            <th style="text-align:center;">Name</th>
+            <th style="text-align:center;">Department</th>
+            <th style="text-align:center;">Role</th>
+            </tr>
+            </thead>
+            foreach (DepartmentRole item in fullList)
+            {
+                //if (Operation.UserName.ToUpper() == "NESTLE\\" + item.AccountName.ToUpper())
+                //{
+                //    continue;
+                //}
+
+                string title = item.RoleName;
+                if (item.DisplayName == null)
+                {
+                    item.DisplayName = string.Empty;
+                }
+                else
+                {
+                    item.DisplayName = item.DisplayName.Replace("'", "");
+                }
+
+        <tr id="roleTR@(item.Id.ToString())" onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="listtd" align="center">
+                @if (item.RoleId > 0)
+                {
+                    <input type="checkbox" id="checkbox@(item.Key)" @(checkedStr) />
+                }
+                else
+                {
+                    <span title="has no role to copy or change">NA</span>
+                }
+               
+            </td>
+            <td class="listtd">
+                @item.InstanceName
+            </td>
+            <td class="listtd">
+                @item.DisplayName
+            </td>
+            <td class="listtd" id="tdDepartment@(item.EmployeeId)">
+            @Html.Raw(item.Department)
+            </td>
+            <td class="listtd" id="tdTitle@(item.EmployeeId)">
+            @Html.Raw(item.RoleName)
+            </td>
+        </tr>
+            }
+        }
+    }
+</table>
+@*<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>*@

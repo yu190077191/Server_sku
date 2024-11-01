@@ -1,0 +1,23 @@
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\Newtonsoft.Json.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\Newtonsoft.Json.xml
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.Up2Date
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.pdb
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.dll
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\WF.Model.pdb
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\Newtonsoft.Json.dll
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\bin\Debug\Newtonsoft.Json.xml
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.csproj.Up2Date
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.dll
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\WF.Model\obj\Debug\WF.Model.pdb

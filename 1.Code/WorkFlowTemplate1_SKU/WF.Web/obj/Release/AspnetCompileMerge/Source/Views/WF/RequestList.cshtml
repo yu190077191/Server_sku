@@ -1,0 +1,63 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.RequestVersion>
+
+@{
+    //ViewBag.Title = "Please select";
+    ViewBag.IsChinese = true;
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<body>
+    <div class="main" style="padding:0px 50px;color:black;">
+        <div id="searchDiv">
+            <select id='filterStatus' class="inputfl" style="width:100px;">
+                <option value="">Status</option>
+                <option value="0">@(Html.Lang("Draft"))</option>
+                <option value="1">@(Html.Lang("Submitted"))</option>
+                <option value="2">@(Html.Lang("Approved"))</option>
+                <option value="3">@(Html.Lang("Rejected"))</option>
+                <option value="8">@(Html.Lang("Withdrawn"))</option>
+            </select>
+
+            <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+            <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="searchList();">@(Html.Lang("Search"))</button>
+
+        </div>
+        <div style="clear:both;"></div>
+        <hr style="margin:5px auto;" />
+        <div id="searchResult">
+            @{ Html.RenderPartial("RequestSelectList", Model); }
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        searchList();
+    });
+
+    function searchList() {
+        var query = new Object();
+        query.PageIndex = 1;
+        query.PageSize = 15;
+        query.Keyword = $.trim($("#keyword").val());
+
+        var url = getRootUrl() + "WF/getRequestList";
+        $.get(url, { json: $.toJSON(query) }, function (html) {
+            $("#searchResult").html(html);
+        });
+    }
+    function returnThis(str) {
+        window.returnValue = str;
+        if (opener != null && opener != 'undefined') {
+            window.opener.returnValue = str; //chrome有些版本有问题, 所以在子窗口同时修改了父窗口的ReturnValue(能执行showModalDialog的chrome)
+            if (window.opener.showModalDialogCallback)
+                window.opener.showModalDialogCallback(str);
+        }
+
+        window.close();
+    }
+</script>

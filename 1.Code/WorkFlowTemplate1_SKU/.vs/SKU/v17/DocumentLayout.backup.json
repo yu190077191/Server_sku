@@ -1,0 +1,223 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\views\\wf\\partialvendor.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\views\\wf\\partialvendor.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\views\\shared\\_layoutsimple.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\views\\shared\\_layoutsimple.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82E5EB92-A336-48C4-84CB-01B69119E23E}|WF.Framework\\WF.Framework.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.framework\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82E5EB92-A336-48C4-84CB-01B69119E23E}|WF.Framework\\WF.Framework.csproj|solutionrelative:wf.framework\\operation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|d:\\net8server\\sku\\sku202410141450\\sku202410141450\\1.code\\workflowtemplate1_sku\\wf.web\\views\\wf\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\views\\wf\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\wf.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{61F5BA3E-3276-4C11-9D14-E20A2F812DAC}|WF.Web\\WF.Web.csproj|solutionrelative:wf.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 20,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:16:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:15:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:13:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:14:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:14:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:10:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:12:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:8:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:6:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PartialVendor.cshtml",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\WF\\PartialVendor.cshtml",
+              "RelativeDocumentMoniker": "WF.Web\\Views\\WF\\PartialVendor.cshtml",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\WF\\PartialVendor.cshtml",
+              "RelativeToolTip": "WF.Web\\Views\\WF\\PartialVendor.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAI8AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-21T08:18:19.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\WF\\Edit.cshtml",
+              "RelativeDocumentMoniker": "WF.Web\\Views\\WF\\Edit.cshtml",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\WF\\Edit.cshtml",
+              "RelativeToolTip": "WF.Web\\Views\\WF\\Edit.cshtml",
+              "ViewState": "AgIAAMkAAAAAAAAAAAAAAOcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-21T08:18:19.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Operation.cs",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Framework\\Operation.cs",
+              "RelativeDocumentMoniker": "WF.Framework\\Operation.cs",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Framework\\Operation.cs",
+              "RelativeToolTip": "WF.Framework\\Operation.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAywCYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T09:08:49.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BaseController.cs",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Controllers\\BaseController.cs",
+              "RelativeDocumentMoniker": "WF.Web\\Controllers\\BaseController.cs",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Controllers\\BaseController.cs",
+              "RelativeToolTip": "WF.Web\\Controllers\\BaseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T08:18:20.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "WF.Web\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "WF.Web\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-21T08:47:51.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "WF.Web\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "WF.Web\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAQwCoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T08:38:53.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_LayoutSimple.cshtml",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\Shared\\_LayoutSimple.cshtml",
+              "RelativeDocumentMoniker": "WF.Web\\Views\\Shared\\_LayoutSimple.cshtml",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Views\\Shared\\_LayoutSimple.cshtml",
+              "RelativeToolTip": "WF.Web\\Views\\Shared\\_LayoutSimple.cshtml",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAAAFEAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-21T08:36:11.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Web.config",
+              "RelativeDocumentMoniker": "WF.Web\\Web.config",
+              "ToolTip": "D:\\NET8Server\\SKU\\SKU202410141450\\SKU202410141450\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\Web.config",
+              "RelativeToolTip": "WF.Web\\Web.config",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACcAAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-09-24T09:50:13.708Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

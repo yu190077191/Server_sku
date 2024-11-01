@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>上传</title>
+	<meta charset="utf-8" />
+    <script type="text/javascript">
+        var rootUrl = "/";
+        function getRootUrl() {
+            return rootUrl;
+        }
+    </script>
+    <script type="text/javascript" src="jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="jquery.form.js"></script>
+    <script type="text/javascript" src="json2.js"></script>
+    <script type="text/javascript" src="nestle.json.js"></script>
+    <script type="text/javascript" src="jquery.watermark.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.datepicker.js"></script>
+    <script type="text/javascript" src="jquery.ui.core.js"></script>
+    <script type="text/javascript" src="Dialog/popup.js"></script>
+    <script type="text/javascript" src="upload.js?time=20170710"></script>
+    <link href="css.css?time=20170710" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    <div style="padding:10px;line-height:24px;font-size:12px;height:auto;width:950px;margin:0 auto;">
+        <div id="searchDiv" style="margin-top:10px;margin-bottom:5px;">
+            <select id="tableId" style="float: left;height:27px;line-height:27px;">
+                <option value="1">Test</option>
+            </select>
+
+            <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left; margin-left: 5px; margin-right: 5px;">
+                <input id="Type" type="hidden" value="ImportDataFromExcel" />
+                <input type="file" id="file1" name="file1" style="height: 27px; float: left; margin-right: 5px; width: 150px;" />
+                <button id="uploadButton1" onclick="upload();" style="float: left; height: 27px; padding: 0px 15px 5px 15px;">
+                    上传
+                </button>
+                <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;">
+                </label>
+                <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
+                                width: 1px;" value="uploadButton" class="submit" />
+            </form>
+            <span id="templateDiv" style="float:left;margin-left:5px;"></span>
+        </div>
+        <div id="progressBarDiv" style="display:none;">
+            <div style="background:#efefef;height:18px;width:250px;">
+                <div id="progressBarId" style="background:Green;width:1%;height:100%;"></div>
+            </div>
+            <div>
+                <span id="timeCounter"></span>
+                <span id="progressBarMessageId">文件正在上传中，请稍候...</span>
+            </div>
+        </div>
+        <div style="clear:both;">&nbsp;</div>
+        <hr />
+        <div style="clear:both;">&nbsp;</div>
+        <div id="searchResult">
+        </div>
+        <div>&nbsp;</div>
+    </div>
+</body>
+</html>

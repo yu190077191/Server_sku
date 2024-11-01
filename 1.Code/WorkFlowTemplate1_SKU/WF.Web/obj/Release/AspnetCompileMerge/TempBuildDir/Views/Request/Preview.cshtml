@@ -1,0 +1,539 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@model ProjectRequirement
+
+@{
+    ViewBag.Title = "Business Requirement";
+
+    WorkFlowAPIController api = new WorkFlowAPIController();
+    Employee requester = Operation.Employee;
+
+    List<Nestle.WorkFlow.Model.ActionHistory> historyList = api.GetApprovers(Model.Id, Model.Id, (Guid)Model.CreatedBy);
+    List<Nestle.WorkFlow.Model.Errors> errors = api.GetErrors(Model.Id, Model.Id);
+    bool hasErrors = errors != null && errors.Count > 0;
+
+    List<Nestle.WorkFlow.Model.Button> buttonList = ViewBag.ButtonList as List<Nestle.WorkFlow.Model.Button>;
+    List<string> buttonNames = buttonList.Select(k => k.EventName).ToList();
+    int eventId = buttonList != null && buttonList.Count > 0 ? buttonList[0].EventId : 0;
+    int workFlowId = buttonList != null && buttonList.Count > 0 ? buttonList[0].WorkFlowId : 0;
+    List<Attachment> commonAttachmentList = ViewBag.commonAttachmentList as List<Attachment>;
+    if (!Constants.IsDigital && ((Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Rejected || (Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Canceled))
+    {
+        historyList = historyList.Where(k => k.Time != null).ToList();
+        buttonList = new List<Nestle.WorkFlow.Model.Button>();
+        buttonNames = new List<string>();
+    }
+
+    bool canChangeE2E = false;
+    if (buttonNames != null && (buttonNames.Contains("Save") || buttonNames.Contains("Approve")))
+    {
+        canChangeE2E = true;
+    }
+
+    bool isUpdate_BR_NPDI = buttonNames != null && buttonNames.Contains("LGO BR/NPDI update");
+
+    string pendingAtPosition = string.Empty;
+}
+
+<div class="main">
+    <div style="font-size:16px;line-height:30px;margin-bottom:15px;">
+        Business Case NO. <b style="color:red;">BC@(Model.Id.ToString().PadLeft(5, '0'))</b>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    <h1>
+                        @Html.Lang("Business Requirement")
+                    </h1>
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initiative Name")
+            </td>
+            <td class="tdRight" id="InitiativeName">
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Prepared by")
+            </td>
+            <td class="tdRight" id="UserName">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Description")
+            </td>
+            <td class="tdRight2" colspan="3" id="Description">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Scope")
+            </td>
+            <td class="tdRight2" colspan="3" id="Scope">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("General Benefits and Risk of not doing")
+            </td>
+            <td class="tdRight2" colspan="3" id="GeneralBenefitsAndRiskOfNotDoingThisChange">
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("NBE E2E Flow or Additional Area")
+            </td>
+            @if (canChangeE2E)
+            {
+                <td class="tdRight" colspan="3">
+                    <select id="NBE_E2E_Flow" onchange="changeE2E(this);">
+                        @(CommonController.GetSelectOption("NBE_Flow", null))
+                    </select>
+                </td>
+            }
+            else
+            {
+                <td class="tdRight" id="NBE_E2E_FlowName" colspan="3"></td>
+            }
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Attachments")
+            </td>
+            <td class="tdRight2" colspan="3">
+                <table id="fileTableList" class="tbl">
+                    <tr>
+                        <th>@(Html.Lang("Description"))</th>
+                        <th>@(Html.Lang("File Type"))</th>
+                        <th>@(Html.Lang("Download"))</th>
+                    </tr>
+                    @if (commonAttachmentList != null)
+                    {
+                        foreach (Attachment item in commonAttachmentList)
+                        {
+                            <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'"
+                                id="trFile@(item.Id.ToString())">
+                                <td id="AttachmentDescription@(item.Id.ToString())" class="listtd" style="padding: 5px;">
+                                    @(item.Description)
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:50px;">@(Path.GetExtension(item.FilePath).ToUpperInvariant())</td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="window.open('@(Url.Content("~/Request/Download?id=" + item.Id.ToString()))');">
+                                        @(Html.Lang("Download"))
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Market Level")
+            </td>
+            <td class="tdRight" colspan="1" id="MarketLevel">
+                &nbsp;
+            </td>
+            <td colspan="2">
+                <div id="specialInput" style="display:none;">
+                        <div>
+                            <input type="radio" name="MarketLevel" id="MarketLevel0_PopId" onclick="saveMarketLevel(0);" />
+                            <label for="MarketLevel0_PopId">Local Project</label>
+                            <input type="radio" name="MarketLevel" id="MarketLevel1_PopId" onclick="saveMarketLevel(1);" />
+                            <label for="MarketLevel1_PopId">Above Market Project</label>
+                            <input type="radio" name="MarketLevel" id="MarketLevel2_PopId" onclick="saveMarketLevel(2);" />
+                            <label for="MarketLevel2_PopId">Non Project</label>
+                        </div>
+                </div>
+            </td>
+        </tr>
+
+@if (WorkFlowAPIController.IsAdmin || isUpdate_BR_NPDI)
+{
+            <tr>
+                <td class="tdLeft">
+                    @Html.Lang("Nestool BR ID")
+                </td>
+                <td class="tdRight" colspan="3">
+                    <input id="Nestool_BR_ID" type="text" />
+                    <select id="Nestool_BR_ID_Status" style="width:100px;height:24px;">
+                        <option value="">Status</option>
+                        <option value="Created">Created</option>
+                        <option value="Approved" style="color:green;">Approved</option>
+                        <option value="Rejected" style="color:red;">Rejected</option>
+                    </select>
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'"  onclick="saveNestoolInfo(@(Model.Id.ToString()), 'Nestool_BR_ID');">
+                        @(Html.Lang("Save"))
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdLeft">
+                    @Html.Lang("NPDIIdentifier")
+                </td>
+                <td class="tdRight" colspan="3">
+                    <input id="NPDIIdentifier" type="text" />
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="saveNestoolInfo(@(Model.Id.ToString()), 'NPDIIdentifier');">
+                        @(Html.Lang("Save"))
+                    </button>
+                </td>
+            </tr>
+}
+else
+{
+    <tr>
+        <td class="tdLeft">
+            @Html.Lang("Nestool BR ID")
+        </td>
+        <td class="tdRight" colspan="3">
+            <span id="Nestool_BR_ID"></span>
+            <span id="Nestool_BR_ID_Status" style="margin-left:15px;"></span>
+        </td>
+    </tr>
+            <tr>
+                <td class="tdLeft">
+                    @Html.Lang("NPDIIdentifier")
+                </td>
+                <td class="tdRight" colspan="3">
+                    <span id="NPDIIdentifier"></span>
+                </td>
+            </tr>
+}
+        </table>
+    </div>
+
+    <div class ="main">
+        <div>
+            <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+                <thead>
+                    <tr>
+                        <th colspan="7" align="left" style="font-size:14px;">
+                            @Html.Lang("E-approval record: (Current Status:")
+                            @if ((Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Approved)
+                            {
+                                <b style="color:green;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model.Status).ToString())</b>
+                            }
+                            else
+                            {
+                                <b style="color:red;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model.Status).ToString())</b>
+                            }
+
+                            )
+                        </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        @Html.Lang("Sequence")
+                    </td>
+                    <td>
+                        @Html.Lang("Step Name")
+                    </td>
+                    <td>
+                        @Html.Lang("Title")
+                    </td>
+                    <td>
+                        @Html.Lang("Name")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Result")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Comment")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Time")
+                    </td>
+                </tr>
+
+                @{
+                    bool someApproversMissing = false;
+                    if (historyList != null)
+                    {
+                        int sequence = 0;
+                        int lastWorkFlowPatternEventContainerId = 0;
+                        foreach (Nestle.WorkFlow.Model.ActionHistory approver in historyList)
+                        {
+                            if (lastWorkFlowPatternEventContainerId == approver.WorkFlowPatternEventContainerId && approver.RowNumber > 1)
+                            {
+                                continue;
+                            }
+
+                            if(!Constants.IsDigital && (Nestle.WorkFlow.Model.RequestStatus)Model.Status == Nestle.WorkFlow.Model.RequestStatus.Approved && Operation.OperationBy != Model.CreatedBy && approver.Time == null)
+                            {
+                                continue;//hide digital work flow in PM
+                            }
+
+                            lastWorkFlowPatternEventContainerId = approver.WorkFlowPatternEventContainerId;
+                            sequence++;
+
+                            if (approver.IsManuallyAdded)
+                            {
+                                if (!string.IsNullOrEmpty(approver.Remark))
+                                {
+                                    approver.StepName += " (Message: <b style='font-weight:bold;'>" + approver.Remark + "</b>)";
+                                    approver.Remark = string.Empty;
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(approver.Name))
+                            {
+                                someApproversMissing = true;
+                                approver.Name = "<b style='color:Red;'>Sorry, the approver with the title \"" + approver.Title + "\" cannot be found!,pls. raise approver role request via <a style='color:Blue;' target=\"_blank\" href='https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u'> SKU Registration MDR Role Application Form(office.com) </a> to fix the issue.</b>";
+                            }
+
+                            if(!string.IsNullOrEmpty(approver.Action) && approver.Action.ToLower().IndexOf("pending") >= 0)
+                            {
+                                pendingAtPosition = approver.Title;
+                            }
+
+                            if (approver.Time == null
+                                && !string.IsNullOrEmpty(approver.StepName)
+                                && approver.StepName.ToLower().Contains("NPDI".ToLower())
+                                && (string.IsNullOrEmpty(approver.Action) || approver.Action.ToLower().IndexOf("pending") < 0)
+                                )
+                            {
+                                continue;
+                            }
+
+                            <tr id="tr@(approver.IsManuallyAdded ? approver.EmployeeId.ToString() : approver.Sequence.ToString())">
+                                <td>@(sequence.ToString() + ".")</td>
+                                <td>@(Html.Raw(approver.StepName))</td>
+                                <td>@(Html.Raw(approver.Title))</td>
+                                <td>@(Html.Raw(approver.Name))</td>
+                                <td>@(Html.Raw(approver.Action))</td>
+                                <td>@(approver.Remark)</td>
+                                <td>@(approver.Time)</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+
+        @if (errors != null && errors.Count > 0)
+        {
+            <div id="ErrorsDiv" class="main" style="width:100%;padding:0;color:red;font-size:16px;">
+                <table>
+                    <tr>
+                        <td width="10%" align="left">
+                            @Html.Lang("Error Type")
+                        </td>
+                        <td width="90%" align="left">
+                            @Html.Lang("Error Details")
+                        </td>
+                    </tr>
+                    @foreach (Nestle.WorkFlow.Model.Errors err in errors)
+                    {
+                        <tr>
+                            <td>@(err.TypeCode)</td>
+                            <td>@(err.Error)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+
+        <div class="buttonDiv">
+            @{
+                if (buttonNames.Contains("Submit"))
+                {
+                    var submitButton = buttonList.Where(k => k.EventName == "Submit");
+                    <button id="SubmitButton" onclick="api('Submit', @(submitButton.First().EventId.ToString()), @(submitButton.First().WorkFlowId.ToString()));">
+                        @(Html.Lang("Submit"))
+                    </button>
+                    <button onclick="edit(@(workFlowId.ToString()));">
+                        @(Html.Lang("Edit"))
+                    </button>
+                    <button onclick="cancelThisRequest(44, @(workFlowId.ToString()));">
+                        @(Html.Lang("Cancel"))
+                    </button>
+                }
+                else if (workFlowId > 0)
+                {
+                    foreach (Nestle.WorkFlow.Model.Button b in buttonList)
+                    {
+                        string buttonName = b.EventName;
+                        if (buttonName.ToLower() == "save")
+                        {
+                            buttonName = "Comment";
+                        }
+                        else if (buttonName.ToLower() == "LGO BR/NPDI update".ToLower())
+                        {
+                            buttonName = "Complete";
+                        }
+
+                        <button onclick="api('@(b.EventName)', @(b.EventId.ToString()), @(b.WorkFlowId.ToString()));">
+                            @(Html.Lang(buttonName))
+                        </button>
+                    }
+
+                    if (buttonList.Where(k => k.EventName.ToLower() == "approve").Count() > 0 || buttonList.Where(k => k.EventName.ToLower() == "save").Count() > 0)
+                    {
+                        <button onclick="forward(@(Model.Id.ToString()));">
+                            @(Html.Lang("Forward"))
+                        </button>
+                        <button onclick="addNote(45, @(workFlowId.ToString()));">
+                            @(Html.Lang("Add Note"))
+                        </button>
+                        @*if (WorkFlowAPIController.IsAdmin)
+                        {
+                            <button onclick="generate(@(Model.Id.ToString()));">
+                                @(Html.Lang("Generate"))
+                            </button>
+                        }*@
+                }
+            }
+        }
+    </div>
+</div>
+    <div style="clear:both;">&nbsp;</div>
+
+@if (hasErrors || someApproversMissing)
+{
+    <script type="text/javascript">
+
+        $(function(){
+            $("#SubmitButton").hide();
+        });
+    </script>
+}
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WorkFlow.js?" + DateTime.Now.ToString("yyyyMMddhhmmss")))"></script>
+<script type="text/javascript">
+    var requestId = @(Model.Id.ToString());
+    var id =@(Model.Id.ToString());
+
+    function edit(workFlowId){
+        editSameVersion();
+    }
+
+    $(function(){
+        if(!$("#SubmitButton").is(":visible"))return;
+
+        var html = $("#fileTableList").html().toUpperCase();
+        if (html != null && html.indexOf(".PDF") > 0 && html.indexOf(".XLSM") > 0) {
+            return;
+        }
+
+        var tips = "Please upload the following attachment(s):";
+        if (html != null && html.indexOf(".XLSM") < 0) {
+            tips += "<br />Preliminary Business Case.xlsm";
+        }
+
+        if (html != null && html.indexOf(".PDF") < 0) {
+            tips += "<br />the PDF (Preliminary Business Case.xlsm) signed by the functional head";
+        }
+
+        $("#SubmitButton").hide();
+
+        pop(tips);
+    });
+
+    function generate(id){
+        $.post(getRootUrl() + "Request/OverWriteExcel", {id:id}, function(json){
+            if(json.Message == "ok"){
+                pop("The approval information has been exported to the Excel successfully!");
+            }
+            else{
+                pop(json.Message);
+            }
+        });
+    }
+
+    function saveNestoolInfo(id, type){
+        var model = new Object();
+        model.Id = getModelId();
+        model.Nestool_BR_ID = getValue("Nestool_BR_ID", false, "string");
+        model.NPDIIdentifier = getValue("NPDIIdentifier", false, "string");
+        model.ProjectRequirementId = getModelId();
+        model.TypeCode = type;
+        model.Value = $("#Nestool_BR_ID_Status").val();
+        var json = $.toJSON(model);
+
+        $.post(getRootUrl() + "Request/SaveNestoolInfo", {json:json}, function(r){
+            if(r.Success){
+                $.post(getRootUrl() + "Request/SaveInfo", {json:json}, function(json){
+                    if(!json.Success){
+                        popFailure();
+                    }
+                    else{
+                        popOK();
+                    }
+                });
+            }
+            else{
+                popFailure();
+            }
+        });
+    }
+
+    function changeE2E(obj){
+        var e2e = $(obj).val();
+        var e2eText = $(obj).find("option:selected").text();
+        var msg = "Are you sure that you want to change the E2E flow to \"" + e2eText + "\"?";
+        if(!confirm(msg))return;
+        $.post(getRootUrl() + "Request/ChangeE2E", {id:getModelId(), e2e: e2e}, function(json){
+            if(json.Success){
+                popOK(function(){
+                    location.href = location.href;
+                });
+            }
+            else{
+                popFailure();
+            }
+        });
+    }
+
+    function saveMarketLevel(type){
+        var model = new Object();
+        model.ProjectRequirementId = getModelId();
+        model.TypeCode = "MarketLevel";
+        model.Value = type == 0 ? "Local Project" : "Above Market Project";
+        if(type == 2){
+            model.Value="Non Project";
+        }
+
+        $("#MarketLevel").html(model.Value);
+        var json = $.toJSON(model);
+        $.post(getRootUrl() + "Request/SaveInfo", {json:json}, function(json){
+            if(!json.Success){
+                popFailure();
+            }
+        });
+    }
+</script>
+
+@if (WorkFlowAPIController.IsAdmin || (!string.IsNullOrEmpty(pendingAtPosition) && pendingAtPosition.ToLower().Contains("GLOBE Manager".ToLower())))
+{
+    if (WorkFlowAPIController.IsAdmin)
+    {
+        <script type="text/javascript">
+        $(function(){
+        $("#specialInput").show();
+        });
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        $(function(){
+            $("#specialInput").html("");
+        });
+    </script>
+}
+
+@Html.Raw(ViewBag.Json)

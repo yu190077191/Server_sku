@@ -1,0 +1,12 @@
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Release\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Release\Nestle.WorkFlow.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.dll
+C:\2.Sunny\Project documents\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Release\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\bin\Release\Nestle.WorkFlow.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\Common\Nestle.WorkFlow\Nestle.WorkFlow.Model\obj\Release\Nestle.WorkFlow.Model.pdb

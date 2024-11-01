@@ -1,0 +1,58 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.MaterialGroup1>
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null)
+        {
+            <thead>
+            <tr>
+            <th>@(Html.Lang("Id"))</th>
+            <th>@(Html.Lang("Name"))</th>
+            <th>@(Html.Lang("Edit"))</th>
+            <th>@(Html.Lang("Delete"))</th>
+            </tr>
+            </thead>
+            foreach (WF.Model.MaterialGroup1 item in Model)
+            {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+            <td class="listtd">@(item.Id)</td>
+            <td class="listtd">@(item.Name)</td>
+<td align="center" style="width:100px;padding:3px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="javascript:window.open('@Url.Content("~/Admin/MaterialGroup1?id=" + item.Id.ToString())');">@(Html.Lang("Edit"))</button>
+</td>
+<td align="center" style="width:100px;padding:3px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="deleteItem('MaterialGroup1', @(item.Id.ToString()));">@(Html.Lang("Delete"))</button>
+</td>
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

@@ -1,0 +1,131 @@
+﻿@using Nestle.WorkFlow.BusinessRule;
+@using Nestle.WorkFlow.Framework;
+@using Nestle.WorkFlow.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRole>
+@{
+    List<DepartmentRole> fullList = Model as List<DepartmentRole>;
+    List<string> userNameList = fullList.OrderBy(k => k.AccountName).Select(k => k.AccountName).Distinct().ToList();
+    List<DepartmentRole> fullRoleList = ViewBag.FullRoleList as List<DepartmentRole>;
+}
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl">
+    @{
+        if (Model != null)
+        {
+            int count = 0;
+            <thead>
+            <tr style="text-align:center;">
+            <th style="text-align:center;">Name</th>
+                <th style="text-align:center;">BU</th>
+            <th style="text-align:center;">Department</th>
+            <th style="text-align:center;">Title</th>
+            <th style="text-align:center;">UserID</th>
+            <th style="text-align:center;">Add Role</th>
+            <th style="text-align:center;">Delete Role</th>
+            </tr>
+            </thead>
+            foreach (DepartmentRole item in fullList)
+            {
+                //if (Operation.UserName.ToUpper() == "NESTLE\\" + item.AccountName.ToUpper())
+                //{
+                //    continue;
+                //}
+
+                string title = item.RoleName;
+                if (string.IsNullOrEmpty(item.RoleName))
+                {
+                    item.RoleName = "(empty)";
+                }
+
+                if (item.RoleId > 0)
+                {
+                    item.RoleName = "<b style='color:Green;' title='" + item.OriginalTitle + "'>" + item.RoleName + "</b>";
+                }
+
+                if (item.DepartmentId > 0)
+                {
+                    item.Department = "<b style='color:Green;' title='" + item.OriginalDepartment + "'>" + item.Department + "</b>";
+                }
+
+                if (item.BUDepartmentId > 0)
+                {
+                    item.BUName = "<b style='color:Green;'>" + item.BUName + "</b>";
+                }
+
+                if (item.DisplayName == null)
+                {
+                    item.DisplayName = string.Empty;
+                }
+                else
+                {
+                    item.DisplayName = item.DisplayName.Replace("'", "");
+                }
+
+        <tr id="roleTR@(item.Id.ToString())" onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="listtd">
+            @if (item.WwwHomepage != null && item.WwwHomepage.ToLower().Contains("http"))
+            {
+                <a href="@item.WwwHomepage" target="_blank">@item.DisplayName</a>
+            }
+            else
+            {
+            @item.DisplayName
+            }
+            </td>
+            <td class="listtd" id="tdBU@(item.EmployeeId)">
+                @Html.Raw(item.BUName) &nbsp;
+            </td>
+            <td class="listtd" id="tdDepartment@(item.EmployeeId)">
+            @Html.Raw(item.Department)
+            </td>
+            <td class="listtd" id="tdTitle@(item.EmployeeId)">
+            @Html.Raw(item.RoleName)
+            </td>
+            <td class="listtd">
+            <a href="@(Url.Content("~/Home/LineManagers?employeeId=" + item.EmployeeId.ToString()))" target="_blank">
+            @item.AccountName
+            </a>
+            </td>
+             <td class="listtd">
+                 <button onclick="showSelect('@(item.EmployeeId)', @(item.DepartmentId.ToString()), @(item.RoleId.ToString()), @(item.BUDepartmentId.ToString()))" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'">
+                 Add Role</button>
+                 <input type="hidden" id="DisplayName@(item.EmployeeId)" value="@(item.DisplayName)" />
+            </td>
+            <td class="listtd">
+                @if (item.RoleId > 0)
+{
+    <button onclick="deleteDepartmentRole(@(item.Id), '@(item.DisplayName.Replace("'", "’"))');" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'">
+                Delete Role</button>
+}
+else
+{
+                    <span>&nbsp;</span>
+                }
+            </td>
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

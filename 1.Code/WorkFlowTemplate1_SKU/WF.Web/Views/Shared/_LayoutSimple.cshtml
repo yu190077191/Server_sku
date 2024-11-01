@@ -1,0 +1,214 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@using WF.Web.Controllers;
+@{
+    bool IsAdmin = WF.Web.Controllers.WorkFlowAPIController.IsAdmin;
+    WF.Web.Controllers.WorkFlowAPIController api = new WF.Web.Controllers.WorkFlowAPIController();
+    bool IsApprover = api.IsApprover();
+    int pendingCount = api.PendingCount;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Nestle/favicon.ico")" />
+    <link rel="Bookmark" href="@Url.Content("~/Nestle/favicon.ico")" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/styles.css")" rel="stylesheet" media="screen" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/newNav.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/css.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/front.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/header.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/register.css")" type="text/css" rel="stylesheet" />
+
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/requester.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Nestle/Themes/Blue/css/admin.css")" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery-1.8.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.form.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/nestle.json.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.watermark.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.ui.datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.ui.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/layout.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/Dialog/popup.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/admin.js")"></script>
+    <script type="text/javascript">
+        function getRootUrl() {
+            return "@(Url.Content("~/"))";
+        }
+        function getLanguage() {
+            return "English";
+        }
+
+        function showMessage(message) {
+            document.getElementById('floatMessage').textContent = message;
+            document.getElementById('floatMessage').style.display = 'block';
+            setTimeout(function () {
+                document.getElementById('floatMessage').style.display = 'none';
+            }, 5000); // 5 seconds
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Content("~/Home/GetMsgInfo")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // 这里处理接口返回的数据
+                    console.log(data);
+                    if (data.DataInfo != null && data.DataInfo.Message != undefined) {
+                        $("#TestMsg").children("p").html(data.DataInfo.Message)
+                        $("#TestMsg").show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 处理错误情况
+                    console.error("An error occurred: " + status + " - " + error);
+                }
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        /*消息提示*/
+        .float-message {
+            float: left;
+            height: 150px;
+            width: 210px;
+            margin: 10px;
+            padding: 10px;
+            background-color: beige;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+
+    @RenderSection("Header", required: false)
+</head>
+<body style="background: url(@(Url.Content("~/Nestle/themes/Blue/images/body.gif"))) repeat-y center 0 #EAE2CC;">
+
+    <div id="TestMsg" class="float-message" style="display:none;">
+        @*<button>下载</button>*@
+        <p></p>
+    </div>
+
+    <div id="container" class="container" style="width: 1000px; margin: 0 auto; background: url(@(Url.Content("~/Nestle/Themes/Blue/images/head.gif"))) repeat-x 0 0;">
+        <div id="mainBody">
+            <div class="head" style="width: 998px; height: 93px; border: 1px solid #FFF; border-top: none;
+            border-bottom: none; overflow: hidden">
+                <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 0px; height: 100px;"
+                       align="left">
+                    <tr>
+                        <td style="padding-left: 10px;">
+                            <div style="width:720px;height:49px;background:URL(@(Url.Content("~/Nestle/logo.png"))) no-repeat;">
+                                <span style="float:left;margin-left:250px;padding-top:18px;font-size:24px;color:#AA5566;">
+                                    SKU Registration System
+                                </span>
+                            </div>
+                        </td>
+                        <td align="right" style="padding-right:20px;font-weight:normal;font-size:14px;">
+                            @if (Operation.IsInDebugMode())
+                            {
+                                <a style="cursor:pointer;" onclick="signOut();">@(Html.Lang("Sign Out"))</a>
+                            }
+                            else
+                            {
+                                <span>Welcome,</span>
+                            }
+
+                            @(WF.Framework.Operation.Employee.DisplayName)
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- head -->
+            <div id="navigateDiv" class="newNav">
+                <div class="newNavEnds_left">
+                </div>
+                <ul>
+                    <!-- newNavEnds_left -->
+                    <li class="more"><a href="@(Url.Content("~/"))">Home</a></li>
+                    @if (IsApprover)
+                    {
+                        if (pendingCount > 0)
+                        {
+                            <li><a href="@Url.Content("~/WF/Approver")">@Html.Lang("Requests") (<b style="color:hotpink;font-size:16px;">@(pendingCount.ToString())</b>)</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Content("~/WF/Approver")">@Html.Lang("Requests")</a></li>
+                        }
+                    }
+                    else
+                    {
+                        @*<li><a href="@Url.Content("~/Vendor/")">@Html.Lang("Create")</a></li>*@
+                        <li><a href="@Url.Content("~/WF/RequestVersionList")">@Html.Lang("Requests")</a></li>
+                    }
+
+                    <li><a href="@Url.Content("~/WF/RequestVersionList")">@Html.Lang("Report")</a></li>
+
+                    @if (IsAdmin)
+                    {
+                        <li><a href="@Url.Content("~/WorkFlowAPI/roles")">@Html.Lang("Roles")</a></li>
+                    }
+
+                    @if (WF.Web.Controllers.WorkFlowAPIController.IsInRole("Manufacturing Costing Manager"))
+                    {
+                        <li><a href="@Url.Content("~/WF/Upload")">@Html.Lang("Upload")</a></li>
+                    }
+
+                    @*<li><a href="@Url.Content("~/Help/Index")">@Html.Lang("Help")</a></li>*@
+                </ul>
+                <div class="newNavEnds_right">
+                </div>
+                <!-- newNavEnds_right -->
+            </div>
+            <!-- newNav -->
+            <div class="search">
+                <div class="search_left left">
+                </div>
+                <table class="search_table left" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td height="41" width="688"></td>
+                        <td width="26"></td>
+                        <td width="10">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+                <div class="search_right right">
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+            @RenderBody()
+            <div class="foot_top">
+            </div>
+        </div>
+        <!-- foot_top -->
+        <div id="footer" class="foot marginAuto" style="width:973px; border-top:1px solid #e0e0e0; padding-top:20px; height:69px; clear:both; margin:0 auto;display:none;">
+            <p>
+                Nestle (China) Ltd.
+            </p>
+        </div>
+        <!-- foot -->
+    </div>
+    <div id="loadingTip">
+        <img src="@Url.Content("~/Nestle/Themes/Blue/images/loading.gif")" alt="loading..." />
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (document.getElementById("searchResult") == null) {
+            ajustBodyHeight();
+        }
+    });
+</script>

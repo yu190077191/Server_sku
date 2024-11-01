@@ -1,0 +1,1481 @@
+﻿@using WF.Model;
+@using System.Data.SqlClient;
+@model List<Field>
+
+@{
+    string fileIds = string.Empty;
+
+}
+
+@section Header
+
+
+{
+
+
+    <link href="@(Url.Content("~/Content/MultiSelect.css?" + DateTime.Now.ToString()))" rel="stylesheet" media="screen"
+          type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Requester.css")" rel="stylesheet" type="text/css" />
+
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.css")" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.bgiframe.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.ajaxQueue.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox-compressed.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ServiceDesk/upload.js?v" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Asset/Common.js?v" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/zTree/css/demo.css")" type="text/css">
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/zTree/css/zTreeStyle.css")" type="text/css">
+    <script type="text/javascript" src="@Url.Content("~/Scripts/zTree/js/jquery.ztree.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/zTree/js/jquery.ztree.excheck.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/layer/layer.js")"></script>
+
+
+
+}
+<style>
+    .tip {
+        width: 200px;
+        text-align: center;
+        position: relative;
+        border: 0px solid #ccc;
+        height: 50px;
+        line-height: 50px;
+        transform: translateX(-50%);
+    }
+
+    .tip-container {
+        position: absolute;
+        box-shadow: 2px 2px 5px #f9f9f9;
+        z-index: 999;
+        display: none;
+    }
+
+        .tip-container .tip-point-top,
+        .tip-container .tip-point-bottom,
+        .tip-container .tip-point-left,
+        .tip-container .tip-point-right {
+            border: 1px solid #dcdcdc;
+            position: relative;
+            background: white;
+        }
+
+    .tip-content {
+        padding: 5px 10px;
+        background: white;
+        font-size: 12px;
+        line-height: 1.7;
+        font-family: "Helvetica Neue",Helvetica,Arial,"MicroSoft YaHei";
+    }
+
+    .tip-container .tip-point-top::after,
+    .tip-container .tip-point-top::before,
+    .tip-container .tip-point-bottom::after,
+    .tip-container .tip-point-bottom::before {
+        content: "";
+        position: absolute;
+        border: solid transparent;
+        left: 50%;
+        width: 0;
+        height: 0;
+        transform: translate3d(-50%,0,0);
+        -webkit-transform: translate3d(-50%,0,0);
+    }
+
+    .tip-container .tip-point-right::after,
+    .tip-container .tip-point-right::before,
+    .tip-container .tip-point-left::after,
+    .tip-container .tip-point-left::before {
+        content: "";
+        position: absolute;
+        border: solid transparent;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform: translate3d(0,-50%,0);
+        -webkit-transform: translate3d(0,-50%,0);
+    }
+    /*tip-point-top*/
+    .tip-container .tip-point-top::after {
+        border-top-color: #fff;
+        top: 100%;
+        border-width: 5px;
+    }
+
+    .tip-container .tip-point-top::before {
+        border-top-color: #dcdcdc;
+        top: 100%;
+        border-width: 7px;
+    }
+    /*tip-point-bottom*/
+    .tip-container .tip-point-bottom::after {
+        border-bottom-color: #fff;
+        bottom: 100%;
+        border-width: 5px;
+    }
+
+    .tip-container .tip-point-bottom::before {
+        border-bottom-color: #dcdcdc;
+        bottom: 100%;
+        border-width: 7px;
+    }
+    /*tip-point-right*/
+    .tip-container .tip-point-right::after {
+        border-right-color: #fff;
+        right: 100%;
+        border-width: 5px;
+    }
+
+    .tip-container .tip-point-right::before {
+        border-right-color: #dcdcdc;
+        right: 100%;
+        border-width: 7px;
+    }
+    /*tip-point-left*/
+    .tip-container .tip-point-left::after {
+        border-left-color: #fff;
+        left: 100%;
+        border-width: 5px;
+    }
+
+    .tip-container .tip-point-left::before {
+        border-left-color: #dcdcdc;
+        left: 100%;
+        border-width: 7px;
+    }
+</style>
+
+
+<style type="text/css">
+    .tdLeft3 {
+        width: 20%;
+    }
+
+    .tdRight3 {
+        width: 80%;
+    }
+
+    .input {
+        width: 200px;
+    }
+
+    textarea {
+        width: 450px;
+        height: 100px;
+    }
+
+    .selectControl {
+        width: 200px;
+    }
+
+    .file {
+        height: 24px;
+        width: 350px;
+        margin-right: 10px;
+    }
+
+
+
+    .bankdata2 {
+        display: none;
+    }
+</style>
+
+
+<div class="main" style="padding-top:10px;">
+    @if (Model == null)
+    {
+        <div style="margin-bottom:15px;">
+            Type:
+            <input type="radio" id="type1" name="vendorType" onclick="loadForm('Main Vendor Creation');" />
+            <label for="type1" onclick="loadForm('Main Vendor Creation');">Main Vendor</label>
+            <input type="radio" id="type2" name="vendorType" onclick="loadForm('Vendor Site Creation');" />
+            <label for="type2" onclick="loadForm('Vendor Site Creation');">Vendor Site</label>
+        </div>
+    }
+
+
+    <div id="formDiv">
+        @*<button type="button" class="btn yes" id="manager">ADD Packaging</button>*@
+
+        @{ Html.RenderPartial("PartialVendor", Model); }
+    </div>
+
+
+
+</div>
+
+<input type="hidden" id="LoadDataReadyMarker" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/field.js?" + DateTime.Now.ToString())"></script>
+<input type="hidden" id="UploadType" />
+<input type="hidden" id="loadData" />
+<input type="hidden" id="RequestID" value="@ViewData["RequestID"]" />
+<input type="hidden" id="hidOversize" value="@ViewData[" Oversize"]" />
+<input type="hidden" id="hidListType" value="@ViewData["ListType"]" />
+
+<script type="text/javascript">
+    var Control_14Value = "";
+    var Control_15Value = "";
+    var Control_29Value = "";
+    var Control_295Value = "";
+    var Control_298Value = "";
+    var type="@(Model[0].RequestType.ToString())";
+    function loadForm(type) {
+        var url = getRootUrl() + "Vendor/Create";
+        $.post(url, { type: type }, function (id) {
+            location.href = getRootUrl() + "Vendor?id=" + id.toString();
+        });
+    }
+
+    function showControl(className) {
+        if ($("." + className).is(":visible")) {
+            $("." + className).hide();
+            $("#bankButton").html("Click here to add the second bank data if applicable");
+        }
+        else {
+            $("." + className).show();
+            $("#bankButton").html("Click here to remove the second bank data if not applicable");
+        }
+    }
+    $(function () {
+        if (type == "Update F&C" || type == "Update F&amp;C") {
+            //if (mandatory.indexOf(",314,") >= 0) {
+            document.getElementById("Name314").style.display = "none";
+            document.getElementById("td_314").style.display = "none";
+            document.getElementById("Name304").style.display = "none";
+            document.getElementById("td_304").style.display = "none";
+            document.getElementById("Name305").style.display = "none";
+            document.getElementById("td_305").style.display = "none";
+            document.getElementById("Name306").style.display = "none";
+            document.getElementById("td_306").style.display = "none";
+            document.getElementById("Name307").style.display = "none";
+            document.getElementById("td_307").style.display = "none";
+            document.getElementById("Name308").style.display = "none";
+            document.getElementById("td_308").style.display = "none";
+            document.getElementById("Name309").style.display = "none";
+            document.getElementById("td_309").style.display = "none";
+            document.getElementById("Name311").style.display = "none";
+            document.getElementById("td_311").style.display = "none";
+            document.getElementById("Name312").style.display = "none";
+            document.getElementById("td_312").style.display = "none";
+            document.getElementById("Name313").style.display = "none";
+            document.getElementById("td_313").style.display = "none";
+            document.getElementById("Name310").style.display = "none";
+            document.getElementById("td_310").style.display = "none";
+            document.getElementById("Name315").style.display = "none";
+            document.getElementById("td_315").style.display = "none";
+            document.getElementById("Name316").style.display = "none";
+            document.getElementById("td_316").style.display = "none";
+        }
+        $("#Control_16").val("9999 NONE");
+    });
+
+    function selectedIndexChanged(obj) {
+        if (obj == null) return;
+        //begin
+        if (obj.id == "Control_227")
+        {
+           // alert(obj.id);
+            var OAProvince = document.getElementById(obj.id);
+            var OACity = document.getElementById("Control_228");
+            var Province = OAProvince.options[OAProvince.selectedIndex].value;
+            OACity.options.length = 0;
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetCity"))",
+                data: "{Province:'" + Province + "'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    var json = eval(data);
+                    var optionstring = "";
+                    OACity.add(new Option("select", ""));
+                    for (var i = 0; i < json.length; i++) {
+                        OACity.add(new Option(json[i].Branch, json[i].Branch));
+                    }
+                },
+                err: function (err) {
+                }
+            })
+
+            var MaterialGroup = document.getElementById("Control_11");
+            MaterialGroup.options.length = 0;
+            var MaterialGroup1 = document.getElementById("Control_32");
+            MaterialGroup1.options.length = 0;
+            var ProductHierarchy = document.getElementById("Control_36");
+            ProductHierarchy.options.length = 0;
+            var SalesOrg1 = document.getElementById("Control_3");
+            SalesOrg1.options.length = 0;
+            var SalesOrg2 = document.getElementById("Control_265");
+            SalesOrg2.options.length = 0;
+            var SalesOrg3 = document.getElementById("Control_284");
+            SalesOrg3.options.length = 0;
+            var GPCCode = document.getElementById("Control_321");
+            GPCCode.options.length = 0;
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetMG_MG1_PHData"))",
+                data: "{Province:'" + Province + "'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    var json = eval(data);
+                    var optionstring = "";
+                    MaterialGroup.add(new Option("select", ""));
+                    var mgArr = json.filter(p => p.ControlType == "MG");
+                    for (var i = 0; i < mgArr.length; i++) {
+                        MaterialGroup.add(new Option(mgArr[i].ShowDetails, mgArr[i].ShowDetails));
+                    }
+                    var mg1Arr = json.filter(p => p.ControlType == "MG1");
+                    MaterialGroup1.add(new Option("select", ""));
+                    for (var i = 0; i < mg1Arr.length; i++) {
+                        MaterialGroup1.add(new Option(mg1Arr[i].ShowDetails, mg1Arr[i].ShowDetails));
+                    }
+                    var phArr = json.filter(p => p.ControlType == "PHDetails");
+                    ProductHierarchy.add(new Option("select", ""));
+                    for (var i = 0; i < phArr.length; i++) {
+                        ProductHierarchy.add(new Option(phArr[i].ShowDetails, phArr[i].ShowDetails));
+                    }
+                    var tempArr = json.filter(p => p.ControlType == "Creation");
+                    SalesOrg1.add(new Option("select", ""));
+                    SalesOrg2.add(new Option("select", ""));
+                    SalesOrg3.add(new Option("select", ""));
+                    for (var i = 0; i < tempArr.length; i++) {
+                        SalesOrg1.add(new Option(tempArr[i].ShowDetails, tempArr[i].ShowDetails));
+                        SalesOrg2.add(new Option(tempArr[i].ShowDetails, tempArr[i].ShowDetails));
+                        SalesOrg3.add(new Option(tempArr[i].ShowDetails, tempArr[i].ShowDetails));
+                    }
+                    var gpcArr = json.filter(p => p.ControlType == "GPC");
+                    GPCCode.add(new Option("select", ""));
+                    for (var i = 0; i < gpcArr.length; i++) {
+                        GPCCode.add(new Option(gpcArr[i].ShowValue + " " + gpcArr[i].ShowDetails, gpcArr[i].ShowValue + " " + gpcArr[i].ShowDetails));
+                    }
+                },
+                err: function (err) {
+                }
+            })
+        } else if (obj.id == "Control_3" || obj.id == "Control_64" || obj.id == "Control_165" || obj.id == "Control_265" || obj.id == "Control_267" || obj.id == "Control_269" || obj.id == "Control_284" || obj.id == "Control_286" || obj.id == "Control_288")
+        {
+           // alert(obj.id);
+            var Org = document.getElementById(obj.id);
+            var Plant;
+            if (obj.id == "Control_3") {
+                Plant = document.getElementById("Control_29");
+            } else if (obj.id == "Control_64") {
+                Plant = document.getElementById("Control_68");
+            } else if (obj.id == "Control_165") {
+                Plant = document.getElementById("Control_168");
+            } else if (obj.id == "Control_265") {
+                Plant = document.getElementById("Control_295");
+            } else if (obj.id == "Control_267") {
+                Plant = document.getElementById("Control_296");
+            } else if (obj.id == "Control_269") {
+                Plant = document.getElementById("Control_297");
+            } else if (obj.id == "Control_284") {
+                Plant = document.getElementById("Control_298");
+            } else if (obj.id == "Control_286") {
+                Plant = document.getElementById("Control_299");
+            } else if (obj.id == "Control_288") {
+                Plant = document.getElementById("Control_300");
+            }
+            var CompanyCode = Org.options[Org.selectedIndex].value;
+            Plant.innerHTML="";
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetPlantByOrg"))",
+                data: "{CompanyCode:'" + CompanyCode+"'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    Plant.add(new Option("Select", ""));
+                    for (var i = 0; i < data.length; i++) {
+                        Plant.append(new Option(data[i], data[i]));
+                    }
+                    if (Control_29Value.length > 0 || Control_295Value.length > 0 || Control_298Value.length > 0) {
+                        var options = Plant.options;
+                        if (obj.id == "Control_3") {
+                            for (var kk = 0; kk < options.length; kk++) {
+                                if (options[kk].textContent.includes(Control_29Value)) {
+                                    Plant.selectedIndex = kk;
+                                    break;
+                                }
+                            }
+                        } else if (obj.id == "Control_265") {
+                            for (var kk = 0; kk < options.length; kk++) {
+                                if (options[kk].textContent.includes(Control_295Value)) {
+                                    Plant.selectedIndex = kk;
+                                    break;
+                                }
+                            }
+                        } else if (obj.id == "Control_284") {
+                            for (var kk = 0; kk < options.length; kk++) {
+                                if (options[kk].textContent.includes(Control_298Value)) {
+                                    Plant.selectedIndex = kk;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                },
+                err: function (err) {
+                }
+            })
+        }
+        if (obj.id == "Control_301")
+        {
+           // alert(obj.id);
+            var OAProduct1 = document.getElementById(obj.id);
+            var OAProduct2 = document.getElementById("Control_302");
+            var Product1 = OAProduct1.options[OAProduct1.selectedIndex].value;
+            Product1 = Product1.substr(0, Product1.indexOf(' '))
+            OAProduct2.options.length = 0;
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetProductClassification"))",
+                data: "{Product1:'" + Product1 + "'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    var json = eval(data);
+                    var optionstring = "";
+                    OAProduct2.add(new Option("select", ""));
+                    for (var i = 0; i < json.length; i++) {
+                        OAProduct2.add(new Option(json[i].ProductName, json[i].ProductName));
+                    }
+                },
+                err: function (err) {
+                }
+            })
+            document.getElementById("Control_302").selectedIndex = 0;
+            document.getElementById("Control_303").selectedIndex = 0;
+            document.getElementById("Control_314").selectedIndex = 0;
+            document.getElementById("Control_306").selectedIndex = 0;
+            document.getElementById("Control_305").selectedIndex = 0;
+            document.getElementById("Control_304").selectedIndex = 0;
+            document.getElementById("Control_307").selectedIndex = 0;
+            document.getElementById("Control_308").selectedIndex = 0;
+            document.getElementById("Control_309").selectedIndex = 0;
+            document.getElementById("Control_311").selectedIndex = 0;
+            document.getElementById("Control_312").selectedIndex = 0;
+            document.getElementById("Control_313").selectedIndex = 0;
+            document.getElementById("Control_310").selectedIndex = 0;
+            document.getElementById("Control_315").selectedIndex = 0;
+            document.getElementById("Control_316").selectedIndex = 0;
+        }
+
+        if (obj.id == "Control_302")
+        {
+           // alert(obj.id);
+            var OAProduct2 = document.getElementById(obj.id);
+            var OAProduct3 = document.getElementById("Control_303");
+            var Product2 = OAProduct2.options[OAProduct2.selectedIndex].value;
+            Product2 = Product2.substr(0, Product2.indexOf(' '))
+            OAProduct3.options.length = 0;
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetProductClassification"))",
+                data: "{Product1:'" + Product2 + "'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    var json = eval(data);
+                    var optionstring = "";
+                    if (json.length == 0) {
+                        OAProduct3.add(new Option(Product2 + "999", Product2 + "999"));
+                    } else {
+                        OAProduct3.add(new Option("select", ""));
+                        for (var i = 0; i < json.length; i++) {
+                            OAProduct3.add(new Option(json[i].ProductName, json[i].ProductName));
+                        }
+                    }
+                },
+                err: function (err) {
+                }
+            })
+
+            var Code1 = new Array("02062", "02063", "02064", "02065", "35001", "35002", "35003");
+            var Code2 = new Array("02067", "35004");
+            var Code3 = new Array("08011", "08012");
+            var Code4 = new Array("14005", "14009", "14006", "14007", "14060", "14061");
+            var Code5 = new Array("14006", "14007", "14060", "14061");
+            var Code6 = new Array("27060", "27061", "27062", "27063", "27064", "27065", "27066", "27067", "27068", "27069", "27070", "27073");
+
+            if (Product2 == '18005') {
+                document.getElementById("Name314").style.display = "table-cell";
+                document.getElementById("td_314").style.display = "table-cell";
+            } else {
+                document.getElementById("Name314").style.display = "none";
+                document.getElementById("td_314").style.display = "none";
+                document.getElementById("Control_314").selectedIndex = 0;
+            }
+            if (Product2 == '21004') {
+                document.getElementById("Name306").style.display = "table-cell";
+                document.getElementById("td_306").style.display = "table-cell";
+            } else {
+                document.getElementById("Name306").style.display = "none";
+                document.getElementById("td_306").style.display = "none";
+                document.getElementById("Control_306").selectedIndex = 0;
+            }
+            if (Product2 == '21003') {
+                document.getElementById("Name304").style.display = "table-cell";
+                document.getElementById("td_304").style.display = "table-cell";
+                document.getElementById("Name305").style.display = "table-cell";
+                document.getElementById("td_305").style.display = "table-cell";
+            } else if (Product2 == '21005') {
+                document.getElementById("Name304").style.display = "table-cell";
+                document.getElementById("td_304").style.display = "table-cell";
+                document.getElementById("Name305").style.display = "none";
+                document.getElementById("td_305").style.display = "none";
+                document.getElementById("Control_305").selectedIndex = 0;
+            } else {
+                document.getElementById("Name304").style.display = "none";
+                document.getElementById("td_304").style.display = "none";
+                document.getElementById("Control_304").selectedIndex = 0;
+                document.getElementById("Name305").style.display = "none";
+                document.getElementById("td_305").style.display = "none";
+                document.getElementById("Control_305").selectedIndex = 0;
+            }
+            if (Product2 == '21006') {
+                document.getElementById("Name307").style.display = "table-cell";
+                document.getElementById("td_307").style.display = "table-cell";
+                document.getElementById("Name308").style.display = "table-cell";
+                document.getElementById("td_308").style.display = "table-cell";
+            } else {
+                document.getElementById("Name307").style.display = "none";
+                document.getElementById("td_307").style.display = "none";
+                document.getElementById("Control_307").selectedIndex = 0;
+                document.getElementById("Name308").style.display = "none";
+                document.getElementById("td_308").style.display = "none";
+                document.getElementById("Control_308").selectedIndex = 0;
+            }
+            if (Product2 == '21048') {
+                document.getElementById("Name309").style.display = "table-cell";
+                document.getElementById("td_309").style.display = "table-cell";
+            } else {
+                document.getElementById("Name309").style.display = "none";
+                document.getElementById("td_309").style.display = "none";
+                document.getElementById("Control_309").selectedIndex = 0;
+            }
+            if (Code3.includes(Product2)) {
+                document.getElementById("Name311").style.display = "table-cell";
+                document.getElementById("td_311").style.display = "table-cell";
+            } else {
+                document.getElementById("Name311").style.display = "none";
+                document.getElementById("td_311").style.display = "none";
+                document.getElementById("Control_311").selectedIndex = 0;
+            }
+            if (Code4.includes(Product2)) {
+                document.getElementById("Name312").style.display = "table-cell";
+                document.getElementById("td_312").style.display = "table-cell";
+                if (Code5.includes(Product2)) {
+                    document.getElementById("Name313").style.display = "table-cell";
+                    document.getElementById("td_313").style.display = "table-cell";
+                } else {
+                    document.getElementById("Name313").style.display = "none";
+                    document.getElementById("td_313").style.display = "none";
+                    document.getElementById("Control_313").selectedIndex = 0;
+                }
+            } else {
+                document.getElementById("Name312").style.display = "none";
+                document.getElementById("td_312").style.display = "none";
+                document.getElementById("Control_312").selectedIndex = 0;
+                document.getElementById("Name313").style.display = "none";
+                document.getElementById("td_313").style.display = "none";
+                document.getElementById("Control_313").selectedIndex = 0;
+            }
+            if (Code6.includes(Product2)) {
+                document.getElementById("Name310").style.display = "table-cell";
+                document.getElementById("td_310").style.display = "table-cell";
+                document.getElementById("Name315").style.display = "table-cell";
+                document.getElementById("td_315").style.display = "table-cell";
+            } else {
+                document.getElementById("Name310").style.display = "none";
+                document.getElementById("td_310").style.display = "none";
+                document.getElementById("Control_310").selectedIndex = 0;
+                document.getElementById("Name315").style.display = "none";
+                document.getElementById("td_315").style.display = "none";
+                document.getElementById("Control_315").selectedIndex = 0;
+            }
+        }
+        if (obj.id == "Control_311") {
+            var OAProduct1 = document.getElementById(obj.id);
+            var Product1 = OAProduct1.options[OAProduct1.selectedIndex].value;
+            if (Product1 == 'Sticks') {
+                document.getElementById("Name316").style.display = "table-cell";
+                document.getElementById("td_316").style.display = "table-cell";
+            } else {
+                document.getElementById("Name316").style.display = "none";
+                document.getElementById("td_316").style.display = "none";
+                document.getElementById("Control_316").selectedIndex = 0;
+            }
+        }
+        if (obj.id == "Control_13") {
+            var Org13 = document.getElementById(obj.id);
+            var CBCode = Org13.options[Org13.selectedIndex].value;
+            var Plant14 = document.getElementById("Control_14");
+            Plant14.innerHTML="";
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetCBRBData"))",
+                data: "{CBCode:'" + CBCode + "', RBCode:'', tType:'CB'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    Plant14.add(new Option("Select", ""));
+                    for (var i = 0; i < data.length; i++) {
+                        Plant14.append(new Option(data[i], data[i]));
+                    }
+                    if (Control_14Value.length > 0) {
+                        var options = Plant14.options;
+                        for (var kk = 0; kk < options.length; kk++) {
+                            if (options[kk].textContent.includes(Control_14Value)) {
+                                Plant14.selectedIndex = kk;
+                                var RBCode = Plant14.options[Plant14.selectedIndex].value;
+                                var Plant15 = document.getElementById("Control_15");
+                                Plant15.innerHTML="";
+                                $.ajax({
+                                    type: "POST",
+                                    url: "@(Url.Content("~/WF/GetCBRBData"))",
+                                    data: "{CBCode:'" + CBCode + "', RBCode:'" + RBCode + "', tType:'RB'}",
+                                    contentType: "application/json;charset=utf-8",
+                                    success: function (data) {
+                                        Plant15.add(new Option("Select", ""));
+                                        for (var pp = 0; pp < data.length; pp++) {
+                                            Plant15.append(new Option(data[pp], data[pp]));
+                                        }
+                                        if (Control_15Value.length > 0) {
+                                            var options = Plant15.options;
+                                            for (var kk1 = 0; kk1 < options.length; kk1++) {
+                                                if (options[kk1].textContent.includes(Control_15Value)) {
+                                                    Plant15.selectedIndex = kk1;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        Control_15Value = "";
+                                    },
+                                    err: function (err) {
+                                    }
+                                })
+                                break;
+                            }
+                        }
+                    }
+                    Control_14Value = "";
+                },
+                err: function (err) {
+                }
+            })
+        }
+        if (obj.id == "Control_14") {
+            var Org13 = document.getElementById("Control_13");
+            var CBCode = Org13.options[Org13.selectedIndex].value;
+            var Org14 = document.getElementById(obj.id);
+            var RBCode = Org14.options[Org14.selectedIndex].value;
+            var Plant15 = document.getElementById("Control_15");
+            Plant15.innerHTML="";
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GetCBRBData"))",
+                data: "{CBCode:'" + CBCode + "', RBCode:'" + RBCode + "', tType:'RB'}",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    Plant15.add(new Option("Select", ""));
+                    for (var i = 0; i < data.length; i++) {
+                        Plant15.append(new Option(data[i], data[i]));
+                    }
+                },
+                err: function (err) {
+                }
+            })
+        }
+        if (obj.id == "Control_36") {
+            $.post("@(Url.Content("~/WF/GetPHCodeByPHDetails"))", { Province: $.trim($("#Control_227").val()), PHDetails: $.trim($("#Control_36").val()) }, function (json) {
+                if (json.Success) {
+                    $("#Control_35").val(json.ShowValue);
+                }
+                else {
+                    //alert("Sorry, failed!");
+                }
+            });
+        }
+
+        var text = $(obj).val();
+        var payterms = "X019 100% Advance Payment,ZC14 Payable immediatelly,Z071 Due within 15 days of invoice date,Z018 Due within 30 days of invoice date,Z059 Due within 30 days of Bill of Lading,Z061 Due within 45 days of Bill of Lading,Z025 Due within 45 days of invoice date,";
+        var optionsText = $(obj).text();
+        if (optionsText.indexOf("within 120 days") >= 0) {
+            $("#DivPaymentTerms").hide();
+        }
+
+        if (optionsText.toLowerCase().indexOf("no vendor site") >= 0) {
+            $("#DivLinkedVendor").hide();
+        }
+
+        if (payterms.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+            $("#DivPaymentTerms").show();
+        }
+        else if (text.toLowerCase().indexOf("other") == 0) {
+            if (optionsText.toLowerCase().indexOf("no vendor site") >= 0) {
+                $("#DivLinkedVendor").show();
+            }
+            else {
+                // $(obj).parent().append("<input type=\"text\" class=\"input\" onchange=\"pushOptions(this);\"/>");
+                if ($(obj).next()[0].name != "otherinput") {
+                    $(obj).after("<input type=\"text\"  id=\"otherinput\" name=\"otherinput\" class=\"input2\" onchange=\"pushOptions(this);\"/>");
+                }
+            }
+        }
+        else if (text.toLowerCase().indexOf("parent product as itself") == 0) {
+            if ($("#otherinput")[0])
+            {
+                $("#otherinput").remove();
+            }
+        }
+    }
+
+    function CopyRequest() {
+        if (!window.showModalDialog) {
+            myShowModalDialog("@(Url.Content("~/WF/RequestList"))", 1200, 800, function (str) {
+                if (str == null) return;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Content("~/WF/GetRequestVersionById"))",
+                    data: "{strId:'" + str + "'}",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        var json = eval(data);
+                        for (var i = 0; i < json.length; i++) {
+                            if (document.getElementById("Control_" + json[i].Id) != null) {
+                                document.getElementById("Control_" + json[i].Id).value = json[i].Value;
+                            }
+                        }
+                    },
+                    err: function (err) {
+                    }
+                });
+            });
+            return;
+        }
+    }
+
+    function CopyRequestData() {
+        if (!window.showModalDialog) {
+            if ($("#Control_227").val().length == 0 || $("#Control_228").val().length == 0) {
+                alert('请先选择BU和BU Branch！');
+                return;
+            }
+            if ($("#Control_228").val().length == 0) {
+                alert('请先选择！');
+                return;
+            }
+            myShowModalDialog("@(Url.Content("~/WF/RequestListData?RequestID="))" + $.trim($("#RequestID").val()), 1200, 800, function (dataInfo) {
+            if (dataInfo == null) return;
+
+            const properties = Object.keys(dataInfo).sort();
+
+            Control_14Value = dataInfo["data14"];
+            Control_15Value = dataInfo["data15"];
+            Control_29Value = dataInfo["data29"];
+            Control_295Value = dataInfo["data295"];
+            Control_298Value = dataInfo["data298"];
+            for (var i = 0; i < properties.length; i++) {
+                if (dataInfo[properties[i]] == null || dataInfo[properties[i]].length == 0 || properties[i] == "data16") { continue; }
+
+                var documentEle = document.getElementById("Control_" + properties[i].replace("data", ""));
+                if (properties[i] == "data5" || properties[i] == "data278" || properties[i] == "data292") {
+                    SetCheckBoxValue("Control_" + properties[i].replace("data", ""), dataInfo[properties[i]]);
+                    continue;
+                }
+                var documentEle = document.getElementById("Control_" + properties[i].replace("data", ""));
+                if (documentEle != null) {
+                    if (documentEle.type.includes('select')) {
+                        SetSelectValue(properties[i], documentEle, dataInfo[properties[i]])
+                    } else {
+                        documentEle.value = dataInfo[properties[i]];
+                        if (properties[i] == "data35") {
+                        $.post("@(Url.Content("~/WF/GetPHDES"))", { L5Code: $.trim($("#Control_35").val()) }, function (json) {
+                            if (json.Success) {
+                                SetSelectValue("data36", document.getElementById("Control_36"), json.L5Des);
+                            }
+                        });
+                    }
+                    }
+                }
+            }
+        });
+        return;
+        }
+
+        function SetCheckBoxValue(docId, docValue) {
+            docValue = docValue.substring(0, docValue.length - 1);
+            var valArr = docValue.split(';');
+            var valSelect = "";
+            $("#" + docId).parent().siblings().children().children().each(function () {
+                if (valArr.filter(o => $(this).find("span").text().includes(o)).length > 0) {
+                    $(this).find("input").prop("checked", true);
+                    valSelect += $(this).find("span").text() + ",";
+                }
+            });
+            $("#" + docId).val("");
+            $("#" + docId + "Selected").val("");
+            if (valSelect.length > 0) {
+                $("#" + docId).val(valSelect.substring(0, valSelect.length - 1));
+                $("#" + docId + "Selected").val(valSelect.substring(0, valSelect.length - 1));
+            }
+        }
+
+        function SetSelectValue(properties, docId, docValue) {
+            var options = docId.options;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].textContent.includes(docValue)) {
+                    docId.selectedIndex = i;
+                    if (properties == "data13" || properties == "data14"
+                        || properties == "data3" || properties == "data265" || properties == "data284") {
+                        selectedIndexChanged(docId);
+                    }
+                    return;
+                }
+            }
+        }
+}
+
+</script>
+
+@if (Model == null)
+{
+    <script type="text/javascript">
+        $(function () {
+        var html = "";
+        html += "Does the vendor exist in SAP?";
+        html += "<BR />";
+        html += "Please check first before you create the new one.";
+        html += "<BR />";
+        html += "<a href='#' style='text-decoration:underline;color:blue;' onclick='window.open(\"@(Url.Content("~/Help/Index"))\");'>Please click here for QRC: How to search vendor in SAP</a>";
+
+            pop(html);
+        });
+    </script>
+}
+<script type="text/javascript">
+
+    $(function () {
+        var ids = $("#autoCompleteIds").val();
+        if (ids == null) return;
+        var arr = ids.split(',');
+        $(arr).each(function () {
+            if (this != "") {
+                autoComplete(this);
+            }
+        });
+
+        selectedIndexChanged(document.getElementById("Control_44"));
+        selectedIndexChanged(document.getElementById("Control_47"));
+    });
+
+    $(document).ready(function () {
+        //$("#Control_36").focus(function () { // 这个是Creation的【Product Hierarchy Description】
+        //    $.post("@(Url.Content("~/WF/GetPHDES"))", { L5Code: $.trim($("#Control_35").val()) }, function (json) {
+        //        if (json.Success) {
+        //            $("#Control_36").val(json.L5Des);
+        //        }
+        //        else {
+        //            //alert("Sorry, failed!");
+        //        }
+        //    });
+        //});
+        $("#Control_75").focus(function () { // 这个是Extend Plant的【Product Hierarchy Description】
+            $.post("@(Url.Content("~/WF/GetPHDES"))", { L5Code: $.trim($("#Control_74").val()) }, function (json) {
+                if (json.Success) {
+                    $("#Control_75").val(json.L5Des);
+                }
+                else {
+                    //alert("Sorry, failed!");
+                }
+            });
+        });
+
+        $("#Control_35").focus(function () {
+            $("#Control_36").val("");
+        });
+        $("#Control_74").focus(function () {
+            $("#Control_75").val("");
+        });
+
+        //Control_3
+        $("#Control_228").change(function () {
+            $("#Control_4").val("");
+            $("#Control_29").val("");
+            $.post("@(Url.Content("~/WF/GetBusiness"))", { Bu: $.trim($("#Control_227").val()), Branch: $.trim($("#Control_228").val()) }, function (json) {
+                if (json.Success) {
+                    // $("#Control_36").val(json.Business);HK Chilled Pak Fook
+                   // $("Control_2 option[text='"+ json.Business + "'").attr("selected", true);
+                  //  $("Control_2 option[text='HK Chilled Pak Fook'").attr("selected", true);
+                    $("select[id='Control_2']>option").each(function () {
+                        if ($(this).text() == json.Business)
+                            $(this).attr("selected","selected")
+                    });
+                    $("#Control_2").attr("style", "background-color: #EEEEEE")
+                    $("#Control_2").attr("disabled", true)
+                }
+                else {
+                    //alert("Sorry, failed!");
+                }
+            });
+
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".textboxValues").each(function () {
+            var id = this.id;
+            var textboxId = id.replace("Values", "");
+            var _value = $("#" + textboxId).val();
+            var data = "";
+            var arr = $(this).val().split(',');
+            for (var i = 0; i < arr.length; i++) {
+                var str = arr[i];
+                if (str != "") {
+                    if (data != "") data += "|";
+                    data += "{k:\"" + str + "\",v:\"" + str + "\"}";
+                }
+            }
+
+            $("#" + textboxId).MultDropList({ data: data });
+            $("#" + textboxId).val(_value);
+        });
+    });
+</script>
+
+
+
+<script>
+    /**
+     * help hip bluefish 2019.9.26
+     */
+    ;
+    (function ($, window, document, undefined) {
+        var modePos;
+        $.fn.tip = function (options) {
+            var set = $.extend({
+                "mode": "bottom",
+                "speed": 300,
+                "tipText": "content"
+            }, options);
+            if (!modePos) {
+                modePos = {
+                    top: function (t, tip) {
+                        return {
+                            left: t.offset().left + (t.width() - tip.width()) / 2 + "px",
+                            top: t.offset().top - tip.height() - 12 + "px"
+                        }
+                    },
+                    bottom: function (t, tip) {
+                        return {
+                            left: this.top(t, tip).left,
+                            top: t.offset().top + t.height() + 12 + "px"
+                        }
+                    },
+                    left: function (t, tip) {
+                        return {
+                            left: t.offset().left - tip.width() - 12 + "px",
+                            top: t.offset().top + (t.height() - tip.height()) / 2 + "px"
+                        }
+                    },
+                    right: function (t, tip) {
+                        return {
+                            left: t.offset().left + t.width() + 12 + "px",
+                            top: t.offset().top + (t.height() - tip.height()) / 2 + "px"
+                        }
+                    }
+                };
+            }
+
+            function Tip(_this) {
+                var _that = $(_this);
+                var _mode = set.mode;
+                var tipText = set.tipText;
+                var _tip = ".tip-container";
+                if (_that.data("mode")) {
+                    _mode = _that.data("mode");
+                }
+                if (_that.data("tip")) {
+                    tipText = _that.data("tip");
+                }
+                _that.css("cursor", "pointer");
+                _that.hover(function () {
+                    var _tipHtml = '<div class="tip-container"><div class="tip-point-' + _mode + '"><div class="tip-content">' + tipText + '</div></div></div>';
+                    _that.removeAttr("title alt");
+                    $("body").append(_tipHtml);
+                    $(_tip).css(modePos[_mode](_that, $(_tip))).fadeIn(set.speed);
+                }, function () {
+                    $(".tip-container").remove();
+                });
+            }
+            return this.each(function () {
+                return new Tip(this);
+            });
+        }
+    })(jQuery, window, document);
+    $(".tip").tip();
+</script>
+
+<SCRIPT type="text/javascript">
+		/*
+         * zTree bluefish 2019.9.26
+         * */
+    var setting = {
+        check: {
+            enable: true,
+            chkboxType: { "Y": "", "N": "" }
+        },
+        view: {
+            dblClickExpand: false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            beforeClick: beforeClick,
+            onCheck: onCheck
+        }
+    };
+
+
+
+
+
+
+    function beforeClick(treeId, treeNode) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.checkNode(treeNode, !treeNode.checked, null, true);
+        //var zTree2 = $.fn.zTree.getZTreeObj("treeDemo2");
+        //zTree2.checkNode(treeNode, !treeNode.checked, null, true);
+        var zTree3 = $.fn.zTree.getZTreeObj("treeDemo3");
+        zTree3.checkNode(treeNode, !treeNode.checked, null, true);
+        var zTree4 = $.fn.zTree.getZTreeObj("treeDemo4");
+        zTree4.checkNode(treeNode, !treeNode.checked, null, true);
+        //var zTree5 = $.fn.zTree.getZTreeObj("treeDemo5");
+        //zTree5.checkNode(treeNode, !treeNode.checked, null, true);
+        //var zTree6 = $.fn.zTree.getZTreeObj("treeDemo6");
+        //zTree6.checkNode(treeNode, !treeNode.checked, null, true);
+        return false;
+    }
+
+    function onCheck(e, treeId, treeNode) {
+        if (treeId == "treeDemo") {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+                nodes = zTree.getCheckedNodes(true),
+                v = "";
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                if (i > 0) v += ",";
+                v += $.trim(nodes[i].name);
+            }
+            //if (v.length > 0) v = v.substring(0, v.length - 1);
+            var cityObj = $("#Control_4");
+            var cityObj1 = $("#Control_65");
+            var cityObj2 = $("#Control_166");
+            cityObj.attr("value", v);
+            cityObj1.attr("value", v);
+            cityObj2.attr("value", v);
+        }
+
+        //if (treeId == "treeDemo2") {
+        //    var zTree2 = $.fn.zTree.getZTreeObj("treeDemo2"),
+        //        nodes2 = zTree2.getCheckedNodes(true),
+        //        v2 = "";
+        //    for (var i = 0, l = nodes2.length; i < l; i++) {
+        //        if (i > 0) v2 += ",";
+        //        v2 += $.trim(nodes2[i].name);
+        //    }
+        //    //if (v2.length > 0) v2 = v2.substring(0, v2.length - 1);
+        //    var cityObj2 = $("#Control_29");
+        //    cityObj2.attr("value", v2);
+        //}
+        if (treeId == "treeDemo3") {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo3"),
+                nodes = zTree.getCheckedNodes(true),
+                v = "";
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                if (i > 0) v += ",";
+                v += $.trim(nodes[i].name);
+            }
+            //if (v.length > 0) v = v.substring(0, v.length - 1);
+            var cityObj = $("#Control_275");
+            var cityObj1 = $("#Control_276");
+            var cityObj2 = $("#Control_277");
+            cityObj.attr("value", v);
+            cityObj1.attr("value", v);
+            cityObj2.attr("value", v);
+        }
+        if (treeId == "treeDemo4") {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo4"),
+                nodes = zTree.getCheckedNodes(true),
+                v = "";
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                if (i > 0) v += ",";
+                v += $.trim(nodes[i].name);
+            }
+            //if (v.length > 0) v = v.substring(0, v.length - 1);
+            var cityObj = $("#Control_289");
+            var cityObj1 = $("#Control_290");
+            var cityObj2 = $("#Control_291");
+            cityObj.attr("value", v);
+            cityObj1.attr("value", v);
+            cityObj2.attr("value", v);
+        }
+        //if (treeId == "treeDemo5") {
+        //    var zTree5 = $.fn.zTree.getZTreeObj("treeDemo5"),
+        //        nodes5 = zTree5.getCheckedNodes(true),
+        //        v5 = "";
+        //    for (var i = 0, l = nodes5.length; i < l; i++) {
+        //        if (i > 0) v5 += ",";
+        //        v5 += $.trim(nodes5[i].name);
+        //    }
+        //    var cityObj5 = $("#Control_295");
+        //    cityObj5.attr("value", v5);
+        //}
+        //if (treeId == "treeDemo6") {
+        //    var zTree6 = $.fn.zTree.getZTreeObj("treeDemo6"),
+        //        nodes6 = zTree2.getCheckedNodes(true),
+        //        v6 = "";
+        //    for (var i = 0, l = nodes6.length; i < l; i++) {
+        //        if (i > 0) v6 += ",";
+        //        v6 += $.trim(nodes6[i].name);
+        //    }
+        //    var cityObj6 = $("#Control_298");
+        //    cityObj6.attr("value", v6);
+        //}
+    }
+
+    function showMenu() {
+
+        var zNodes;
+        var CompanyCode = "";
+        if ($("#Control_3").val() != undefined) {
+            CompanyCode = $("#Control_3").val();
+        } else if ($("#Control_64").val() != undefined) {
+            CompanyCode = $("#Control_64").val();
+        } else if ($("#Control_165").val() != undefined) {
+            CompanyCode = $("#Control_165").val();
+        }
+        if (CompanyCode == "" || CompanyCode == null)
+        {
+            alert("Please Select Sales Organization");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "@(Url.Content("~/WF/GetPlant"))",
+
+            data: "{CompanyCode:'" + CompanyCode+"'}",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                zNodes = data;
+
+            },
+            err: function (err) {
+            }
+        });
+        var zTree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        //var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        var test = "泉州";
+        var menuIds = test.split(',');
+        for (var i = 0; i < menuIds.length; i++) {
+
+            //zTree.checkNode(node, true, true);
+
+            var node = zTree.getNodeByParam("name", menuIds[i]);
+            if (node != null) {
+                zTree.checkNode(node, true)
+            }
+        }
+
+        zTree.expandAll(true);
+
+        var cityObj = "";
+        var cityOffset = "";
+        if ($("#Control_3").val() != undefined) {
+            cityObj = $("#Control_4");
+            cityOffset = $("#Control_4").offset();
+        } else if ($("#Control_64").val() != undefined) {
+            cityObj = $("#Control_65");
+            cityOffset = $("#Control_65").offset();
+        } else if ($("#Control_165").val() != undefined) {
+            cityObj = $("#Control_166");
+            cityOffset = $("#Control_166").offset();
+        }
+        $("#menuContent").css({ left: cityOffset.left + "px", top: cityOffset.top + cityObj.outerHeight() + "px" }).slideDown("fast");
+
+
+        //ztree2 beging
+
+        //var zTree2 = $.fn.zTree.init($("#treeDemo2"), setting, zNodes);
+        ////var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //var test2 = "泉州";
+        //var menuIds2 = test2.split(',');
+        //for (var i = 0; i < menuIds2.length; i++) {
+
+        //    //zTree.checkNode(node, true, true);
+
+        //    var node2 = zTree2.getNodeByParam("name", menuIds2[i]);
+        //    if (node2 != null) {
+        //        zTree2.checkNode(node2, true)
+        //    }
+        //}
+
+        //zTree2.expandAll(true);
+
+        //var cityObj2 = $("#Control_29");
+        //var cityOffset2 = $("#Control_29").offset();
+        //$("#menuContent2").css({ left: cityOffset2.left + "px", top: cityOffset2.top + cityObj2.outerHeight() + "px" }).slideDown("fast");
+
+        $("body").bind("mousedown", onBodyDown);
+    }
+
+    @*function showMenu2(e) {
+
+        var CompanyCode;
+        if ($("#Control_3").val() != undefined) {
+            CompanyCode = $("#Control_3").val();
+        } else if ($("#Control_64").val() != undefined) {
+            CompanyCode = $("#Control_64").val();
+        } else if ($("#Control_165").val() != undefined) {
+            CompanyCode = $("#Control_165").val();
+        }
+        if (CompanyCode == "" || CompanyCode == null)
+        {
+            alert("Please Select Sales Organization");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "@(Url.Content("~/WF/GetPlantByOrg"))",
+
+            data: "{CompanyCode:'" + CompanyCode+"'}",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                $(e).empty();
+                $(e).append('<option value=""></option>')
+                for (var i = 0; i < data.length; i++) {
+                    $(e).append('<option value="' + data[i] + '">' + data[i] + '</option>')
+                }
+            },
+            err: function (err) {
+            }
+        });
+
+        //var zTree2 = $.fn.zTree.init($("#treeDemo2"), setting, zNodes);
+        ////var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //var test2 = "泉州";
+        //var menuIds2 = test2.split(',');
+        //for (var i = 0; i < menuIds2.length; i++) {
+
+        //    //zTree.checkNode(node, true, true);
+
+        //    var node2 = zTree2.getNodeByParam("name", menuIds2[i]);
+        //    if (node2 != null) {
+        //        zTree2.checkNode(node2, true)
+        //    }
+        //}
+
+        //zTree2.expandAll(true);
+
+        //var cityObj2 = $("#Control_29");
+        //var cityOffset2 = $("#Control_29").offset();
+        //$("#menuContent2").css({ left: cityOffset2.left + "px", top: cityOffset2.top + cityObj2.outerHeight() + "px" }).slideDown("fast");
+
+        //$("body").bind("mousedown", onBodyDown);
+    }*@
+
+    function showMenu3() {
+
+        // $(document).ready(function () {
+        var zNodes;
+        var CompanyCode = "";
+        if ($("#Control_265").val() != undefined) {
+            CompanyCode = $("#Control_265").val();
+        } else if ($("#Control_267").val() != undefined) {
+            CompanyCode = $("#Control_267").val();
+        } else if ($("#Control_269").val() != undefined) {
+            CompanyCode = $("#Control_269").val();
+        }
+        if (CompanyCode == "" || CompanyCode == null) {
+            alert("Please Select Sales Organization");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "@(Url.Content("~/WF/GetPlant"))",
+
+            data: "{CompanyCode:'" + CompanyCode + "'}",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                zNodes = data;
+
+            },
+            err: function (err) {
+            }
+        });
+        var zTree = $.fn.zTree.init($("#treeDemo3"), setting, zNodes);
+        //var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        var test = "泉州";
+        var menuIds = test.split(',');
+        for (var i = 0; i < menuIds.length; i++) {
+
+            //zTree.checkNode(node, true, true);
+
+            var node = zTree.getNodeByParam("name", menuIds[i]);
+            if (node != null) {
+                zTree.checkNode(node, true)
+            }
+        }
+
+        zTree.expandAll(true);
+
+        var cityObj = $("#Control_275");
+        var cityOffset = $("#Control_275").offset();
+
+        var cityObj = "";
+        var cityOffset = "";
+        if ($("#Control_265").val() != undefined) {
+            cityObj = $("#Control_275");
+            cityOffset = $("#Control_275").offset();
+        } else if ($("#Control_267").val() != undefined) {
+            cityObj = $("#Control_276");
+            cityOffset = $("#Control_276").offset();
+        } else if ($("#Control_269").val() != undefined) {
+            cityObj = $("#Control_277");
+            cityOffset = $("#Control_277").offset();
+        }
+        $("#menuContent3").css({ left: cityOffset.left + "px", top: cityOffset.top + cityObj.outerHeight() + "px" }).slideDown("fast");
+
+        $("body").bind("mousedown", onBodyDown);
+    }
+
+    function showMenu4() {
+
+           // $(document).ready(function () {
+        var zNodes;
+        var CompanyCode = "";
+        if ($("#Control_284").val() != undefined) {
+            CompanyCode = $("#Control_284").val();
+        } else if ($("#Control_286").val() != undefined) {
+            CompanyCode = $("#Control_286").val();
+        } else if ($("#Control_288").val() != undefined) {
+            CompanyCode = $("#Control_288").val();
+        }
+        if (CompanyCode == "" || CompanyCode == null)
+        {
+            alert("Please Select Sales Organization");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "@(Url.Content("~/WF/GetPlant"))",
+
+            data: "{CompanyCode:'" + CompanyCode+"'}",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                zNodes = data;
+
+            },
+            err: function (err) {
+            }
+        });
+        var zTree = $.fn.zTree.init($("#treeDemo4"), setting, zNodes);
+        //var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        var test = "泉州";
+        var menuIds = test.split(',');
+        for (var i = 0; i < menuIds.length; i++) {
+
+            //zTree.checkNode(node, true, true);
+
+            var node = zTree.getNodeByParam("name", menuIds[i]);
+            if (node != null) {
+                zTree.checkNode(node, true)
+            }
+        }
+
+        zTree.expandAll(true);
+
+        var cityObj = "";
+        var cityOffset = "";
+        if ($("#Control_284").val() != undefined) {
+            cityObj = $("#Control_289");
+            cityOffset = $("#Control_289").offset();
+        } else if ($("#Control_286").val() != undefined) {
+            cityObj = $("#Control_290");
+            cityOffset = $("#Control_290").offset();
+        } else if ($("#Control_288").val() != undefined) {
+            cityObj = $("#Control_291");
+            cityOffset = $("#Control_291").offset();
+        }
+        $("#menuContent4").css({ left: cityOffset.left + "px", top: cityOffset.top + cityObj.outerHeight() + "px" }).slideDown("fast");
+
+        $("body").bind("mousedown", onBodyDown);
+    }
+
+    function getModelId() {
+        if (globalJsonModel != null) {
+            return globalJsonModel.Id;
+        }
+
+        var url = location.href;
+        if (url.indexOf("?id=") > 0) {
+            var id = url.substr(url.indexOf("?") + 4);
+            return parseInt(id);
+        }
+
+        return 0;
+    }
+    ///
+    function hideMenu() {
+        $("#menuContent").fadeOut("fast");
+        $("body").unbind("mousedown", onBodyDown);
+        $("#menuContent2").fadeOut("fast");
+        $("#menuContent3").fadeOut("fast");
+        $("#menuContent4").fadeOut("fast");
+        $("#menuContent5").fadeOut("fast");
+        $("#menuContent6").fadeOut("fast");
+    }
+    function onBodyDown(event) {
+        if (!(event.target.id == "menuBtn" || event.target.id == "Control_4" || event.target.id == "Control_275" || event.target.id == "Control_289"
+            || event.target.id == "Control_29" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length > 0
+            || event.target.id == "menuContent2" || $(event.target).parents("#menuContent2").length > 0 || event.target.id == "menuContent3"
+            || $(event.target).parents("#menuContent3").length > 0 || event.target.id == "menuContent4" || $(event.target).parents("#menuContent4").length > 0
+            || event.target.id == "menuContent5" || $(event.target).parents("#menuContent5").length > 0 || event.target.id == "menuContent6" || $(event.target).parents("#menuContent6").length > 0)) {
+            hideMenu();
+        }
+    }
+
+
+
+    //var test = "~/WF/Packaging?RequestID=" + workFlowRequestVersionId;
+    $('#manager').on('click', function () {
+        var workFlowRequestVersionId = getModelId();
+        layer.open({
+            type: 2,
+            title: "Add Packagin Info",
+            maxmin: false,
+            shadeClose: false,
+            area: ['800px', '600px'],
+            //area: ['400px', '420px'],
+
+            content: "@Url.Content("~/WF/Packaging?RequestID=")"+ workFlowRequestVersionId
+        });
+    });
+
+
+
+
+        //-->
+</SCRIPT>
+@Html.Raw(ViewBag.Json)

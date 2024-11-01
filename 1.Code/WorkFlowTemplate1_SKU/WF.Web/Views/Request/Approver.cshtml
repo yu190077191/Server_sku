@@ -1,0 +1,30 @@
+﻿@using WF.BusinessRule;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<ApproverItem>
+@{
+    ViewBag.Title = "Business Requests";
+}
+
+<div style="padding:30px 50px;line-height:30px;font-size:14px;height:auto;">
+    <div id="searchDiv" style="float:left;margin-bottom:5px;">
+        <select id='filterStatus' class="inputfl" style="width:100px;">
+            <option value="">Status</option>
+            <option value="0">@(Html.Lang("Draft"))</option>
+            <option value="1">@(Html.Lang("Submitted"))</option>
+            <option value="2">@(Html.Lang("Approved"))</option>
+            <option value="3">@(Html.Lang("Rejected"))</option>
+            <option value="8">@(Html.Lang("Withdrawn"))</option>
+        </select>
+
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="search(1);">@(Html.Lang("Search"))</button>
+    </div>
+    <div style="clear:both;"></div>
+    <hr />
+    <div class="rightDiv" style="width:100%;padding-left:0;margin-left:0;">
+        <div id="searchResult">
+            @{ Html.RenderPartial("PartialApproverItemList", Model); }
+        </div>
+    </div>
+</div>

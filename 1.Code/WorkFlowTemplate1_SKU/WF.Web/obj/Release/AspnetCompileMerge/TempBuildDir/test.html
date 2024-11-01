@@ -1,0 +1,306 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="SHORTCUT ICON" href="/Nestle/favicon.ico" />
+    <link rel="Bookmark" href="/Nestle/favicon.ico" />
+    <title>ProjectRequirement</title>
+    <link href="/Content/themes/base/jquery.ui.all.css" rel="Stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/styles.css" rel="stylesheet" media="screen" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/newNav.css" rel="stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/css.css" rel="stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/front.css" rel="Stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/header.css" rel="Stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/register.css" type="text/css" rel="stylesheet" />
+
+    <link href="/Nestle/Themes/Blue/css/requester.css" rel="Stylesheet" type="text/css" />
+    <link href="/Nestle/Themes/Blue/css/admin.css" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Nestle/Scripts/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/json2.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/nestle.json.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/jquery.watermark.min.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/jquery.ui.datepicker.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/layout.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/Dialog/popup.js"></script>
+    <script type="text/javascript" src="/Nestle/Scripts/admin.js"></script>
+    <script type="text/javascript">
+        function getRootUrl() {
+            return "/";
+        }
+        function getLanguage() {
+            return "English";
+        }
+    </script>
+
+
+</head>
+<body style="background: url(/Nestle/themes/Blue/images/body.gif) repeat-y center 0 #EAE2CC;">
+    <div id="container" class="container" style="width: 1000px;margin: 0 auto; background:url(/Nestle/Themes/Blue/images/head.gif) repeat-x 0 0;">
+        <div id="mainBody">
+            <div class="head" style="width: 998px; height: 93px; border: 1px solid #FFF; border-top: none;
+            border-bottom: none; overflow: hidden">
+                <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 0px; height: 100px;"
+                       align="left" title="Credit Release Request">
+                    <tr>
+                        <td style="padding-left: 10px;">
+                            <div style="width:720px;height:49px;background:URL(/Nestle/logo.png) no-repeat;">
+                                <span style="float:left;margin-left:350px;padding-top:18px;font-size:24px;color:#AA5566;">
+                                    <span>Business Requirement Management</span>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table id="welcome" cellpadding="0" cellspacing="0" border="0" class="right" style="margin-top:15px;">
+                    <tr> <td align="right" style="padding-right:20px;"></td></tr>
+                    <tr>
+                        <td style="padding-right:20px;padding-top:8px;">
+
+                            <span>Welcome, NESTLE\CNLuMa2</span>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- head -->
+            <div id="navigateDiv" class="newNav">
+                <div class="newNavEnds_left">
+                </div>
+                <ul>
+                    <!-- newNavEnds_left -->
+                    <li class="more"><a href="/">Home</a></li>
+                    <li><a href="/Request/ProjectRequirementList">Project Requests</a></li>
+                    <li><a href="/WorkFlowAPI/Roles">Roles</a></li>
+                </ul>
+                <div class="newNavEnds_right">
+                </div>
+                <!-- newNavEnds_right -->
+            </div>
+            <!-- newNav -->
+            <div class="search">
+                <div class="search_left left">
+                </div>
+                <table class="search_table left" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td height="41" width="688"></td>
+                        <td width="26"></td>
+                        <td width="10">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+                <div class="search_right right">
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+
+
+            <div class="main">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                ProjectRequirement
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="tdLeft">
+                            Title:
+                        </td>
+                        <td class="tdRight2">
+                            <input type="text" id="Title" class="input" style="width: 698px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Requirement:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="Requirement" style="width:700px;height:200px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Current Situation:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="CurrentSituation" style="width:700px;height:50px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Priority:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="Priority" style="width:700px;height:50px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Justification:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="Justification" style="width:700px;height:150px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Financial Savings:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="FinancialSavings" style="width:700px;height:80px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Risk of not doing this change:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="RiskOfNotDoingThisChange" style="width:700px;height:80px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdLeft">
+                            Contact:
+                        </td>
+                        <td class="tdRight2">
+                            <textarea id="Contact" style="width:700px;height:50px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr id='buttonTR'>
+                        <td colspan="4" align="center" style="height: 60px;">
+                            <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                    onmouseout="this.className='button'" onclick="save();">
+                                Save
+                            </button>
+                            <button onclick="next();">
+                                Next
+                            </button>
+                            <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                    onmouseout="this.className='button'" onclick="closeWindow();">
+                                Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <script type="text/javascript">
+                function getModel() {
+                    var elementIds = ",Title,Requirement,CurrentSituation,Priority,Justification,FinancialSavings,RiskOfNotDoingThisChange";
+                    elementIds += ",Contact";
+                    if (checkElements(elementIds)) {
+                        var model = new Object();
+                        model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+                        //model.Status = getValue("Status", true, "int");
+                        model.Title = getValue("Title", true, "string");
+                        model.Requirement = getValue("Requirement", true, "string");
+                        model.CurrentSituation = getValue("CurrentSituation", false, "string");
+                        model.Priority = getValue("Priority", false, "string");
+                        model.Justification = getValue("Justification", true, "string");
+                        model.FinancialSavings = getValue("FinancialSavings", false, "string");
+                        model.RiskOfNotDoingThisChange = getValue("RiskOfNotDoingThisChange", false, "string");
+                        model.Contact = getValue("Contact", false, "string");
+                        //model.Note = getValue("Note", true, "string");
+
+                        if (requiredIsEmpty()) {
+                            alert("Required fields cannot be empty!");
+                            return "";
+                        }
+                        else {
+                            return $.toJSON(model);
+                        }
+                    }
+                    else {
+                        return "";
+                    }
+                }
+
+                $.ajaxSetup({ cache: false });
+
+                var id = 0;
+                function save() {
+                    saveModel(function () {
+                        popOK(function () {
+                            if (location.href.indexOf("?") > 0) {
+                                closeWindow();
+                            }
+                            else {
+                                location.href = getRootUrl() + "Request/ProjectRequirementList";
+                            }
+                        });
+                    });
+                }
+
+                var isRunning = false;
+                function next() {
+                    if (isRunning) return;
+                    saveModel(function () {
+                        location.href = getRootUrl() + "Request/Approvers?id=" + id.toString();
+                    });
+                }
+
+                function saveModel(callback) {
+                    if (isRunning) return;
+                    var model = getModel();
+                    if (model == "") return;
+                    $("#buttonTR").css({ "display": "none" });
+                    isRunning = true;
+                    $.post(getRootUrl() + "Request/SaveProjectRequirement", { json: model }, function (json) {
+                        if (json.Success) {
+                            id = json.Id;
+                            if (callback) {
+                                callback();
+                            }
+                        }
+                        else {
+                            popFailure();
+                            $("#buttonTR").css({ "display": "" });
+                        }
+                    });
+                }
+            </script>
+            <script id="jsonModelJs" type="text/javascript">
+                var jsonModel = { "Id": 2, "UserName": "Lu,Max,BEIJING,GLOBE IS/IT", "Status": 0, "Title": "基于工作流平台的审批系统", "Requirement": "建立基于工作流平台的审批系统，以利于现有流程的更新。", "CurrentSituation": "没有平台，开发费时。", "Priority": "普通优先级", "Justification": "利于现有流程的更新。", "FinancialSavings": "不一定省钱，但能提高效率。", "RiskOfNotDoingThisChange": "不开发也没有大影响", "Contact": "84348770", "Note": null };
+            </script>
+
+            <div class="foot_top">
+            </div>
+        </div>
+        <!-- foot_top -->
+        <div id="footer" class="foot marginAuto" style="width:973px; border-top:1px solid #e0e0e0; padding-top:20px; height:69px; clear:both; margin:0 auto;">
+            <p>
+                Nestle (China) Ltd.
+            </p>
+        </div>
+        <!-- foot -->
+    </div>
+    <div id="loadingTip">
+        <img src="/Nestle/Themes/Blue/images/loading.gif" alt="loading..." />
+    </div>
+
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"InternetExplorer","requestId":"ce365e72d4a247438969929eeddf6966"}
+    </script>
+    <script type="text/javascript" src="http://localhost:52240/58c48e021c5a4765adc9db64dce6c2b4/browserLink" async="async"></script>
+    <!-- End Browser Link -->
+
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (document.getElementById("searchResult") == null) {
+            ajustBodyHeight();
+        }
+    });
+</script>

@@ -1,0 +1,43 @@
+﻿@using MVC4Pager;
+@using WF.Model;
+@model PagedList<WF.Model.RequestVersion>
+    @{
+    ViewBag.Title = "RequestVersion List";
+    }
+
+    <div class="main" style="padding:0px 50px;color:black;">
+        <div id="searchDiv">
+            <select id='filterStatus' class="inputfl" style="width:100px;">
+                <option value="">Status</option>
+                <option value="0">@(Html.Lang("Draft"))</option>
+                <option value="1">@(Html.Lang("Submitted"))</option>
+                <option value="2">@(Html.Lang("Approved"))</option>
+                <option value="3">@(Html.Lang("Rejected"))</option>
+                <option value="8">@(Html.Lang("Withdrawn"))</option>
+            </select>
+
+            <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+            <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="search(1);">@(Html.Lang("Search"))</button>
+            <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                    onmouseout="this.className = 'button'" onclick="exportCSV(this);">
+                Export
+            </button>
+        </div>
+        <div style="clear:both;"></div>
+        <hr style="margin:5px auto;" />
+        <div id="searchResult">
+            @{ Html.RenderPartial("RequestVersionListPartial", Model); }
+        </div>
+    </div>
+<script type="text/javascript">
+    function exportCSV(obj) {
+        $.post(getRootUrl() + "Admin/ExportToCSV", { keyword: $("#keyword").val(), status: $("#filterStatus").val() }, function (filePath) {
+            if (filePath.toLowerCase().indexOf(".csv") > 0) {
+                location.href = getRootUrl() + filePath;
+            }
+            else {
+                alert(filePath);
+            }
+        });
+    }
+</script>

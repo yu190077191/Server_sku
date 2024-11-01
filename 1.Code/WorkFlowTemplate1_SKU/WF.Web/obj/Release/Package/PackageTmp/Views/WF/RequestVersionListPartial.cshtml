@@ -1,0 +1,99 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.RequestVersion>
+
+<table cellpadding="0" cellspacing="0" class="tbl" style="line-height:30px;font-size:14px;">
+    @{
+        if (Model != null && Model.Count > 0)   
+        {
+            bool canDelete = Model.Where(k => k.CreatedBy == Operation.OperationBy && k.State == 0).Count() > 0;
+            <thead>
+            <tr>
+            <th>@(Html.Lang("Id"))</th>
+                <th>@(Html.Lang("Type"))</th>
+                <th>@(Html.Lang("Status"))</th>
+                <th>@(Html.Lang("SKU Number"))</th>
+            <th>@(Html.Lang("PreparedBy"))</th>
+
+                <th>@(Html.Lang("Last Approver"))</th>
+                <th>@(Html.Lang("Reviewed Result"))</th>
+                
+                <th>@(Html.Lang("Reviewed Time"))</th>
+
+            <th>@(Html.Lang("View"))</th>
+                @if (canDelete)
+                { 
+            <th>@(Html.Lang("Delete"))</th>
+                }
+            </tr>
+            </thead>
+            foreach (WF.Model.RequestVersion item in Model)
+            {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'" id="tr@(item.Id.ToString())">
+            <td class="listtd">@(item.Id)</td>
+            <td class="listtd">@(item.ProjectName)</td>
+            <td class="listtd">
+                @if (item.State == 2)
+                {
+                    <span style="color:green;">@(item.Status)</span>
+                }
+                else
+                {
+                    <span>@(item.Status)</span>
+                }
+            </td>
+            <td class="listtd">@(item.CustomerNumber)</td>
+            <td class="listtd">@(item.PreparedBy != null ? item.PreparedBy.Replace(",",", ") : string.Empty)</td>
+            <td class="listtd">@(item.ReviewedBy != null ? item.ReviewedBy.Replace(",", ", ") : string.Empty)</td>
+            <td class="listtd">@(item.Action)</td>
+            
+            <td class="listtd">@(item.ReviewedTime)</td>
+            
+<td align="center" style="width:100px;padding:3px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="javascript:window.open('@Url.Content("~/WF/Preview?id=" + item.Id.ToString())');">@(Html.Lang("Details"))</button>
+</td>
+@if (canDelete)
+{         
+<td align="center" style="width:100px;padding:3px;">
+@if (item.CreatedBy == Operation.OperationBy && item.State == 0)
+{
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'"
+                onclick="deleteItem('Request', @(item.Id.ToString()));">@(Html.Lang("Delete"))</button>
+}
+else
+{
+    <span>&nbsp;</span>
+}
+</td>
+}
+            
+        </tr>
+            }
+        }
+    }
+</table>
+<div id="pager" style="margin: 5px auto; text-align: center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>

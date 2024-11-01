@@ -1,0 +1,141 @@
+﻿.trHeader{background-color:#efefef;padding:3px;}
+.fl {float:left;}
+.fr {float:right;}
+.rightTitle{ 
+	width:634px; 
+	height:42px; 
+	background-color:#FAFAFA; 
+	display:block; 
+	border-left:1px solid #990000; 
+	font-size:16px; 
+	line-height:42px; 
+	font-weight:bold;
+	color:#929292;
+	margin-left:30px;
+	margin-top:5px;
+	padding-left:20px;
+	border-bottom:1px solid #E0E0E0
+}
+.rightDiv{ 
+	width:640px; 
+	margin-left:30px; 
+	margin-top:20px
+}
+.simpleTable{ 
+	border-left:1px solid #CCC; 
+	border-top:1px solid #CCC;
+	font-size:12px;
+}
+.simpleTable td{
+	border-right:1px solid #CCC; 
+	border-bottom:1px solid #CCC;
+    padding:3px;
+}
+.simpleTable th{
+	border-right:1px solid #CCC; 
+	border-bottom:1px solid #CCC;
+	height:30px;
+	line-height:30px;
+	background:#F7F7F7;
+	font-weight:normal;
+	text-align:center;
+    padding:3px;
+}
+.lefttd
+{
+    width:123px; 
+	padding-left:10px; 
+	background-color:#F7F7F7;
+	height:30px;
+	vertical-align:middle;
+}
+.righttd
+{
+	padding:5px 10px; 
+	height:30px;
+	vertical-align:middle;
+}
+.righttd .textbox
+{
+    border:1px solid #CCC;
+    height:20px;
+    line-height:20px;
+    padding-left:3px; 
+    width:300px;
+}
+.righttd .textarea
+{
+    border:1px solid #CCC;
+    line-height:20px;
+    padding:3px; 
+    width:300px;
+}
+.widetd
+{
+    width:100%; 
+	height:38px;
+	vertical-align:middle;
+	text-align:center;
+}
+.trCommon
+{
+    background:#FFF;
+}
+.trFocused
+{
+    background:#F7F7F7;
+}
+.listtd
+{
+   padding-left:8px;
+   padding-right:8px;
+}
+.currentPage
+{ 
+    border: #eee 1px solid; 
+    padding:1px 2px;
+    color: #000;
+    text-decoration:none; 
+    background:#ccc; 
+    font-size:12px;
+}
+.keyword
+{
+    border:1px solid #CCC;
+    height:20px;
+    line-height:20px;
+    padding-left:3px; 
+    width:200px;
+}
+.searchDiv
+{
+    border:1px solid #CCC;
+    width:97%;
+    padding:8px;
+    margin-bottom:8px;   
+}
+.textbox
+{
+    border:1px solid #CCC;
+    height:25px;
+    line-height:25px;
+    padding-left:3px; 
+    width:300px;
+}
+.textarea
+{
+    border:1px solid #CCC;
+    line-height:20px;
+    padding:3px; 
+    width:300px;
+}
+.watermark {
+	color: #999 !important;
+}
+.watermark2 {
+	color: #999 !important;
+	font-style: italic !important;
+}
+.watermark3 {
+	color: #c77 !important;
+}

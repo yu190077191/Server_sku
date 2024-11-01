@@ -1,0 +1,10 @@
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\bin\Debug\Nestle.WriteOff.Tool.exe.config
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\bin\Debug\Nestle.WriteOff.Tool.exe
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\bin\Debug\Nestle.WriteOff.Tool.pdb
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.csproj.AssemblyReference.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.Form1.resources
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.Properties.Resources.resources
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.csproj.GenerateResource.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.csproj.CoreCompileInputs.cache
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.exe
+D:\NET8Server\SKU\SKU202410141450\SKU202410141450\1.Code\WorkFlowTemplate1_SKU\Nestle.WriteOff.Tool\obj\Debug\Nestle.WriteOff.Tool.pdb

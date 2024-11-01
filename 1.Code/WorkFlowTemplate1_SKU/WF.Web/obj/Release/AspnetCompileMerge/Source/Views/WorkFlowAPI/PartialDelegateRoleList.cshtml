@@ -1,0 +1,118 @@
+﻿@using Nestle.WorkFlow.BusinessRule;
+@using Nestle.WorkFlow.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRoleDeputy>
+
+<div>
+
+<table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+<thead><tr>
+<th>@Html.Lang("Deputy Name")</th>
+<th> @Html.Lang("Department")</th>
+<th> @Html.Lang("Role")</th>
+<th> @Html.Lang("Start Time")</th>
+<th> @Html.Lang("End Time")</th>
+<th>@Html.Lang("Created Time")</th>
+<th>@Html.Lang("Remarks")</th>
+<th>@Html.Lang("Edit")</th>
+<th>@Html.Lang("Delete")</th>
+</tr>
+    </thead>
+@{
+    ViewBag.IsChinese = false;// LanguagesRule.GetUserLanguage() == "Chinese";
+    if (Model != null)
+    {
+        int i = 0;
+        foreach (DepartmentRoleDeputy item in Model)
+        {
+            i++;
+            string timeStyle = string.Empty;
+            if(item.StartTime <= DateTime.Now && DateTime.Now <= item.EndTime)
+            {
+                timeStyle = "color:Green;";
+            }
+            
+    <tr id="tr@(item.Id.ToString())" onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+        <td class="listtd" style="padding:3px;">
+        @item.DeputyName
+        </td>
+        <td class="listtd" style="padding:3px;">
+            @item.Department
+        </td>
+        <td class="listtd" style="padding:3px;">
+            @item.Role
+        </td>
+        <td class="listtd" style="padding:3px;@(Html.Raw(timeStyle))">
+             @item.StartTime.ToShortDateString()
+        </td>
+        <td class="listtd" style="padding:3px;@(Html.Raw(timeStyle))">
+             @item.EndTime.ToShortDateString()
+        </td>
+         <td class="listtd" style="padding:3px;">
+             @(((DateTime)item.CreatedTime).ToString())
+        </td>
+         <td class="listtd" style="padding:3px;">
+        @item.Justification
+        </td>
+        <td class="listtd" style="width:80px;padding:3px;" align="center">
+            <a style="cursor:pointer;" onclick="editDelegate(@(item.Id.ToString()));">@Html.Lang("Edit")</a>
+        </td>
+        <td class="listtd" style="width:80px;padding:3px;" align="center">
+            <a style="cursor:pointer;" onclick="deleteDepartmentRoleDeputy(@(item.Id.ToString()));">@Html.Lang("Delete")</a>
+        </td>
+    </tr>
+        }
+    }
+}
+
+</table>
+</div>
+<div id="pager" style="margin:5px auto; text-align:center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"         
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>
+
+<script type="text/javascript">
+    function deleteDepartmentRoleDeputy(id) {
+        var confirmMessage = "@(Html.Lang("Are you sure to delete it?"))";
+        if(confirm(confirmMessage)) {
+            $.post(getRootUrl() + "API_LargerOrder/DeleteDepartmentRoleDeputy", { id: id }, function (jsonResult) {
+                if (jsonResult.Success) {
+                    popOK();
+                    location.href = getRootUrl() + "API_LargerOrder/DelegateRole";
+                }
+                else {
+                    alert(jsonResult.Message);
+                }
+            });
+        }
+    }
+
+var count=@(Model == null ? 0 : Model.Count);
+(function(){
+    if(count==0){
+        //$("#exportButton").css({"display":"none"});
+    }
+    else
+    {
+        //$("#exportButton").css({"display":""});
+    }
+})()
+</script>

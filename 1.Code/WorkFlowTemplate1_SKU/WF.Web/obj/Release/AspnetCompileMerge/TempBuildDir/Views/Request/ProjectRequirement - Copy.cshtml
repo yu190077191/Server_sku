@@ -1,0 +1,627 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@{
+    ViewBag.Title = "Business Requirement";
+    string idStr = "0";
+    string fileControlIds = "0";
+    List<Attachment> commonAttachmentList = ViewBag.commonAttachmentList as List<Attachment>;
+}
+
+<div class="main">
+    <table cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    <h1 style="font-size:16px;">
+                        @Html.Lang("Business Requirement")
+                    </h1>
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initiative Name") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="InitiativeName" class="input" style="width: 300px;" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Prepared by")
+            </td>
+            <td class="tdRight">
+                @(WF.Framework.Operation.Employee.DisplayName)
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Description") *
+            </td>
+            <td class="tdRight2" colspan="3">
+                <textarea id="Description" style="width:770px;height:100px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Scope") *
+            </td>
+            <td class="tdRight2" colspan="3">
+                <textarea id="Scope" style="width:770px;height:150px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("General Benefits and Risk of not doing") *
+            </td>
+            <td class="tdRight2" colspan="3">
+                <textarea id="GeneralBenefitsAndRiskOfNotDoingThisChange" style="width:770px;height:80px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Business Case Owner") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="BusinessCaseOwnerName" class="input" style="width: 300px;" onclick="selectUser(this);" readonly="readonly"/>
+                <input type="hidden" id="BusinessCaseOwner" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Market / OPCO") *
+            </td>
+            <td class="tdRight">
+                <select id="Market_OPCO">
+@(CommonController.GetSelectOption("Market", "1"))
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Desired Start Date") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="DesiredStartDate" class="input" style="width: 300px;" readonly="readonly"/>
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Desired Closure Date") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="DesiredClosureDate" class="input" style="width: 300px;" readonly="readonly" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("NBE E2E Flow") *
+            </td>
+            <td class="tdRight">
+                <select id="NBE_E2E_Flow">
+                    @(CommonController.GetSelectOption("NBE_Flow", null))
+                </select>
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Driving Business") *
+            </td>
+            <td class="tdRight">
+                <select id="DrivingBusiness">
+                    @(CommonController.GetSelectOption("BU", null))
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Currency") *
+            </td>
+            <td class="tdRight">
+                <select id="Currency">
+                    @(CommonController.GetSelectOption("Currency", "1"))
+                </select>
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Initial Cost Estimation") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="InitialCostEstimation" class="input" style="width: 300px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Initial Capex Estimation")
+            </td>
+            <td class="tdRight">
+                <input type="text" id="InitialCapexEstimation" class="input" style="width: 300px;" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Initial Benefits Estimation")
+            </td>
+            <td class="tdRight">
+                <input type="text" id="InitialBenefitsEstimation" class="input" style="width: 300px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Contribution to NBE E2E Value drivers / KPI's")
+            </td>
+            <td class="tdRight2" colspan="3">
+                <textarea id="ContributionKPI" style="width:770px;height:80px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("E2E Lead") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="E2ELeadName" class="input" style="width: 300px;" onclick="selectUser(this);" readonly="readonly" />
+                <input type="hidden" id="E2ELead" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Endorsement Date") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="E2ELeadEndorsementDate" class="input" style="width: 300px;" readonly="readonly" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Executive Sponsor") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="ExecutiveSponsorName" class="input" style="width: 300px;" onclick="selectUser(this);" readonly="readonly" />
+                <input type="hidden" id="ExecutiveSponsor" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Endorsement Date") *
+            </td>
+            <td class="tdRight">
+                <input type="text" id="ExecutiveSponsorEndorsementDate" class="input" style="width: 300px;" readonly="readonly" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("NPDI Identifier") 
+            </td>
+            <td class="tdRight">
+                <input type="text" id="NPDIIdentifier" class="input" style="width: 300px;" />
+            </td>
+            <td class="tdLeft">
+                @Html.Lang("Nestool BR ID") 
+            </td>
+            <td class="tdRight">
+                <input type="text" id="Nestool_BR_ID" class="input" style="width: 300px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Program / Project Manager") 
+            </td>
+            <td class="tdRight2" colspan="3">
+                <input type="text" id="ProgramProjectManagerName" class="input" style="width: 300px;" onclick="selectUser(this);" readonly="readonly" />
+                <input type="hidden" id="ProgramProjectManager" />
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Estimations General Notes") *
+            </td>
+            <td class="tdRight2" colspan="3">
+                <textarea id="EstimationsGeneralNotes" style="width:770px;height:80px;"></textarea>
+            </td>
+        </tr>
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="tdLeft">
+                @Html.Lang("Attachments") *
+            </td>
+            <td colspan="3">
+                <div style="line-height:30px;padding-bottom:10px;">
+                    <b style="font-size:14px;color:red;">Please upload the following attachment(s):</b>
+                    <br />1. Preliminary Business Case.xlsm
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="uploadThis('Preliminary Business Case');">
+                        @(Html.Lang("Select"))
+                    </button>
+
+                    <a style="color:blue;text-decoration:underline;" href="@(Url.Content("~/Preliminary Business Case.xlsm?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">Click here to download the template "Preliminary Business Case.xlsm"</a>
+                    <br />2. the PDF (Preliminary Business Case.xlsm) signed by the functional head
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className = 'button'" onclick="    uploadThis('the PDF signed by the functional head');">
+                        @(Html.Lang("Select"))
+                    </button>
+                    <hr style="margin-bottom:8px;" />
+
+                    <span style="float:left;margin-right:10px;">
+                        @Html.Lang("Description")
+                        <input type="text" class="input" id="AttachmentDescription@(idStr)" style="height:22px;width:180px;" />
+                    </span>
+                    <form id="attachementUpload@(idStr)" enctype="multipart/form-data" method="post" class="compareForm" style="width:600px;">
+                        <input type="file" id="fileInputControl@(idStr)" name="fileInputControl@(idStr)"
+                               class="compareFile" style="width: 250px; height:24px;" />
+                        <button id="uploadButton@(idStr)" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                onmouseout="this.className='button'" onclick="upload('@(idStr)');">
+                            @(Html.Lang("Upload"))
+                        </button>
+                        <label id="lbl@(idStr)" style="float: left; font-weight: normal; font-size: 12px;">
+                        </label>
+                        <input type="submit" id="uploadSubmitButton@(idStr)" name="uploadSubmitButton@(idStr)" style="visibility: hidden;
+                  width: 1px;" value="uploadSubmitButton@(idStr)" class="submit" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Uploaded attachments")
+            </td>
+            <td class="tdRight2" colspan="3">
+                <table id="fileTableList" class="tbl">
+                    <tr>
+                        <th>@(Html.Lang("Description"))</th>
+                        <th>@(Html.Lang("File Type"))</th>
+                        <th>@(Html.Lang("Download"))</th>
+                        <th>@(Html.Lang("Edit"))</th>
+                        <th>@(Html.Lang("Delete"))</th>
+                    </tr>
+                    @if (commonAttachmentList != null)
+                    {
+                        foreach (Attachment item in commonAttachmentList)
+                        {
+                            <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'"
+                                id="trFile@(item.Id.ToString())">
+                                <td id="AttachmentDescription@(item.Id.ToString())" class="listtd" style="padding: 5px;">
+                                    @(item.Description)
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:50px;">@(Path.GetExtension(item.FilePath).ToUpperInvariant())</td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="window.open('@(Url.Content("~/Request/Download?id=" + item.Id.ToString()))');">
+                                        @(Html.Lang("Download"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="editAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Edit"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="deleteAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Delete"))
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+        <tr id='buttonTR'>
+            <td colspan="4" align="center" style="height: 60px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                <button onclick="next();" type="button" class="button">
+                    @(Html.Lang("Next"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var timeTextboxes = "DesiredStartDate,DesiredClosureDate,E2ELeadEndorsementDate,ExecutiveSponsorEndorsementDate";
+        var arr = timeTextboxes.split(',');
+        $(arr).each(function () {
+            var elementId = this;
+            if (elementId != null) {
+                var obj = document.getElementById(elementId);
+                if (obj != null && obj.tagName.toLowerCase() != "td") {
+                    $("#" + elementId).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy-mm-dd"
+                    });
+                }
+            }
+        });
+    });
+
+    function selectUser(obj) {
+        var str = window.showModalDialog(getRootUrl() + "Common/Search", { url: "Employee/EmployeeList", viewName: "EmployeeListPartialSelect" }, "dialogWidth=1010px;dialogHeight=670px;scroll=auto;");
+        if (str == null) return;
+        var arr = str.split('|');
+        $("#" + obj.id.replace("Name", "")).val(arr[0]);
+        $(obj).val(arr[1]);
+    }
+</script>
+<script type="text/javascript">
+    var _requiredIsEmpty = false;
+    function getModel() {
+        var elementIds = "InitiativeName";
+        if (checkElements(elementIds)) {
+            var model = new Object();
+            model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+            //model.Status = getValue("Status", true, "int");
+            model.InitiativeName = getValue("InitiativeName", true, "string");
+            model.Description = getValue("Description", true, "string");
+            model.Scope = getValue("Scope", true, "string");
+            model.GeneralBenefitsAndRiskOfNotDoingThisChange = getValue("GeneralBenefitsAndRiskOfNotDoingThisChange", true, "string");
+            model.BusinessCaseOwner = getValue("BusinessCaseOwner", true, "Guid");
+            model.DesiredStartDate = getValue("DesiredStartDate", true, "DateTime");
+            model.DesiredClosureDate = getValue("DesiredClosureDate", true, "DateTime");
+            model.Market_OPCO = getValue("Market_OPCO", true, "int");
+            model.DrivingBusiness = getValue("DrivingBusiness", true, "int");
+            model.NBE_E2E_Flow = getValue("NBE_E2E_Flow", true, "int");
+            model.AdditionalArea = 0;// getValue("AdditionalArea", true, "int");
+            model.Currency = getValue("Currency", true, "int");
+            model.InitialCostEstimation = getValue("InitialCostEstimation", true, "double");
+            model.InitialCapexEstimation = getValue("InitialCapexEstimation", false, "double");
+            model.InitialBenefitsEstimation = getValue("InitialBenefitsEstimation", false, "double");
+            model.ContributionKPI = getValue("ContributionKPI", false, "string");
+            model.E2ELead = getValue("E2ELead", false, "Guid");
+            model.E2ELeadEndorsementDate = getValue("E2ELeadEndorsementDate", false, "DateTime");
+            model.ExecutiveSponsor = getValue("ExecutiveSponsor", false, "Guid");
+            model.ExecutiveSponsorEndorsementDate = getValue("ExecutiveSponsorEndorsementDate", false, "DateTime");
+            model.NPDIIdentifier = getValue("NPDIIdentifier", false, "string");
+            model.Nestool_BR_ID = getValue("Nestool_BR_ID", false, "string");
+            model.ProgramProjectManager = getValue("ProgramProjectManager", false, "Guid");
+            model.EstimationsGeneralNotes = getValue("EstimationsGeneralNotes", false, "string");
+            _requiredIsEmpty = requiredIsEmpty();
+            if (_requiredIsEmpty) {
+                alert("Required fields cannot be empty!");
+                return "";
+            }
+            else {
+                return $.toJSON(model);
+            }
+        }
+        else {
+            return "";
+        }
+    }
+
+    $.ajaxSetup({ cache: false });
+
+    var id = 0;
+    function save() {
+        saveModel(function () {
+            popOK(function () {
+                if (location.href.indexOf("?") > 0) {
+                    closeWindow();
+                }
+                else {
+                    location.href = getRootUrl() + "Request/ProjectRequirementList";
+                }
+            });
+        });
+    }
+
+    function isAttachmentReady() {
+        var html = "";
+        var trs = $("#fileTableList").find("tr");
+        for (var i = 0; i < trs.length; i++) {
+            if ($(trs[i]).css("display") != "none") {
+                html += $(trs[i]).html().toUpperCase();
+            }
+        }
+
+        if (html != null && html.indexOf(".PDF") > 0 && html.indexOf(".XLSM") > 0) {
+            return true;
+        }
+
+        var tips = "Please upload the following attachment(s):";
+        if (html != null && html.indexOf(".XLSM") < 0) {
+            tips += "<br />Preliminary Business Case.xlsm";
+        }
+
+        if (html != null && html.indexOf(".PDF") < 0) {
+            tips += "<br />the PDF (Preliminary Business Case.xlsm) signed by the functional head";
+        }
+
+        pop(tips);
+
+        return false;
+    }
+
+    var isRunning = false;
+    function next() {
+        if (isRunning) return;
+        saveModel(function () {
+            if (!_requiredIsEmpty) {
+                $("#buttonTR").css({ "display": "" });
+                if (isAttachmentReady() == false) return;
+
+                location.href = getRootUrl() + "Request/Approvers?id=" + id.toString();
+            }
+        });
+    }
+
+    function saveModel(callback) {
+        if (isRunning) return;
+        var model = getModel();
+        if (model == "") return;
+        $("#buttonTR").css({ "display": "none" });
+        isRunning = true;
+        $.post(getRootUrl() + "Request/SaveProjectRequirement", { json: model }, function (json) {
+            isRunning = false;
+            if (json.Success) {
+                id = json.Id;
+                if (callback) {
+                    callback();
+                }
+            }
+            else {
+                popFailure();
+                $("#buttonTR").css({ "display": "" });
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    var fileControlIds = "@(fileControlIds)";
+    $(document).ready(function () {
+        var array = fileControlIds.split('|');
+        for(var i=0;i<array.length;i++){
+            var idStr = array[i];
+            if(idStr != ""){
+                $('#attachementUpload' + idStr).submit(uploadAttachmentSubmit);
+            }
+        }
+    });
+
+    var globalFileExtentionName = "";
+    var GlobalButtonId = "";
+    function upload(buttonId) {
+        if(buttonId == null)buttonId = "";
+        GlobalButtonId = buttonId;
+
+        var filePath = $("#fileInputControl" + GlobalButtonId).val();
+        var extentionName = filePath;
+        if (extentionName.indexOf(".") > 0) {
+            extentionName = extentionName.substr(extentionName.lastIndexOf("."));
+            extentionName = "," + extentionName.toLowerCase() + ",";
+            if (extentionName.length > 2 && ",@(Constants.UploadFileType),".indexOf(extentionName) >= 0) {
+                if (id == 0) {
+                    id = getModelId();
+                }
+
+                if (id > 0) {
+                    var description = getValue("AttachmentDescription" + GlobalButtonId, true, "string");
+                    if (requiredIsEmpty()) {
+                        emptyAlert();
+                        return "";
+                    }
+                    else {
+                        globalFileExtentionName = extentionName.replace(/\,/g, "").toUpperCase();
+                        $("#uploadSubmitButton" + GlobalButtonId).submit();
+                        $("#lbl" + GlobalButtonId).html("uploading...");
+                        $("#uploadButton" + GlobalButtonId).css({ "display": "none" });
+                    }
+                }
+                else {
+                    saveModel(function () { upload(buttonId); });
+                }
+            }
+            else alert("File type not allowed!");
+        }
+    }
+
+   function uploadAttachmentSubmit() {
+       try {
+           var _vendorId = "";
+            var description = getValue("AttachmentDescription" + GlobalButtonId, true, "string");
+            var param = ({
+                type: "CommonAttachment"
+                , typeCode: "Common"
+                , subCode: _vendorId
+                , id: id
+                , Description: description
+            });
+
+           var options = {
+               url: getRootUrl() + 'Upload',
+               data: param,
+               success: function (guid) {
+                   $("#uploadButton" + GlobalButtonId).css({ "display": "" });
+                   if(guid != null && guid.length != 36){
+                       alert(guid);
+                   }
+                   else{
+                       $("#lbl" + GlobalButtonId).html("");
+
+                       updateFileTable(description, guid, _vendorId);
+
+                       if($("#AttachmentDescription" + GlobalButtonId).is(":visible")==true) {
+                           $("#AttachmentDescription" + GlobalButtonId).val("");
+                       }
+
+                       var file = $("#fileInputControl" + GlobalButtonId)
+                       file.after(file.clone().val(""));
+                       file.remove();
+
+                       popOK();
+                   }
+               },
+               error: function (data) {
+                   alert(data);
+               }
+           };
+
+           $(this).ajaxSubmit(options);
+       }
+       catch (e) {
+           alert(e.Message);
+       }
+       return false;
+   }
+
+   function updateFileTable(description, guid, subCode) {
+       var tr = $("<tr onmouseover=\"this.className='trFocused'\" onmouseout=\"this.className='trCommon'\" id=\"trFile" + guid + "\"></tr>");
+       tr.appendTo($("#fileTableList" + subCode));
+
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;\" id=\"AttachmentDescription" + guid + "\">" + description + "</td>"));
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:50px;\">" + globalFileExtentionName + "</td>"));
+
+       var button = "";
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"window.open('@(Url.Content("~/Request/Download?id="))" +guid + "');\">@(Html.Lang("Download"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"editAttachment('" + guid + "');\">@(Html.Lang("Edit"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"deleteAttachment('" + guid + "');\">@(Html.Lang("Delete"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+   }
+
+    function editAttachment(guid) {
+        var description = $.trim($("#AttachmentDescription" + guid).html());
+        closeDialogDiv();
+        popup("<div style='padding:10px;'> <label style=\"float:left;\">@(Html.Lang("Description")): </label> <input type='text' id=\"description" + guid
+         + "\" style=\"float:left;width:200px;height:22px;margin:0 5px;\"/> <button style=\"float:left;width:80px;\" type=\"button\" "
+         + "onclick=\"saveDescription('" + guid + "');\">@(Html.Lang("Save"))</button><div style='clear:both;'></div></div>", "popDiv" + guid);
+        $("#description" + guid).val(description);
+    }
+    function saveDescription(guid) {
+        var description = $.trim($("#description" + guid).val());
+        $.post(getRootUrl() + "Request/SaveDescription", { id: guid, description: description }, function (json) {
+            if (json.Success) {
+                $("#AttachmentDescription" + guid).html(description);
+                closeDialogDiv();
+            }
+        });
+    }
+    function deleteAttachment(guid) {
+        if (confirm(getConfirmDeleteMessage())) {
+            $.post(getRootUrl() + "Request/Delete", { id: guid }, function (json) {
+                if (json.Success) {
+                    $("#trFile" + guid).css({ "display": "none" });
+                    closeDialogDiv();
+                }
+            });
+        }
+    }
+
+    function uploadRequiredDoc(obj){
+        $("#AttachmentDescription").val($.trim($(obj).html()));
+    }
+
+    function uploadThis(desc) {
+        $("#AttachmentDescription0").val($.trim(desc));
+        $("#fileInputControl0").click();
+        pop("Please click the \"Upload\" button after you select the file");
+    }
+</script>
+
+@Html.Raw(ViewBag.Json)

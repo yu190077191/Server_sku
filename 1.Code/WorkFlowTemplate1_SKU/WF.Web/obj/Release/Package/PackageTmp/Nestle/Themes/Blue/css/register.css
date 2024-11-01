@@ -1,0 +1,40 @@
+﻿.login_head {height:49px; width:auto; background:url(../images/login_02.jpg) no-repeat 13px top; background-color:#0c8acb; border-bottom-width:2px; border-bottom-style:solid; border-bottom-color:#B8A15D}
+.login_table {width:820px; margin:41px auto 0 auto; background:#fff; -moz-border-radius:5px;  -webkit-border-radius:8px; border:1px #CCC solid}
+.login_table_title {width:783px; height:59px; padding-left:31px; margin:3px auto 0 auto; background:url(../images/newNav_bg.jpg) repeat-x 0 0; -moz-border-radius-topleft:3px; -moz-border-radius-topright:3px; -webkit-border-top-left-radius:3px; -webkit-border-top-right-radius:3px; font-size:16px; font-family:"黑体"; line-height:40px; color:#FFF; text-shadow:0 1px 0 #006}
+.login_table_bottom {width:812px; height:36px; margin:30px auto 0 auto; background:url(../images/login_table_bottom.jpg) repeat-x 0 0}
+.xinghao{color:red;}
+.gray{color:Gray;}
+.font04{font-size: 13px; font-weight: bold;}
+.font05{font-size: 13px; font-weight: bold; color:Black;}
+.font06{font-size: 13px; font-weight: bold; margin: 0 0 0 60px;}
+.login_table_input2 {border:1px solid #999; background-color:#FFF; width:280px; height:24px; line-height:24px}
+.login_table_input3 {margin-top:10px}
+.line_height {line-height:40px}
+.anniu_2_gray
+{
+	background: url(../images/bookDetailsButton.gif) no-repeat;
+	width: 86px;
+	height: 27px;
+	border: none;
+	cursor: pointer;
+}
+/*.anniu_2_gray
+{
+	width: 49px;
+	height: 22px;
+	border: none;
+	background: url(../images/ag_r2.gif);
+	padding-top: 1px;
+	cursor: pointer;
+}*/
+
+/*=================================== 注册页 =========================================*/
+.registerContainer {width:inherit; height:auto; position:relative}
+.registerTitle {height:30px; width:946px; background:#e7f9fc; margin:0 auto; position:absolute; top:-30px; left:27px; line-height:30px; font-size:14px; text-indent:2em}
+.registerContainer table input {width:200px; border:1px solid #ccc; height:22px; line-height:22px}
+.registerContainer table tr td {padding:5px 0}
+.registerContainer table tr td samp {color:red; float:right}
+.registerContainer table tr td span {float:right}
+.registerButton {width:inherit; height:50px}
+.registerButtonInputArea {width:180px; margin:0 auto; height:30px}
+.registerButton input {width:68px; height:24px; letter-spacing:0.1em}

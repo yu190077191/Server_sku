@@ -1,0 +1,34 @@
+.pager 
+{
+	text-align:center;
+	font-size:12px;
+}
+.pager span
+{ 
+    font-weight:bold;
+    color:#666;
+    border:1px solid #000; 
+    text-align:center; 
+    padding:2px 5px;
+}
+.pager font
+{ 
+    border: #eee 1px solid; 
+    padding:2px 5px;
+    color: #000;
+    text-decoration:none; 
+    background:#ccc; 
+    font-size:12px;
+}
+.pager A 
+{
+	border: #eee 1px solid; 
+	padding:2px 5px;
+	color: #000;
+	text-decoration:none;
+}
+.pager A:hover 
+{
+	border: #999 1px solid;
+	color: #666;
+}

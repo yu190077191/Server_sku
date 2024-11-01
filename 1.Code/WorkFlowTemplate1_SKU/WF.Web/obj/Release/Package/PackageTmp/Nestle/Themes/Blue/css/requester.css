@@ -1,0 +1,58 @@
+﻿.main
+{
+    padding:30px;
+    line-height:24px;
+    font-size:12px;
+}
+.main table
+{
+    width:100%;
+}
+.main td
+{
+    padding-left:5px;
+    border:1px solid #eee;
+    height:30px;
+    line-height:30px;
+}
+ .main th
+{
+    border:1px solid #eee;
+    height:40px;
+    line-height:40px;
+    text-align:center;
+    font-weight:normal;
+}
+.gray{background-color:#F7F7F7;}
+.main .tdLeft
+{
+    background-color:#F7F7F7;
+    width:12%;
+}
+.main .tdRight
+{
+    width:33%;
+}
+.main .tdRight input
+{
+    height:20px; 
+    padding-left:3px;  
+}
+.main .tdRight select
+{
+    height:20px; 
+    width:300px;
+}
+.main .tdRight2
+{
+    width:80%;
+}
+.main .tdRight2 input
+{
+    height:20px; 
+    padding-left:3px;  
+}
+.main .tdRight2 select
+{
+    height:20px; 
+}

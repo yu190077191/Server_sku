@@ -1,0 +1,354 @@
+﻿@using WF.Model;
+@model List<Field>
+
+@{
+    Layout = null;
+    string fileIds = string.Empty;
+    List<string> groups = new List<string>();
+    string stepName = string.Empty;
+    bool isFinance = false;
+    bool mandatoryIsEmpty = false;
+    string timeControls = "";
+    string strFieldIds = ViewBag.ChangeData;
+    if (ViewBag.Pending != null)
+    {
+        List<Nestle.WorkFlow.Model.ActionHistory> pendingList = ViewBag.Pending as List<Nestle.WorkFlow.Model.ActionHistory>;
+        stepName = pendingList[0].StepName;
+    }
+
+    string mandatory = ",";
+
+    if(Model != null)
+    {
+        for(int k=0;k<Model.Count;k++)
+        {
+            Field f = Model[k];
+            if (f.TypeCode == "mandatory")// || f.Editable
+            {
+                mandatory += f.Id.ToString() + ",";
+            }
+
+            if (!groups.Contains(f.Category) && (!string.IsNullOrEmpty(f.Files) || f.Type != "Common" || f.Editable))
+            {
+                groups.Add(f.Category);
+            }
+        }
+    }
+}
+@if (Model != null)
+{ 
+<table id="fieldTable" class="tbl" border="0" cellpadding="0" cellspacing="0">
+
+
+    @for (int g = 0; g < groups.Count; g++)
+    {
+        string groupName = groups[g];
+        List<Field> li = Model.Where(k => k.Category == groupName).ToList().OrderBy(k => k.Priority).ThenBy(q => q.Id).ToList();
+        MvcHtmlString className = MvcHtmlString.Create(string.Empty);
+        if (groupName.ToLower().Contains("Secondary Bank Data".ToLower()))
+        {
+            var bank2 = Model.Where(k => k.Category == groupName && !string.IsNullOrEmpty(k.Value));
+            if (bank2 == null || bank2.Count() == 0)
+            {
+                className = MvcHtmlString.Create(" class='bankdata2' ");
+            }
+        }
+        if (groupName.ToLower().Contains("Copy From Reference SKU".ToLower()))
+        {
+            continue;
+        }
+
+        <thead @(className)>
+            <tr>
+                <th colspan="2" style="background-color:#efefef;line-height:24px;">
+                    <h2>@(groupName.Replace(" 2", string.Empty))</h2>
+                </th>
+            </tr>
+        </thead>
+        for (int i = 0; i < li.Count; i++)
+        {
+            var BackGroundColor = "";
+            Field item = li[i];
+            if (strFieldIds.Contains("," + item.Id + ","))
+            {
+                BackGroundColor = "background-color: yellow;";
+            }
+            if (!string.IsNullOrEmpty(item.Specification) && item.Specification.ToLower() == "calendar")
+            {
+                timeControls += "," + item.Id.ToString();
+            }
+
+            List<string> options = new List<string>();
+            if (!string.IsNullOrEmpty(item.Values))
+            {
+                string[] array = item.Values.Replace("，", ",").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                if (item.InputType.ToLower().IndexOf("drop down list") == 0)
+                {
+                    options.Add("Select");
+                }
+
+                options.AddRange(array);
+            }
+            if (item.TypeCode == "mandatory" && item.Type == "Update F&C" && item.Category == "F&C Data" && string.IsNullOrEmpty(item.Value))
+            {
+                className = MvcHtmlString.Create(" style='display: none' ");
+            }
+            <tr @(className)>
+                <td class="tdLeft3" id="Name@(item.Id.ToString())">
+                    @if (item.TypeCode == "mandatory")
+                    {
+                        if (string.IsNullOrEmpty(item.Value) && string.IsNullOrEmpty(item.Files) && !className.ToString().Contains("style='display: none'"))
+                        {
+                            mandatoryIsEmpty = true;
+                        }
+
+                        <span style="color:red;">*</span>
+                    }
+                    else
+                    {
+                        <span>&nbsp;</span>
+                    }
+                    @Html.Raw(item.Name):
+                </td>
+                <td class="tdRight3" style="@(BackGroundColor)" id="td_@(item.Id.ToString())">
+                    @if (item.Name.ToLower().Contains("payment terms"))
+                    {
+                        string reason = Model.Where(k => k.Id == 243).FirstOrDefault().Value;
+                        MvcHtmlString hidden = MvcHtmlString.Create(!string.IsNullOrEmpty(reason) ? "" : "display:none;");
+                        <span>@(item.Value)</span>
+                        <div id="DivPaymentTerms" style="@(hidden)">
+                            Reasons for selecting payment terms shorter than 60 days:
+                            <br />
+                            @(reason)
+                        </div>
+                    }
+                    else if (item.Name.ToLower().Contains("linked vendor") && item.Value.ToLower().IndexOf("other") == 0)
+                    {
+                        <div id="DivLinkedVendor">
+                            Vendor Site Code: @(Model.Where(k => k.Id == 244).FirstOrDefault().Value)
+                            Vendor Site Name: @(Model.Where(k => k.Id == 245).FirstOrDefault().Value)
+                        </div>
+                    }
+                    else if (!item.Editable && (!isFinance || !groupName.ToLower().Contains("Validated by Finance".ToLower())))
+                    {
+                        if (!string.IsNullOrEmpty(item.Value) && item.Value.IndexOf(",") == 0 && item.InputType.ToLower().IndexOf("check") == 0)
+                        {
+                            string[] arr = item.Value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                            options = new List<string>(arr);
+                            for (int o = 0; o < options.Count; o++)
+                            {
+                                <input type="checkbox" id="CHK_@(item.Id.ToString())_@(o.ToString())" value="@(options[o])" checked="checked" disabled="disabled" />
+                                <label for="CHK_@(item.Id.ToString())_@(o.ToString())">@(options[o])</label>
+                                <br />
+                            }
+                        }
+                        else
+                        {
+
+                            if (item.InputType.ToLower().IndexOf("button") == 0)
+                            {
+                                <button type="button" class="btn yes" id="manager">Packaging</button>
+                            }
+                            else
+                            {
+                                <span>@(item.Value)</span>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (item.InputType.ToLower().IndexOf("text box") == 0)
+                        {
+                            string maxlength = string.Empty;
+                            if (!string.IsNullOrEmpty(item.Specification) && item.Specification.ToLower().IndexOf("maximum") == 0)
+                            {
+                                maxlength = " maxlength=\"" + item.Specification.ToLower().Replace("maximum", string.Empty).Replace("characters", string.Empty).Trim() + "\"";
+                            }
+
+                            <input type="text" id="Control_@(item.Id.ToString())" class="input" value="@(item.Value)" @(Html.Raw(maxlength)) />
+                            if (!string.IsNullOrEmpty(item.Values))
+                            {
+                                <input type="hidden" id="Control_@(item.Id.ToString())Selected" />
+                                <input type="hidden" value="@(item.Values)" id="Control_@(item.Id.ToString())Values" class="textboxValues" />
+                            }
+                        }
+                        else if (item.InputType.ToLower().IndexOf("big text box") == 0)
+                        {
+                            <textarea id="Control_@(item.Id.ToString())" style="margin-top:5px;">@(item.Value)</textarea>
+                        }
+                        else if (item.InputType.ToLower().IndexOf("check") == 0)
+                        {
+                            for (int o = 0; o < options.Count; o++)
+                            {
+                                <input type="checkbox" id="Control_@(item.Id.ToString())_@(o.ToString())" value="@(options[o])" />
+                                <label for="Control_@(item.Id.ToString())_@(o.ToString())">@(options[o])</label>
+                                <br />
+                            }
+                        }
+                        //button
+
+                        else if (item.InputType.ToLower().IndexOf("drop down list") == 0)
+                        {
+                            <select id="Control_@(item.Id.ToString())" class="selectControl" onchange="selectedIndexChanged(this);">
+                                @foreach (string s in options)
+                                {
+                                    if (s == "Select")
+                                    {
+                                        <option value="">@(s)</option>
+                                    }
+                                    else if (s == item.Value)
+                                    {
+                                        <option selected="selected" value="@(s)">@(s)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(s)">@(s)</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (item.InputType.ToLower().IndexOf("button") == 0)
+                        {
+                            <button type="button" class="btn yes" id="manager">Packaging</button>
+                        }
+                        if (!string.IsNullOrEmpty(item.Description) && item.InputType.ToLower().IndexOf("attach") != 0)
+                        {
+                            int dot = item.Description.LastIndexOf(".");
+                            if (dot == item.Description.Length - 4 || dot == item.Description.Length - 5)
+                            {
+                                <span class="tip">
+                                    <a href="@(Url.Content("~/templates/" + item.Description + "?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                                        download template
+                                    </a>
+                                </span>
+                            }
+                            else
+                            {
+                                if (item.Description.Length > 60)
+                                {
+                                    <br />
+                                }
+                                <span class="tip">@(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))</span>
+                            }
+                        }
+                    }
+                    @if (item.InputType.ToLower().IndexOf("attach") == 0 && !item.Editable)
+                    {
+                        if (item.Files != "")
+                        {
+                            string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string line in array)
+                            {
+                                string[] arr = line.Split('|');
+                                string guid = arr[0];
+                                string name = arr[1];
+
+                                <div id='trFile@(guid)'>
+                                    <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                        @(name) [download]
+                                    </a>
+                                </div>
+                            }
+                        }
+
+                    }
+
+
+                    @if ((item.Files ?? "").Contains("66B3B7BB-64A0-4367-80B6-81ECC7FFCB8F"))
+                    {
+                        <div id='trFile66B3B7BB-64A0-4367-80B6-81ECC7FFCB8F'>
+                            <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=66B3B7BB-64A0-4367-80B6-81ECC7FFCB8F"))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                Packaging Data-Dreyers-RD – Fruity Apple Lychee Tea IM24 [download]<a>
+                                    <a style='cursor:pointer;color:red;' onclick='deleteAttachment("66B3B7BB-64A0-4367-80B6-81ECC7FFCB8F");'>[delete]</a>
+                        </div>
+                    }
+
+
+                    @if (item.InputType.ToLower().IndexOf("attach") == 0 && item.Editable)
+                    {
+                        <form id="attachementUpload@(item.Id.ToString())" enctype="multipart/form-data" method="post" class="attachmentForm">
+                            <input type="file" id="File_@(item.Id.ToString())" name="File_@(item.Id.ToString())" class="file" />
+                            <button type="button" class="button" onmousedown="this.className='buttonPressed'" id="fileButton@(item.Id.ToString())"
+                                    onmouseout="this.className='button'" onclick="uploadFile('@(item.Id.ToString())');">
+                                @(Html.Lang("Upload"))
+                            </button>
+                            <label id="lbl@(item.Id.ToString())" style="font-weight: normal; font-size: 12px;">
+                                @if (item.Files != "")
+                                {
+                                    string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
+                                    foreach (string line in array)
+                                    {
+                                        string[] arr = line.Split('|');
+                                        string guid = arr[0];
+                                        string name = arr[1];
+
+                                        <div id='trFile@(guid)'>
+                                            <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                                @(name) [download]<a>
+                                                    <a style='cursor:pointer;color:red;' onclick='deleteAttachment("@(guid)");'>[delete]</a>
+                                        </div>
+                                    }
+                                }
+                            </label>
+                            <input type="submit" id="uploadButton@(item.Id.ToString())" name="uploadButton@(item.Id.ToString())" style="visibility: hidden;
+                                width: 1px;" value="uploadButton@(item.Id.ToString())" class="submit" />
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                int dot = item.Description.LastIndexOf(".");
+                                if (dot == item.Description.Length - 4 || dot == item.Description.Length - 5)
+                                {
+                                    <span class="tip">
+                                        <a href="@(Url.Content("~/templates/" + item.Description + "?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                                            download template
+                                        </a>
+                                    </span>
+                                }
+                                else
+                                {
+                                    if (item.Description.Length > 20)
+                                    {
+                                        <br />
+                                    }
+                                    <span class="tip">@(Html.Raw(item.Description != null ? item.Description.Trim().Replace("\n", "<br />") : string.Empty))</span>
+                                }
+                            }
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    }
+</table>
+}
+
+@*@if (stepName.ToLower().IndexOf("mdc") >= 0)
+{
+    <div style="padding:10px;border:1px solid black;margin-top:15px;">
+        Vendor Code <input type="text" /> , name <input type="text" style="width:300px;"/> has been created in <input type="text" />.
+    </div>
+}*@
+<script type="text/javascript">
+    var stepName = "@(stepName)";
+    var mandatory = "@(mandatory)";
+    var mandatoryIsEmpty = @(mandatoryIsEmpty.ToString().ToLower());
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var timeControls = "@(timeControls)";
+        if (timeControls != null) {
+            var arr = new Array();
+            arr = timeControls.split(",");
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] != "") {
+                    $("#Control_" + arr[i]).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy-mm-dd"
+                    });
+                }
+            }
+        }
+    });
+</script>

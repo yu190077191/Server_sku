@@ -1,0 +1,683 @@
+﻿@{
+    ViewBag.Title = "Packaging";
+    int RequestID = Convert.ToInt32(Request.QueryString["RequestID"]);
+}
+@{Layout = null;}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery-1.8.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery.form.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/nestle.json.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/Dialog/popup.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/admin.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/layer/layer.js")"></script>
+
+    <style type="text/css">
+        .page_top {
+            width: 100%;
+        }
+
+            .page_top tr td {
+                border: 0;
+            }
+
+        .page_tit {
+            margin: 0 auto;
+            position: relative;
+        }
+
+            .page_tit h1 {
+                font-size: 22px;
+                text-align: center;
+                color: #2c8ad3;
+                font-weight: normal;
+                letter-spacing: 16px;
+                line-height: 28px;
+                padding: 8px 16px;
+                padding-right: 0px;
+                text-align: center;
+            }
+
+            .page_tit .line {
+                height: 4px;
+                overflow: hidden;
+                border-bottom: 2px solid #2c8ad3;
+                border-top: 2px solid #2c8ad3;
+                width: 100%;
+            }
+
+        .page_date {
+            text-align: center;
+            line-height: 30px;
+            color: #2c8ad3;
+        }
+
+        .page_top .Barcode {
+        }
+
+        .bill_table {
+            border-collapse: collapse;
+           /* width: 100%; */
+            color: #2c8ad3;
+            margin: 10px 0;
+            border: 1px solid #2c8ad3;
+            width:800px;
+        }
+
+            .bill_table tr td {
+                border: 1px solid #2c8ad3;
+                line-height: 22px;
+                padding: 5px;
+                height: 22px;
+                text-align: center;
+                border-top: 0;
+                width: 65px;
+            }
+
+                .bill_table tr td input[type=text] {
+                    width: 60px;
+                    border: 0;
+                    border-bottom: 1px solid #ddd;
+                    height: 22px;
+					text-align: center;
+                }
+
+                    .bill_table tr td input[type=text].input_on {
+                        border-color: #2c8ad3;
+                    }
+
+                    .bill_table tr td input[type=text].input_move {
+                        border-color: #2c8ad3;
+                    }
+
+                .bill_table tr td select {
+                    width: 100%;
+                    border: 1px solid #ddd;
+                    height: 24px;
+                }
+
+                .bill_table tr td textarea {
+                    width: 100%;
+                    border: 0;
+                    border-bottom: 1px solid #ddd;
+                    height: 22px;
+                    overflow: hidden;
+                    overflow-y: auto;
+                    border: solid 1px transparent;
+                    padding: 2px 0px;
+                }
+
+            .bill_table .readyonly {
+                border: none;
+            }
+
+        .add_bill {
+            color: #2c8ad3;
+        }
+
+            .add_bill input {
+                width: 38px;
+                border: 0;
+                border-bottom: 1px solid #ddd;
+                text-align: center;
+                height: 20px;
+            }
+
+        .bill_table {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div>
+        <table class="bill_table">
+            <tbody>
+                @*<tr>
+                    <td colspan="4" class="alarm">&nbsp;</td>
+                    <td colspan="4" class="alarm">&nbsp;</td>
+                    <td colspan="2" class="alarm">&nbsp;</td>
+                    
+                </tr>*@
+                <tr>
+                  <td style="width:60px;" class="alarm">Denominator</td>
+                    <td width="8%" class="alarm">AUoM</td>
+                    <td width="9%" class="alarm">Numerator</td>
+                    <td width="8%" class="alarm">BUoM</td>
+                    <td width="8%" class="alarm">
+                        Length
+                    </td>
+                    <td width="8%" class="alarm">
+                        Width
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        Height
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        Unit
+                    </td>
+                    <td width="9%" class="alarm">
+                        Gross Weight
+                    </td>
+                    <td width="8%">
+                        Unit
+                    </td>
+                    
+
+                </tr>
+
+
+                <tr id="Packaging0">
+                    <td style="width:60px;" class="alarm"><input type="text" id="Denominator0" style="height:24px;width:70px;" class="checkNum"></td>
+                    <td width="8%" class="alarm"><label id="AUoM0">EA</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator0" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM0" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length0" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width0" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height0" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit0" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross0" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit0" style="height:24px;width:70px;">
+                    </td>
+                   
+
+                </tr>
+
+                <tr id="Packaging1">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator1" style="height:24px;width:70px;" class="NumText"></td>
+                    <td width="8%" class="alarm"><label id="AUoM1">DSP</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator1" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM1" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length1" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width1" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height1" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit1" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross1" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit1" style="height:24px;width:70px;">
+                    </td>
+    
+
+                </tr>
+                
+                <tr id="Packaging2">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator2" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM2">CT</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator2" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM2" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length2" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width2" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height2" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit2" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross2" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit2" style="height:24px;width:70px;">
+                    </td>
+                    
+
+                </tr>
+
+<tr id="Packaging3">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator3" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM3">CS</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator3" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM3" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length3" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width3" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height3" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit3" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross3" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit3" style="height:24px;width:70px;">
+                    </td>
+                  
+
+                </tr>
+                
+                <tr id="Packaging4">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator4" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM4">PUM</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator4" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM4" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit4" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                   
+
+                </tr>
+                
+                
+                 <tr id="Packaging5">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator5" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM5">LAY</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator5" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM5" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit5" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    
+
+                </tr>
+                
+                
+                 <tr id="Packaging6">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator6" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM6">PAL</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator6" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM6" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length6" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width6" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height6" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit6" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross6" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit6" style="height:24px;width:70px;">
+                    </td>
+                   
+
+                </tr>
+                
+                
+                 <tr id="Packaging7">
+                      <td width="9%" class="alarm"><input type="text" id="Denominator7" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm"><label id="AUoM7">NL</label></td>
+                    <td width="9%" class="alarm"><input type="text" id="Numerator7" style="height:24px;width:70px;"> </td>
+                    <td width="8%" class="alarm"><input type="text" id="BUoM7" style="height:24px;width:70px;"></td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Length7" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="alarm">
+                        <input type="text" id="Width7" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="Height7" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%" class="black  text_l">
+                        <input type="text" id="BUnit7" style="height:24px;width:70px;" disabled="disabled">
+                    </td>
+                    <td width="9%" class="alarm">
+                        <input type="text" id="Cross7" style="height:24px;width:70px;">
+                    </td>
+                    <td width="8%">
+                        <input type="text" id="CUnit7" style="height:24px;width:70px;">
+                    </td>
+                   
+
+                </tr>
+             
+
+            </tbody>
+        </table>
+
+        <div>
+          <table style="width:800px;" border="0">
+            <tr>
+              <td width="25%"><table class="bill_table" style="width:170px;">
+                <tr>
+                  <td style="width:80px;">Handling Unit Type</td>
+                  <td style="width:80px;" class="alarm"><input type="text" id="LastHUT" style="height:24px;width:70px;"> </td>
+                </tr>
+              </table>
+                </td>
+              <td width="25%"><table class="bill_table" style="width:170px;">
+                <tr>
+                  <td width="60%">Supported Weight</td>
+                  <td width="40%" class="alarm"><input type="text" id="LastSW" style="height:24px;width:70px;"> </td>
+                </tr>
+              </table></td>
+              <td width="25%"><table class="bill_table" style="width:190px;">
+                <tr>
+                  <td style="width:120px;">UOM Supp Weight</td>
+                  <td class="alarm"><input type="text" id="LastUSW" style="height:24px;width:70px;"> </td>
+                </tr>
+              </table></td>
+              <td width="0%"></td>
+              <td width="25%"><table class="bill_table" style="width:170px;">
+                <tr>
+                  <td width="60%">Stack Diff M</td>
+                  <td width="40%" class="alarm"><input type="text" id="LastSDM" style="height:24px;width:70px;"> </td>
+                </tr>
+              </table></td>
+            </tr>
+          </table> 
+        </div>
+      <div class="modal-footer" align="center">
+            <!--  <div class="panel-heading">-->
+          @*<button type="button" class="btn yes" id="manager2">Get</button>*@
+            <input type="button" id="btn_spcFeeFormBSubmit" class="btn btn-success" value="Save" onClick="submitApply();" style="width:150px;">
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    //$('#manager2').on('click', function () {
+    $(document).ready(function(){ 
+        var AUoMs = ["EA", "DSP", "CT", "CS", "PUM", "LAY", "PAL", "NL"]; 
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Content("~/WF/GePackaging"))",
+                data: "{RequestID:'@(RequestID.ToString())'}",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var json = eval(data);
+
+                var temp = json;
+                //console.log(temp);
+                $.each(json, function (index, item) {
+                    if (item != null) {
+                       // console.log(item.AUoM);
+                        var i = jQuery.inArray(item.AUoM, AUoMs);
+                       // var i = AUoMs.indexOf(item.AUoM);
+                        if (i !=-1)
+                        //if (item.AUoM == "EA")
+                        {
+                            var paydet = $("tr[id^='Packaging']:eq(" + i + ")");
+                            var payob = new Object();
+                            paydet.find("[id^='Denominator']").val(item.Denominator); //
+                           // payob.AUoM = paydet.find("[id^='AUoM']").html().trim(); //
+                            paydet.find("[id^='Numerator']").val(item.Numerator); //
+                            paydet.find("[id^='BUoM']").val(item.BUoM); //
+                            paydet.find("[id^='Length']").val(item.Length); //
+                            paydet.find("[id^='Width']").val(item.Width); //
+                            paydet.find("[id^='Height']").val(item.Height); //
+                            paydet.find("[id^='BUnit']").val(item.UOMUnit); //
+                            paydet.find("[id^='Cross']").val(item.GrossWeight); //
+                            paydet.find("[id^='CUnit']").val(item.GrossUnit); //
+                        }
+                        if (item.AUoM == "Last")
+                        {
+                            $("#LastHUT").val(item.BUoM); //
+                            $("#LastSW").val(item.GrossWeight); //
+                            $("#LastUSW").val(item.GrossUnit); //
+                            $("#LastSDM").val(item.UOMUnit); //
+                        }
+                        
+                    } 
+                });
+
+                var optionstring = "";
+
+            },
+            err: function (err) {
+            }
+        })
+    });
+
+    function getModelId() {
+        if (globalJsonModel != null) {
+            return globalJsonModel.Id;
+        }
+
+        var url = location.href;
+        if (url.indexOf("?RequestID=") > 0) {
+            var id = url.substr(url.indexOf("?") + 11);
+            return parseInt(id);
+        }
+
+        return 0;
+    }
+
+        function submitApply() {
+            var model = new Object();
+            model.RequestID = getModelId();
+           // console.log(model.RequestID);
+            model.packagingList = AddPackaging();
+
+              var json = $.toJSON(model);
+            if (confirm("Are you save or change the packaging?")) {
+                $.post("@(Url.Content("~/WF/SavePackaging"))", { json: json }, function (response) {
+                if (response.Success) {
+                    layer.msg("添加成功！");
+                    var index = parent.layer.getFrameIndex(window.name);
+
+                    parent.layer.close(index);
+                        CloseDialog();
+                        layer.close(this);
+                }
+            });
+        }
+        }
+
+    function LastPackaging() {
+        var payob = new Object();
+        payob.Denominator = "";
+        payob.AUoM = "Last";//
+        payob.Numerator = "";
+        payob.BUoM = $("#LastHUT").val(); //
+        payob.Length = ""
+        payob.Width = ""
+        payob.Height = ""
+        payob.UOMUnit = ""
+        payob.GrossWeight = $("#LastSW").val(); //
+        payob.GrossUnit = $("#LastUSW").val(); //
+
+        payob.UOMUnit = $("#LastSDM").val(); //
+        return payob;
+    }
+     
+        function AddPackaging() {
+            var packagingList = [];
+            for (var i = 0; i < $("tr[id^='Packaging']").length; i++) {
+                var paydet = $("tr[id^='Packaging']:eq(" + i + ")");
+                var payob = new Object();
+                payob.Denominator = paydet.find("[id^='Denominator']").val(); //
+                //payob.AUoM = paydet.find("[id^='AUoM']").html().trim(); //
+                payob.AUoM = paydet.find("[id^='AUoM']").html(); //
+                payob.Numerator = paydet.find("[id^='Numerator']").val(); //
+                payob.BUoM = paydet.find("[id^='BUoM']").val(); //
+                payob.Length = paydet.find("[id^='Length']").val(); //
+                payob.Width = paydet.find("[id^='Width']").val(); //
+                payob.Height = paydet.find("[id^='Height']").val(); //
+                payob.UOMUnit = paydet.find("[id^='BUnit']").val(); //
+                payob.GrossWeight = paydet.find("[id^='Cross']").val(); //
+                payob.GrossUnit = paydet.find("[id^='CUnit']").val(); //
+
+                if (payob.GrossUnit != "")
+                {
+                    if (payob.GrossUnit.toLowerCase() == "kg" || payob.GrossUnit.toLowerCase() == "g") {
+                       
+                    }
+                    else {
+
+                        paydet.find("[id^='CUnit']").val("");
+                        paydet.find("[id^='CUnit']").focus();
+                        alert("For Gross Weight using KG or G as unit!");
+                        return false;
+                    }
+                }
+                if (payob.GrossUnit.toLowerCase() == "kg" && payob.GrossWeight !="")
+				{
+					paydet.find("[id^='CUnit']").val(payob.GrossUnit.toLowerCase());
+					//when <10kg
+                    if (parseFloat(payob.GrossWeight)<=10)
+					{
+						if (payob.GrossWeight.lastIndexOf(".")!=-1)
+						{
+							var toDecimalArr = payob.GrossWeight.split(".");
+                            if (toDecimalArr[1].length == 2 || toDecimalArr[1].length == 1)
+							{
+								paydet.find("[id^='Cross']").val(payob.GrossWeight);
+								}
+							else
+							{
+								paydet.find("[id^='Cross']").val("");
+							paydet.find("[id^='Cross']").focus();
+							alert("When GrossWeight<10kg, 1 or 2 decimal places allowed;");
+							return false;}
+						}
+					
+					}
+					
+					//end <10kg
+					
+					//when <100kg
+                    if (parseFloat(payob.GrossWeight) > 10 && parseFloat(payob.GrossWeight) <100)
+					{
+						if (payob.GrossWeight.lastIndexOf(".")!=-1)
+						{
+							var toDecimalArr = payob.GrossWeight.split(".");
+                            if (toDecimalArr[1].length == 1 )
+							{
+								paydet.find("[id^='Cross']").val(payob.GrossWeight);
+								}
+							else
+							{
+								paydet.find("[id^='Cross']").val("");
+							paydet.find("[id^='Cross']").focus();
+							alert("When 10<=GrossWeight<100kg, 1 decimal places allowed");
+							return false;}
+						}
+					
+                    }
+
+                    //when >100kg
+                    if (parseFloat(payob.GrossWeight)>=100) {
+                        if (payob.GrossWeight.lastIndexOf(".") != -1) {
+                            paydet.find("[id^='Cross']").val("");
+                            paydet.find("[id^='Cross']").focus();
+                            alert("When GrossWeight>100kg, 0 decimal places allowed");
+                            return false;
+                        }
+                        else
+                        {
+                            paydet.find("[id^='Cross']").val(payob.GrossWeight);
+                        }
+
+                    }
+					
+					//end <10kg
+					
+				}
+				//else if( payob.GrossUnit !="")
+				//{
+					
+				//	paydet.find("[id^='CUnit']").val("");
+				//	paydet.find("[id^='CUnit']").focus();
+				//	alert("For Gross Weight using KG as unit");
+				//	return false;
+				//}
+              //  payob.Net = paydet.find("[id^='Net']").val(); //Net
+              //  payob.NUnit = paydet.find("[id^='NUnit']").val(); //
+
+
+
+
+                if (payob.Numerator != "" || payob.Denominator !="") {
+                    packagingList.push(payob);
+                }
+            }
+            if ($("#LastSW").val() != "" || $("#LastSDM").val() !="")
+            {
+                packagingList.push(LastPackaging());
+            }
+            return packagingList
+        }
+		
+		
+		$(".checkNum").keypress(function(event) { 
+        var keyCode = event.which;
+         if (keyCode == 46 || (keyCode >= 48 && keyCode <=57)) return true;
+         else return false; 
+        }).focus(function() { 
+                this.style.imeMode='disabled'; 
+        });     
+		
+		 /*JQuery 限制文本框只能输入数字*/  
+            $(".NumText").keyup(function(){    
+                    $(this).val($(this).val().replace(/D|^0/g,''));  
+                }).bind("paste",function(){  //CTR+V事件处理    
+                    $(this).val($(this).val().replace(/D|^0/g,''));     
+                }).css("ime-mode", "disabled"); //CSS设置输入法不可用    
+	
+            /*JQuery 限制文本框只能输入数字和小数点*/
+            $(".NumDecText").keyup(function(){    
+                    $(this).val($(this).val().replace(/[^0-9.]/g,''));    
+                }).bind("paste",function(){  
+                    $(this).val($(this).val().replace(/[^0-9.]/g,'')); //粘贴的不是数字，则替换为''    
+　　　　　　　　　　　　//或 return false; 禁用粘贴功能
+                }).css("ime-mode", "disabled"); //CSS设置输入法不可用   
+
+</script>

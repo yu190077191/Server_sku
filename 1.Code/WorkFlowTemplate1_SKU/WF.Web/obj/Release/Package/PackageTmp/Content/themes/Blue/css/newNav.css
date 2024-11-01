@@ -1,0 +1,17 @@
+﻿@charset "utf-8";
+* {margin:0; padding:0}
+.newNav {height:43px; width:1000px; overflow:hidden; background:url(../images/newNav_bg.jpg) repeat-x #fff}
+.newNavEnds_left {float:left; width:6px; height:38px; background: url(../images/newNavEnds_bg.jpg) no-repeat; margin-right:20px}
+.newNav ul {list-style:none; width:945; float:left}
+.newNav ul li {width:105px; height:43px; display:block; float:left}
+.newNav ul li a {display:block; line-height:38px; text-decoration:none; text-align:center; font-size:14px; letter-spacing:0.1em; color:white}
+.newNav ul li a:hover {height:43px; background:url(../images/newNavEnds_a_hover.jpg) no-repeat; font-weight:bold}
+.newNavEnds_right {float:right; width:7px; height:38px; background:url(../images/newNavEnds_bg.jpg) no-repeat right 0}
+.newNav ul li .isCurrent {height:43px; background:url(../images/newNavEnds_a_hover.jpg) no-repeat; font-weight:bold}
+
+.newNav2 {height:43px; width:1000px; overflow:hidden; background:url(../images/newNav_bg.jpg) repeat-x #fff}
+.newNav2 ul {list-style:none; width:945; float:left}
+.newNav2 ul li {width:200px; height:43px; display:block; float:left}
+.newNav2 ul li a {display:block; line-height:38px; text-decoration:none; text-align:center; font-size:14px; letter-spacing:0.1em; color:white}
+.newNav2 ul li a:hover {height:43px; background:url(../images/newNavEnds_a_hover200.jpg) no-repeat; font-weight:bold}
+.newNav2 ul li .isCurrent {height:43px; background:url(../images/newNavEnds_a_hover200.jpg) no-repeat; font-weight:bold}

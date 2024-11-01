@@ -1,0 +1,172 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@{
+    bool isChinese = LanguagesRule.IsInChinese();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="IE=9.0000" http-equiv="X-UA-Compatible">
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/favicon.ico")" />
+    <link rel="Bookmark" href="@Url.Content("~/favicon.ico")" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery-1.8.2.js")"></script>
+    <link href="@Url.Content("~/Content/themes/Blue/css/styles.css?" + DateTime.Now.ToString())" rel="stylesheet" media="screen"
+          type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/newNav.css?v1")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/css.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/front.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/header.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/register.css")" type="text/css" rel="stylesheet" />
+
+    <link href="@(Url.Content("~/Content/themes/Asset/css/css.css"))" rel="stylesheet" type="text/css">
+    <script type='text/javascript' src='@(Url.Content("~/Scripts/Asset/dropdown.js"))'></script>
+
+    <link href="@Url.Content("~/Content/themes/Simple/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/admin.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Blue/css/styles.css")" rel="stylesheet" media="screen" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/LargeOrder.css?" + DateTime.Now.ToString())" rel="Stylesheet" type="text/css" />
+    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/json2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/nestle.json.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/cn_scroll.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/StyleTuner.js?" + DateTime.Now.ToString())"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Login.js?" + DateTime.Now.ToString())"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Dialog/popup.js?" + DateTime.Now.ToString())"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/admin.js?" + DateTime.Now.ToString())"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.watermark.min.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/LargeOrder/PressEnter.js")"></script>
+
+    <link href="@Url.Content("~/Scripts/zTree_v3/css/zTreeStyle/zTreeStyle.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/zTree_v3/css/tree.css")" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/zTree_v3/js/jquery.ztree.core-3.5.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/zTree_v3/js/jquery.ztree.excheck-3.5.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/zTree_v3/js/jquery.ztree.exedit-3.5.js")"></script>
+
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.datepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ui.core.js")"></script>
+
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.ajaxQueue.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox-compressed.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/keepSession.js?" + DateTime.Now.ToString())"></script>
+    <script type="text/javascript">
+        function getRootUrl() {
+            return "@(Url.Content("~/"))";
+        }
+        function getLanguage() {
+            return "@LanguagesRule.GetUserLanguage()";
+        }
+    </script>
+
+    @RenderSection("Header", required: false)
+</head>
+<body>
+    <div class="container" style="width: 99%; margin: 0 auto; background: url(/Content/themes/Blue/images/head.gif) repeat-x 0 0">
+        <div class="head" style="width: 99%; height: 93px; border: 1px solid #FFF; border-top: none; border-bottom: none; overflow: hidden">
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-top: 0px; height: 100px;"
+                   align="left" title="Large Capital Investment Order">
+                <tr>
+                    <td style="padding-left: 10px;">
+                        <div style="width:900px;height:49px;background:URL(@(Url.Content("~/logo.png"))) no-repeat;">
+                            <span style="float:left;margin-left:450px;padding-top:18px;font-size:24px;color:#AA5566;">
+                                Large Capital Investment Order
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table id="welcome" cellpadding="0" cellspacing="0" border="0" width="300" class="right" style="margin-top:15px;">
+                <tr> <td align="right" style="padding-right:20px;">@(Html.Raw(LanguagesRule.GetLanguageSelection()))</td></tr>
+                <tr>
+                    <td style="padding-right:20px;padding-top:8px;">
+                        @if (Operation.IsInDebugMode())
+                        {
+                            <a style="cursor:pointer;" onclick="signOut();">@(Html.Lang("Sign Out"))</a>
+                        }
+                        else
+                        {
+                            <span>Welcome,</span>
+                        }
+
+                        @(WF.Framework.Operation.Employee.DisplayName)
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- head -->
+        
+        <!-- head -->
+        <div id="navMenu">
+            <ul>
+                <li><a id="Menu1" href="@(Url.Content("~/"))">@LanguagesRule.Translate("Home")</a></li>
+                <li><a id="Menu2" rel="dropmenu2">@LanguagesRule.Translate("IT Asset Requests")</a></li>
+
+                <li><a id="Menu5" rel="dropmenu5">@LanguagesRule.Translate("Tools")</a></li>
+            </ul>
+        </div>
+
+        @*<script type="text/javascript">cssdropdown.startchrome("navMenu")</script>*@    
+
+        <!-- newNav -->
+        <div style="padding:30px 30px;font-size:12px;height:auto;background-color:#FFF;">
+            @RenderBody()
+        </div>
+            <div class="foot_top" style="width: 99%; background-color: #FFF; display: none;">
+            </div>
+            <!-- foot_top -->
+            <div class="foot marginAuto" style="width: 99%; background-color: #FFF;display:none;">
+                <p>
+                    Nestle (China) Ltd.
+                </p>
+            </div>
+            <!-- foot -->
+        </div>
+    <div id="loadingTip">
+        <img src="@Url.Content("~/images/loading.gif")" alt="加载中……" />
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script type="text/javascript">
+    var companyId = "";
+    function companyIdSelectChanged() {
+        companyId = $("#CompanyID").find("option:selected").val();
+        callCompanyIdSelectChanged(companyId);
+    }
+</script>
+<style type="text/css">
+    #loadingTip {
+        width: 100px;
+        height: 50px;
+        padding: 30px;
+        float: left;
+        position: absolute;
+        display: none;
+        top: -15px;
+        left: 40px;
+    }
+</style>
+<script type="text/javascript" src="@Url.Content("~/Scripts/loading.js")"></script>
+
+<input type="hidden" id="IsWorkstationUser" onblur="workstationDocumentCompleted();" />
+<script type="text/javascript">
+    function isWorkstationUser() {
+        return $("#IsWorkstationUser").val() == "1";
+    }
+
+    function workstationDocumentCompleted() {
+        //TODO add code when workstation is ready
+    }
+</script>

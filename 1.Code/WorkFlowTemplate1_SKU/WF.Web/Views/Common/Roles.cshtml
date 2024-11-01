@@ -1,0 +1,137 @@
+﻿@using Nestle.WorkFlow.BusinessRule;
+@using Nestle.WorkFlow.Model;
+@using MVC4Pager;
+@model PagedList<DepartmentRole>
+@{
+    ViewBag.Title = "User Management";
+    List<Role> RoleList = ViewBag.RoleList as List<Role>;
+    bool IsAdmin = WF.Web.Controllers.WorkFlowAPIController.IsAdmin;
+}
+@section Header{
+    <script type="text/javascript" src="@(Url.Content("~/Scripts/WorkFlow.js?" + DateTime.Now.ToString()))"></script>
+}
+<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
+    <div style="float:right;margin-bottom:5px;">
+        <span style="float:left;margin-right:10px;">
+            Please input the existing approver's email:
+        </span>
+        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
+        <button style="float:left;margin-right:10px;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="searchUser(1);">@(Html.Lang("Search"))</button>
+        <button style="float:left;margin-right:10px;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="updateRole('copy');">@(Html.Lang("Copy Role"))</button>
+        <button style="float:left;margin-right:10px;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="updateRole('transfer');">@(Html.Lang("Transfer Role"))</button>
+        <button style="float:left;margin-right:10px;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="updateRole('delete');">@(Html.Lang("Delete Role"))</button>
+    </div>
+    <div style="clear:both;"></div>
+    <hr />
+    <div class="rightDiv" style="width:100%;padding-left:0;margin-left:0;">
+        <div id="searchResult">
+            @{ Html.RenderPartial("PartialRolesList", Model); }
+        </div>
+    </div>
+</div>
+<div id="popDiv" style="display:none;">
+    <div style="width:300px;line-height:24px;">
+        <b id="actionPOPID"></b>
+        <br />
+        <div id="newPOPID">
+            <span id="tip">Please input the new approver's email:</span>
+            <br />
+            <input type="text" id="emailToPOPID" style="width:200px" />
+        </div>
+        <span id="tip">Please input the justification:</span>
+        <br />
+        <textarea id="reasonPOPID" style="width:200px;height:100px;"></textarea>
+        <br />
+        <button style="" type="button" class="button" onmousedown="this.className = 'buttonPressed'" onmouseout="    this.className = 'button'" onclick="applyRole(POPID);">@(Html.Lang("Submit"))</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function searchUser(pageIndex) {
+        var query = new Object();
+        query.PageIndex = pageIndex;
+        query.Keyword = $.trim($("#keyword").val());
+        query.Array = new Array();
+
+        var a = query.Keyword.indexOf("<");
+        if (a > 0) {
+            var b = query.Keyword.indexOf(">");
+            if (b > a) {
+                query.Keyword = query.Keyword.substr(a + 1, b - a - 1);
+            }
+        }
+
+        //var RoleId = $("#RoleSelect").val();
+        //if (RoleId != "") {
+        //    query.Array.push(createParameter("RoleId", RoleId));
+        //}
+
+        //var department = $("#departmentSelect").val();
+        //if (department != "") {
+        //    query.Array.push(createParameter("DepartmentId", department));
+        //}
+        pop("Please wait...");
+        $.get(location.href, { json: $.toJSON(query) }, function (html) {
+            closeMe();
+            $("#searchResult").html(html);
+        });
+    }
+
+    var _popID = 0;
+    var _mode = "";
+    function updateRole(mode) {
+        _mode = mode;
+        _popID++;
+        var html = $("#popDiv").html();
+        html = html.replace(/\POPID/g, _popID.toString());
+        pop(html, 250);
+        var action = "";
+        switch (mode) {
+            case "copy":
+                action = "Copy role to a new user";
+                break;
+            case "transfer":
+                action = "Transfer role to a new user";
+                break;
+            case "delete":
+                action = "Delete role";
+                $("#new" + _popID.toString()).hide();
+                break;
+        }
+
+        $("#action" + _popID.toString()).html(action);
+    }
+
+    function applyRole(_popID) {
+        var email = $("#emailTo" + _popID.toString()).val();
+        var reason = $("#reason" + _popID.toString()).val();
+        var a = email.indexOf("<");
+        if (a > 0) {
+            var b = email.indexOf(">");
+            if (b > a) {
+                email = email.substr(a + 1, b - a - 1);
+            }
+        }
+
+        var checkedIds = getSelectedIds();
+        if (checkedIds == "") {
+            alert("Please select the roles you want to " + _mode + "!");
+            return;
+        }
+
+        if (_mode != "delete" && email.indexOf("@@") < 0) {
+            alert("Please input the new user's email!");
+            return;
+        }
+
+        if (reason == "") {
+            alert("Please input the reason!");
+            return;
+        }
+
+        if (!confirm("Are you sure to " + _mode + " the roles?")) return;
+
+        $.post("@(Url.Content("~/Common/ApplyRoleChange"))", { checkedIds: checkedIds, mode: _mode, email: email, reason: reason }, function (msg) {
+            alert(msg);
+    });
+    }
+</script>

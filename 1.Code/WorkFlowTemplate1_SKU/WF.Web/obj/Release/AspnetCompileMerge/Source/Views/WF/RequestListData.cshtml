@@ -1,0 +1,63 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using MVC4Pager;
+@model PagedList<WF.Model.RequestVersionData>
+
+@{
+    //ViewBag.Title = "Please select";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<body>
+    <div class="main" style="padding:0px 50px;color:black;">
+        <div style="background-color: gray;">
+            <p style="line-height: 30px;padding: 5px;font-weight: 700;">从已存在产品复制相关产品属性</p>
+        </div>
+        <div style="background-color: #d91010;margin-top: -10px;color:white;">
+            <p style="line-height: 30px;padding: 5px;font-weight: 700;">请确保Reference SKU与本产品的如下产品属性一致</p>
+        </div>
+        <div style="border: solid 1px;margin-top: -10px;">
+            <p style="line-height: 30px;padding: 5px;font-weight: 700;margin-top: 0px;">此功能将从Reference SKU信息中复制如下属性</p>
+            <p style="font-size: 12px;padding: 5px;margin-top: -10px;">Material Type, Origin, Basic Of Unit, Sales  Organization, Distribution channel, Global Attribute 3, Business Group, Material Group, Product Hierarchy, Delivering plant,  Corporate brand, range brand, Brand denomination, , BAI, Material Group1, Parent Code, Sales Unit， Material group 3, Material Group 4</p>
+        </div>
+        <div id="searchDiv" style="margin-top: 5px;margin-left: 6px;">
+            <label for="SKUCode" style="margin-right: 5px;">Reference SKU Code :</label>
+
+            <input id="SKUCode" type="text" class="keyword" style="width: 150px;margin-right:10px;margin-top:3px;margin-left: 10px;line-height: 35px;height: 31px;font-size: 18px;padding-left: 8px;border: 1px solid green;">
+            <button type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="searchList();" style="font-size: 18px; background-size: 150px 35px;width: 150px;height: 35px;margin-left: 5px;">
+                Search 搜 索
+            </button>
+        </div>
+        <div id="searchResult" style="border: solid 1px;height: 520px; margin-top: 8px;">
+
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        //searchList();
+    });
+
+    function searchList() {
+        if ($.trim($("#SKUCode").val()).length == 0) {
+            alert('请输入SKU Code后查询');
+            return;
+        }
+
+        $.post(getRootUrl() + "WF/SearchRequestListData", { SKUCode: $.trim($("#SKUCode").val()), RequestID: @ViewBag.RequestID }, function (html) {
+            $("#searchResult").html(html);
+        });
+    }
+    function returnThisData(dataInfo) {
+        window.returnValue = dataInfo;
+        if (opener != null && opener != 'undefined') {
+            window.opener.returnValue = dataInfo; //chrome有些版本有问题, 所以在子窗口同时修改了父窗口的ReturnValue(能执行showModalDialog的chrome)
+            if (window.opener.showModalDialogCallback)
+                window.opener.showModalDialogCallback(dataInfo);
+        }
+
+        window.close();
+    }
+</script>

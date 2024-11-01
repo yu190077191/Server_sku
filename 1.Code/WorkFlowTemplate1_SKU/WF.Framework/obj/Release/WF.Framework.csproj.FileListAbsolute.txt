@@ -1,0 +1,20 @@
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Framework.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.csproj.AssemblyReference.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.csproj.CopyComplete
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\bin\Release\WF.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Frame.31AB1EE0.Up2Date
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.Framework\obj\Release\WF.Framework.pdb

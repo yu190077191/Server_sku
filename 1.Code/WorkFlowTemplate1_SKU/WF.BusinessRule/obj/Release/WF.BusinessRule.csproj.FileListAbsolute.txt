@@ -1,0 +1,30 @@
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.BusinessRule.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.BusinessRule.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\System.Web.Mvc.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.DataAccess.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Framework.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Model.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.DataAccess.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Framework.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Model.pdb
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.csproj.AssemblyReference.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.csproj.CoreCompileInputs.cache
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.csproj.CopyComplete
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.dll
+C:\2.Sunny\Project documents\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.BusinessRule.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.BusinessRule.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\System.Web.Mvc.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.DataAccess.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Framework.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Model.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.DataAccess.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Framework.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\bin\Release\WF.Model.pdb
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.csproj.AssemblyReference.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.csproj.CoreCompileInputs.cache
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.Busin.9994D1CB.Up2Date
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.dll
+C:\0aWork\运维工作\SKU运维\12.SKU\1.Code\WorkFlowTemplate1_SKU\WF.BusinessRule\obj\Release\WF.BusinessRule.pdb

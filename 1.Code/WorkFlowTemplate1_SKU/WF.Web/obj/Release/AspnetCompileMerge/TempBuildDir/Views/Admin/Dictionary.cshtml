@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Dictionary";
+}
+
+<div class="main">
+    <table>
+        <thead>
+            <tr>
+                <th colspan="4">
+                    @Html.Lang("Dictionary")
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("TypeCode"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="TypeCode" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Name"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Name" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Value"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Value" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("ValueString"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="ValueString" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Priority"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Priority" class="input"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Description"):
+            </td>
+            <td class="tdRight2">
+                <input type="text" id="Description" class="input"/>
+            </td>
+        </tr>
+
+        <tr id='buttonTR'>
+            <td colspan="4" align="center" style="height: 60px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function getModel() {
+        var elementIds = ",TypeCode,Name,Value,ValueString,Priority,Description";
+        if (checkElements(elementIds)) {
+            var model = new Object();
+            model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+            model.TypeCode = getValue("TypeCode", true, "string");
+            model.Name = getValue("Name", true, "string");
+            model.Value = getValue("Value", false, "int");
+            model.ValueString = getValue("ValueString", false, "string");
+            model.Priority = getValue("Priority", false, "double");
+            model.Description = getValue("Description", false, "string");
+
+            if (requiredIsEmpty()) {
+                alert("Required fields cannot be empty!");
+                return "";
+            }
+            else {
+                return $.toJSON(model);
+            }
+        }
+        else {
+            return "";
+        }
+    }
+
+    $.ajaxSetup({ cache: false });
+
+    var id = 0;
+    function save() {
+        saveModel(function () {
+            popOK(function () {
+                if (location.href.indexOf("?") > 0) {
+                    closeWindow();
+                }
+                else {
+                    location.href = getRootUrl() + "Admin/DictionaryList";
+                }
+            });
+        });
+    }
+
+    function saveModel(callback) {
+        var model = getModel();
+        if (model == "") return;
+        $("#buttonTR").css({ "display": "none" });
+        $.post(getRootUrl() + "Admin/SaveDictionary", { json: model }, function (json) {
+            if (json.Success) {
+                id = json.Id;
+                if (callback) {
+                    callback();
+                }
+            }
+            else {
+                popFailure();
+                $("#buttonTR").css({ "display": "" });
+            }
+        });
+    }
+</script>
+@Html.Raw(ViewBag.Json)

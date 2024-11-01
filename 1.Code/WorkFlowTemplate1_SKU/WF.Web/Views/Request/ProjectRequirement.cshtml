@@ -1,0 +1,523 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+@using WF.Web.Controllers;
+
+@{
+    ViewBag.Title = "Business Requirement";
+    string idStr = "0";
+    string fileControlIds = "0";
+    List<Attachment> commonAttachmentList = ViewBag.commonAttachmentList as List<Attachment>;
+}
+
+<div class="main">
+    <table cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    <h1 style="font-size:16px;">
+                        @Html.Lang("Business Requirement")
+                    </h1>
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Step 1"):
+            </td>
+            <td class="tdRight" colspan="3">
+                <a style="color:blue;text-decoration:underline;" href="@(Url.Content("~/Preliminary Business Case.xlsm?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">Click here to download the template "Preliminary Business Case.xlsm"</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Step 2"):
+            </td>
+            <td class="tdRight" colspan="3">
+                    Please populate Preliminary Business Case.xlsm according to “<b style="color:red;">Instructions</b>” embedded, 
+                    and fill the correct names according to the <b style="color:red;">Approval Matrix</b>. 
+                <br />
+                <a style="color:blue;text-decoration:underline;" href="@(Url.Content("~/Business Case Approval Matrix.xlsx?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                Click here to download the "Business Case Approval Matrix.xlsx"</a>
+                <br />
+                <a style="color:blue;text-decoration:underline;" href="@(Url.Content("~/NBE E2E coverage.pptx?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))" target="_blank">
+                    Click here to download the "E2E Coverage"
+                </a>
+            </td>
+        </tr>
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="tdLeft">
+                @Html.Lang("Step 3"):
+            </td>
+            <td colspan="3">
+                <div style="line-height:30px;padding-bottom:10px;">
+                    Please upload the 
+                    <b style="font-size:14px;">Preliminary Business Case.xlsm</b>
+
+                    <span style="float:left;margin-right:10px;display:none;">
+                        @Html.Lang("Description")
+                        <input type="text" value="Preliminary Business Case" class="input" id="AttachmentDescription0" style="height:22px;width:180px;" />
+                    </span>
+                    <form id="attachementUpload0" enctype="multipart/form-data" method="post" class="compareForm" style="width:600px;">
+                        <input type="file" id="fileInputControl0" name="fileInputControl0"
+                               class="compareFile" style="width: 250px; height:24px;" />
+                        <button id="uploadButton0" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                onmouseout="this.className='button'" onclick="upload('0');">
+                            @(Html.Lang("Upload"))
+                        </button>
+                        <label id="lbl0" style="float: left; font-weight: normal; font-size: 12px;">
+                        </label>
+                        <input type="submit" id="uploadSubmitButton0" name="uploadSubmitButton0" style="visibility: hidden;
+                  width: 1px;" value="uploadSubmitButton0" class="submit" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="tdLeft">
+                @Html.Lang("Step 4"):
+            </td>
+            <td colspan="3">
+                <div style="line-height:30px;padding-bottom:10px;">
+                    Please upload the 
+                    <b style="font-size:14px;">Preliminary Business Case.<span style="color:red;">PDF</span></b> sigined by
+                    Function Head/Business Case Owner and Requestor, i.e. print the previous file and signed by requestor and Function Head/Business Case Owner right beside the name box, and then scan it to PDF.
+                    <span style="float:left;margin-right:10px;display:none;">
+                        @Html.Lang("Description")
+                        <input type="text" value="the PDF signed by the functional head" class="input" id="AttachmentDescription1" style="height:22px;width:180px;" />
+                    </span>
+                    <form id="attachementUpload1" enctype="multipart/form-data" method="post" class="compareForm" style="width:600px;">
+                        <input type="file" id="fileInputControl1" name="fileInputControl1"
+                               class="compareFile" style="width: 250px; height:24px;" />
+                        <button id="uploadButton1" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                onmouseout="this.className='button'" onclick="upload('1');">
+                            @(Html.Lang("Upload"))
+                        </button>
+                        <label id="lbl1" style="float: left; font-weight: normal; font-size: 12px;">
+                        </label>
+                        <input type="submit" id="uploadSubmitButton1" name="uploadSubmitButton1" style="visibility: hidden;
+                  width: 1px;" value="uploadSubmitButton1" class="submit" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLeft">
+                @Html.Lang("Uploaded attachments")
+            </td>
+            <td class="tdRight2" colspan="3">
+                <table id="fileTableList" class="tbl">
+                    <tr>
+                        <th>@(Html.Lang("Description"))</th>
+                        <th>@(Html.Lang("File Type"))</th>
+                        <th>@(Html.Lang("Download"))</th>
+                        <th>@(Html.Lang("Edit"))</th>
+                        <th>@(Html.Lang("Delete"))</th>
+                    </tr>
+                    @if (commonAttachmentList != null)
+                    {
+                        foreach (Attachment item in commonAttachmentList)
+                        {
+                            <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'"
+                                id="trFile@(item.Id.ToString())">
+                                <td id="AttachmentDescription@(item.Id.ToString())" class="listtd" style="padding: 5px;">
+                                    @(item.Description)
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:50px;">@(Path.GetExtension(item.FilePath).ToUpperInvariant())</td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="window.open('@(Url.Content("~/Request/Download?id=" + item.Id.ToString()))');">
+                                        @(Html.Lang("Download"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="editAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Edit"))
+                                    </button>
+                                </td>
+                                <td class="listtd" style="padding: 5px;width:80px;">
+                                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                                            onmouseout="this.className='button'" onclick="deleteAttachment('@(item.Id.ToString())');">
+                                        @(Html.Lang("Delete"))
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </td>
+        </tr>
+        
+        <tr id='buttonTR'>
+            <td colspan="4" align="center" style="height: 60px;">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="save();">
+                    @(Html.Lang("Save"))
+                </button>
+                <button onclick="next();" type="button" class="button">
+                    @(Html.Lang("Next"))
+                </button>
+                @if (Request.Url.ToString().ToLowerInvariant().Contains("?id="))
+                {
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="closeWindow();">
+                        @(Html.Lang("Close"))
+                    </button>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="uploadResult" style="display:none;">
+    <table id="ResultTable" cellpadding="0" cellspacing="0" width="100%" class="tbl"></table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var timeTextboxes = "DesiredStartDate,DesiredClosureDate,E2ELeadEndorsementDate,ExecutiveSponsorEndorsementDate";
+        var arr = timeTextboxes.split(',');
+        $(arr).each(function () {
+            var elementId = this;
+            if (elementId != null) {
+                var obj = document.getElementById(elementId);
+                if (obj != null && obj.tagName.toLowerCase() != "td") {
+                    $("#" + elementId).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy-mm-dd"
+                    });
+                }
+            }
+        });
+    });
+
+    function selectUser(obj) {
+        var str = window.showModalDialog(getRootUrl() + "Common/Search", { url: "Employee/EmployeeList", viewName: "EmployeeListPartialSelect" }, "dialogWidth=1010px;dialogHeight=670px;scroll=auto;");
+        if (str == null) return;
+        var arr = str.split('|');
+        $("#" + obj.id.replace("Name", "")).val(arr[0]);
+        $(obj).val(arr[1]);
+    }
+</script>
+<script type="text/javascript">
+    var _requiredIsEmpty = false;
+    function getModel() {
+        var elementIds = "InitiativeName";
+        if (checkElements(elementIds)) {
+            var model = new Object();
+            model.Id = getModelId() > 0 ? getModelId() : 0;// id;
+            //model.Status = getValue("Status", true, "int");
+            model.InitiativeName = getValue("InitiativeName", true, "string");
+            model.Description = getValue("Description", true, "string");
+            model.Scope = getValue("Scope", true, "string");
+            model.GeneralBenefitsAndRiskOfNotDoingThisChange = getValue("GeneralBenefitsAndRiskOfNotDoingThisChange", true, "string");
+            model.BusinessCaseOwner = getValue("BusinessCaseOwner", true, "Guid");
+            model.DesiredStartDate = getValue("DesiredStartDate", true, "DateTime");
+            model.DesiredClosureDate = getValue("DesiredClosureDate", true, "DateTime");
+            model.Market_OPCO = getValue("Market_OPCO", true, "int");
+            model.DrivingBusiness = getValue("DrivingBusiness", true, "int");
+            model.NBE_E2E_Flow = getValue("NBE_E2E_Flow", true, "int");
+            model.AdditionalArea = 0;// getValue("AdditionalArea", true, "int");
+            model.Currency = getValue("Currency", true, "int");
+            model.InitialCostEstimation = getValue("InitialCostEstimation", true, "double");
+            model.InitialCapexEstimation = getValue("InitialCapexEstimation", false, "double");
+            model.InitialBenefitsEstimation = getValue("InitialBenefitsEstimation", false, "double");
+            model.ContributionKPI = getValue("ContributionKPI", false, "string");
+            model.E2ELead = getValue("E2ELead", false, "Guid");
+            model.E2ELeadEndorsementDate = getValue("E2ELeadEndorsementDate", false, "DateTime");
+            model.ExecutiveSponsor = getValue("ExecutiveSponsor", false, "Guid");
+            model.ExecutiveSponsorEndorsementDate = getValue("ExecutiveSponsorEndorsementDate", false, "DateTime");
+            model.NPDIIdentifier = getValue("NPDIIdentifier", false, "string");
+            model.Nestool_BR_ID = getValue("Nestool_BR_ID", false, "string");
+            model.ProgramProjectManager = getValue("ProgramProjectManager", false, "Guid");
+            model.EstimationsGeneralNotes = getValue("EstimationsGeneralNotes", false, "string");
+            _requiredIsEmpty = requiredIsEmpty();
+            if (_requiredIsEmpty) {
+                alert("Required fields cannot be empty!");
+                return "";
+            }
+            else {
+                return $.toJSON(model);
+            }
+        }
+        else {
+            return "";
+        }
+    }
+
+    $.ajaxSetup({ cache: false });
+
+    var id = 0;
+    function save() {
+        saveModel(function () {
+            popOK(function () {
+                if (location.href.indexOf("?") > 0) {
+                    closeWindow();
+                }
+                else {
+                    location.href = getRootUrl() + "Request/ProjectRequirementList";
+                }
+            });
+        });
+    }
+
+    function isAttachmentReady() {
+        var html = "";
+        var trs = $("#fileTableList").find("tr");
+        for (var i = 0; i < trs.length; i++) {
+            if ($(trs[i]).css("display") != "none") {
+                html += $(trs[i]).html().toUpperCase();
+            }
+        }
+
+        if (html != null && html.indexOf(".PDF") > 0 && html.indexOf(".XLSM") > 0) {
+            return true;
+        }
+
+        var tips = "Please upload the following attachment(s):";
+        if (html != null && html.indexOf(".XLSM") < 0) {
+            tips += "<br />Preliminary Business Case.xlsm";
+        }
+
+        if (html != null && html.indexOf(".PDF") < 0) {
+            tips += "<br />the PDF (Preliminary Business Case.xlsm) signed by the functional head";
+        }
+
+        pop(tips);
+
+        return false;
+    }
+
+    var isRunning = false;
+    function next() {
+        if (isAttachmentReady() == false) return;
+        id = getModelId() > 0 ? getModelId() : id;
+        location.href = getRootUrl() + "Request/Approvers?id=" + id.toString();
+        return;
+
+        if (isRunning) return;
+        saveModel(function () {
+            if (!_requiredIsEmpty) {
+                $("#buttonTR").css({ "display": "" });
+                if (isAttachmentReady() == false) return;
+                id = getModelId() > 0 ? getModelId() : id;
+                location.href = getRootUrl() + "Request/Approvers?id=" + id.toString();
+            }
+        });
+    }
+
+    function saveModel(callback) {
+        if (isAttachmentReady() == false) return;
+        id = getModelId() > 0 ? getModelId() : id;
+        location.href = getRootUrl() + "Request/Approvers?id=" + id.toString();
+        return;
+
+        if (isRunning) return;
+        var model = getModel();
+        if (model == "") return;
+        $("#buttonTR").css({ "display": "none" });
+        isRunning = true;
+        $.post(getRootUrl() + "Request/SaveProjectRequirement", { json: model }, function (json) {
+            isRunning = false;
+            if (json.Success) {
+                id = json.Id;
+                if (callback) {
+                    callback();
+                }
+            }
+            else {
+                popFailure();
+                $("#buttonTR").css({ "display": "" });
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    var fileControlIds = "0|1";
+    $(document).ready(function () {
+        var array = fileControlIds.split('|');
+        for(var i=0;i<array.length;i++){
+            var idStr = array[i];
+            if(idStr != ""){
+                $('#attachementUpload' + idStr).submit(uploadAttachmentSubmit);
+            }
+        }
+    });
+
+    var globalFileExtentionName = "";
+    var GlobalButtonId = "";
+    function upload(buttonId) {
+        if(buttonId == null)buttonId = "";
+        GlobalButtonId = buttonId;
+
+        var filePath = $("#fileInputControl" + GlobalButtonId).val();
+        var extentionName = filePath;
+        if (extentionName.indexOf(".") > 0) {
+            extentionName = extentionName.substr(extentionName.lastIndexOf("."));
+            extentionName = "," + extentionName.toLowerCase() + ",";
+            if (extentionName.length > 2 && ",@(Constants.UploadFileType),".indexOf(extentionName) >= 0) {
+                if (id == 0) {
+                    id = getModelId();
+                }
+
+                globalFileExtentionName = extentionName.replace(/\,/g, "").toUpperCase();
+                $("#uploadSubmitButton" + GlobalButtonId).submit();
+                $("#lbl" + GlobalButtonId).html("uploading...");
+                $("#uploadButton" + GlobalButtonId).css({ "display": "none" });
+                pop("The file is being uploaded and analyzed. Please wait...");
+            }
+            else alert("File type not allowed!");
+        }
+    }
+
+    function uploadAttachmentSubmit() {
+        try {
+            var _vendorId = "";
+            var type = GlobalButtonId == "0" ? "ImportDataFromExcel" : "CommonAttachment";
+            var description = getValue("AttachmentDescription" + GlobalButtonId, true, "string");
+            var param = ({
+                type: type
+                , typeCode: "Common"
+                , subCode: _vendorId
+                , id: id
+                , Description: description
+                , tableId: "BR_Attachment_" + GlobalButtonId
+            });
+
+            var options = {
+                url: getRootUrl() + 'Upload',
+                data: param,
+                success: function (guid) {
+                    $("#uploadButton" + GlobalButtonId).css({ "display": "" });
+
+                    if (guid != null && guid.indexOf("|") > 0) {
+                        var arr = guid.split('|');
+                        id = parseInt(arr[0]);
+                        guid = arr[1];
+                    }
+
+                    if (guid != null && guid.length != 36) {
+                        if (GlobalButtonId == "0" && guid.toLowerCase().indexOf("error") >= 0) {
+                            $.get(getRootUrl() + "Upload/GetUploadResultHtml", null, function (html) {
+                                $("#ResultTable").html(html);
+                                pop($("#uploadResult").html());
+                            });
+                        }
+                        else {
+                            if (guid.indexOf("TableName") > 0) {
+                                guid = "The uploaded file cannot be recognized. Please use the standard template!";
+                                pop(guid);
+                                return;
+                            }
+
+                            alert(guid);
+                        }
+                    }
+                    else {
+                        $("#lbl" + GlobalButtonId).html("");
+
+                        updateFileTable(description, guid, _vendorId);
+
+                        if ($("#AttachmentDescription" + GlobalButtonId).is(":visible") == true) {
+                            $("#AttachmentDescription" + GlobalButtonId).val("");
+                        }
+
+                        var file = $("#fileInputControl" + GlobalButtonId)
+                        file.after(file.clone().val(""));
+                        file.remove();
+
+                        if (GlobalButtonId == "0") {
+                            $.get(getRootUrl() + "Upload/GetUploadResultHtml", null, function (html) {
+                                $("#ResultTable").html(html);
+                                if (html.toLowerCase().indexOf("successfully") > 0) {
+                                    popOK();
+                                }
+                                else {
+                                    pop($("#uploadResult").html());
+                                }
+                            });
+                        }
+                        else {
+                            popOK();
+                        }
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            };
+
+            $(this).ajaxSubmit(options);
+        }
+        catch (e) {
+            alert(e.Message);
+        }
+        return false;
+    }
+
+   function updateFileTable(description, guid, subCode) {
+       var tr = $("<tr onmouseover=\"this.className='trFocused'\" onmouseout=\"this.className='trCommon'\" id=\"trFile" + guid + "\"></tr>");
+       tr.appendTo($("#fileTableList" + subCode));
+
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;\" id=\"AttachmentDescription" + guid + "\">" + description + "</td>"));
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:50px;\">" + globalFileExtentionName + "</td>"));
+
+       var button = "";
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"window.open('@(Url.Content("~/Request/Download?id="))" +guid + "');\">@(Html.Lang("Download"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"editAttachment('" + guid + "');\">@(Html.Lang("Edit"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+
+       button = "<button type=\"button\" class=\"button\" onmousedown=\"this.className='buttonPressed'\" onmouseout=\"this.className='button'\" ";
+       button += " onclick=\"deleteAttachment('" + guid + "');\">@(Html.Lang("Delete"))</button>";
+       tr.append($("<td class=\"listtd\" style=\"padding:5px;width:80px;\">" + button + "</td>"));
+   }
+
+    function editAttachment(guid) {
+        var description = $.trim($("#AttachmentDescription" + guid).html());
+        closeDialogDiv();
+        popup("<div style='padding:10px;'> <label style=\"float:left;\">@(Html.Lang("Description")): </label> <input type='text' id=\"description" + guid
+         + "\" style=\"float:left;width:200px;height:22px;margin:0 5px;\"/> <button style=\"float:left;width:80px;\" type=\"button\" "
+         + "onclick=\"saveDescription('" + guid + "');\">@(Html.Lang("Save"))</button><div style='clear:both;'></div></div>", "popDiv" + guid);
+        $("#description" + guid).val(description);
+    }
+    function saveDescription(guid) {
+        var description = $.trim($("#description" + guid).val());
+        $.post(getRootUrl() + "Request/SaveDescription", { id: guid, description: description }, function (json) {
+            if (json.Success) {
+                $("#AttachmentDescription" + guid).html(description);
+                closeDialogDiv();
+            }
+        });
+    }
+    function deleteAttachment(guid) {
+        if (confirm(getConfirmDeleteMessage())) {
+            $.post(getRootUrl() + "Request/Delete", { id: guid }, function (json) {
+                if (json.Success) {
+                    $("#trFile" + guid).css({ "display": "none" });
+                    closeDialogDiv();
+                }
+            });
+        }
+    }
+
+    function uploadRequiredDoc(obj){
+        $("#AttachmentDescription").val($.trim($(obj).html()));
+    }
+
+    function uploadThis(desc) {
+        $("#AttachmentDescription0").val($.trim(desc));
+        $("#fileInputControl0").click();
+        pop("Please click the \"Upload\" button after you select the file");
+    }
+</script>
+
+@Html.Raw(ViewBag.Json)

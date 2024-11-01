@@ -1,0 +1,133 @@
+﻿@using WF.Model;
+@using System.Data.SqlClient;
+@model List<Field>
+
+@{
+    string fileIds = string.Empty;
+    string type = Request.QueryString["type"];
+    if (string.IsNullOrEmpty(type)){
+        type = "1";
+    }
+}
+
+@section Header
+{
+<link href="@(Url.Content("~/Content/MultiSelect.css?" + DateTime.Now.ToString()))" rel="stylesheet" media="screen"
+      type="text/css" />
+    <link href="@Url.Content("~/Content/themes/Requester.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.bgiframe.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/jquery.ajaxQueue.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/lib/thickbox-compressed.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-autocomplete/jquery.autocomplete.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ServiceDesk/upload.js?v" + DateTime.Now.ToString("yyyyMMddHHmmss"))"></script>
+}
+
+<style type="text/css">
+    .tdLeft3{
+        width:40%;
+    }
+    .tdRight3{
+        width:60%;
+    }
+    .input {
+        width: 200px;
+    }
+    textarea {
+        width: 450px;
+        height:100px;
+    }
+    .selectControl {
+        width: 200px;
+    }
+    .file{
+        height:24px;
+        width:350px;
+        margin-right:10px;
+    }
+    .tip{
+    }
+    .bankdata2{
+        display:none;
+    }
+</style>
+
+<div class="main" style="padding-top:10px;">
+    @if(Model == null)
+    { 
+        if(type == "1")
+        {
+            <div id="CreateDiv" style="margin-bottom:15px;">
+                <button onclick="loadForm('Create');" style="padding:0 8px;">Update</button>
+       
+    </div>
+        }
+        else if (type == "2")
+        {
+            <div id="CreateDiv" style="margin-bottom:15px;">
+        <input type="radio" id="type1" name="vendorType" onclick="loadForm('Extend DC');"/>
+        <label for="type1" onclick="loadForm('Extend DC');">To Distribution Channel</label>
+        <input type="radio" id="type2" name="vendorType" onclick="loadForm('Extend Plant');" />
+        <label for="type2" onclick="loadForm('Extend Plant');">To Plant</label>
+    </div>
+        }
+        else if (type == "3")
+        {
+            List<string> updateList = new List<string>();
+            updateList.Add("Update General");
+            updateList.Add("Update Sales");
+            updateList.Add("Update NHW");
+            updateList.Add("Update Logistics");
+            updateList.Add("Update QA");
+            updateList.Add("Update GTIN");
+            updateList.Add("Update Packaging");
+            updateList.Add("Update F&C");
+            <div id="CreateDiv" style="margin-bottom:15px;">
+                @for (int i=0;i<updateList.Count;i++)
+                {
+                    <input type="radio" id="type@(i.ToString())" name="updateType" onclick="loadForm('@(updateList[i])');" />
+    <label for="type@(i.ToString())" onclick="loadForm('@(updateList[i])');">@(updateList[i] + (i == 0 ? " & Freshness" : ""))</label>
+                }
+    </div>
+        }
+    }
+    <div id="formDiv">
+        @{ Html.RenderPartial("PartialVendor", Model); }
+    </div>
+    
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/Common/field.js?" + DateTime.Now.ToString())"></script>
+<input type="hidden" id="UploadType" />
+<input type="hidden" id="loadData" />
+
+<script type="text/javascript">
+    function loadForm(type) {
+        var url = getRootUrl() + "WF/Create";
+        $.post(url, { type: type }, function (id) {
+            location.href = getRootUrl() + "WF/Edit?id=" + id.toString();
+        });
+    }
+
+    function showControl(className) {
+        $("." + className).show();
+    }
+    function selectedIndexChanged(obj) {
+        var text = $(obj).val();
+        if (text.toLowerCase().indexOf("other") == 0) {
+            if (text.toLowerCase().indexOf("site code") >= 0) {
+                $(obj).parent().append("site code: <input type=\"text\" class=\"input\" style='width:100px;'/>site name: <input type=\"text\" class=\"input\" style='width:130px;'/>");
+            }
+            else {
+                $(obj).parent().append("<input type=\"text\" class=\"input\" onchange=\"pushOptions(this);\"/>");
+            }
+        }
+    }
+</script>
+
+    <script type="text/javascript">
+        var type = "@(type)";
+    </script>
+
+@Html.Raw(ViewBag.Json)

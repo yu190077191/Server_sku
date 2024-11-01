@@ -1,0 +1,68 @@
+﻿.listClass hr {
+        clear: both;
+        margin: 15px auto 5px;
+    }
+
+@media only screen and (min-width: 1600px) {
+    .compareDiv {
+            border: 1px solid #efefef;
+            float: left;
+            width: 512px;
+            margin-left: 2px;
+        }
+
+    .costDesc{
+        width:90%;
+    }
+
+    .compareTextArea{
+        height:80px;
+        width:90%;
+    }
+
+    .compareFile{
+        width: 300px; float: left; height: 27px;margin-right: 10px;
+    }
+
+    .compareForm{
+        width:400px;
+    }
+
+    .largeOrderButtonDiv{
+        width:1350px;
+        margin:0 auto;
+        text-align:center;
+    }
+}
+
+@media only screen and (max-width: 1599px) {
+    .compareDiv {
+            border: 1px solid #efefef;
+            float: left;
+            width: 400px;
+            margin-left: 2px;
+        }
+
+    .costDesc{
+        width:90%;
+    }
+
+    .compareTextArea{
+        height:80px;
+        width:90%;
+    }
+
+    .compareFile{
+        width: 200px; float: left; height: 27px;margin-right: 10px;
+    }
+
+    .compareForm{
+        width:288px;
+    }
+
+    .largeOrderButtonDiv{
+        width:1350px;
+        margin:0 auto;
+        text-align:center;
+    }
+}

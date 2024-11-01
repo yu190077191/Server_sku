@@ -1,0 +1,16 @@
+@charset "gb2312";
+
+#navMenu {width:950px; height: 40px; display:block;overflow:hidden;background: url(../images/nav_bg.jpg) repeat-x ;}
+#navMenu ul{list-style:none; background:url(../images/nav_l.jpg) no-repeat;float:left;}
+#navMenu .onelink{background-image:none;}
+#navMenu_r{padding-right:8px;background:url(../images/nav_r.jpg) no-repeat right ;float:right;height:40px;}
+#navMenu li {width:188px; list-style:none;  text-align:center;float: left;line-height:40px;height: 40px; font-size:14px; color:#000; font-family:"Î¢ÈíÑÅºÚ", "ºÚÌå"; }
+.dropMenu { width:188px;	position:absolute; top: 0; z-index:999;visibility: hidden; border-top:1px #fff solid; margin-top:-1px;}
+#navMenu li a {	color:white; display: block;}
+#navMenu li a:hover{background:#ebebeb; font-weight:bold;color:black;}
+#navMenu li a.hover{background:#ebebeb;	text-decoration: none;color:black;}
+#navMenu li a.active{background:#ebebeb;font-weight:bold;color:black;}
+
+.dropMenu li { width:100%; float:left; }
+.dropMenu li a { background: url(../images/menubg1.gif) top left repeat-y #ebebeb; line-height:30px; display:block; border-bottom:1px #fff solid; padding-left:16px; text-align:left; font-size:12px; color:#000;	}
+.dropMenu a:hover {text-decoration:none; background: url(../images/menubg1a200.gif) top left repeat-y #ebebeb; color:#fff;}
