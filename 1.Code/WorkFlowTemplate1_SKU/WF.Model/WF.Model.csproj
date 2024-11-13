@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarCodeInfo.cs" />
     <Compile Include="BranchResult.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="DepartmentRole.cs" />

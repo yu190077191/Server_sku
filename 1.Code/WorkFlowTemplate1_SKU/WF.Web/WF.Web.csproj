@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BarCodeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -1535,6 +1536,10 @@
     <Content Include="Views\WF\PartialVendor20240821.cshtml" />
     <Content Include="Views\WF\RequestListData.cshtml" />
     <Content Include="Views\WF\RequestSelectListData.cshtml" />
+    <Content Include="Views\BarCode\BarCodeList.cshtml" />
+    <Content Include="Views\BarCode\BarCodeInfo.cshtml" />
+    <Content Include="Views\BarCode\BarCodeEdit.cshtml" />
+    <Content Include="Views\BarCode\KeepInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "KeepInfo";
+}
+
+<div>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="imageUpload">选择图片上传:</label>
+        <input type="file" id="imageUpload" name="image" accept="image/*">
+        <label for="imageUpload">备注信息:</label><input type="text" value="">
+        <input type="submit" value="上传">
+        <input type="submit" value="取消">
+    </form>
+</div>

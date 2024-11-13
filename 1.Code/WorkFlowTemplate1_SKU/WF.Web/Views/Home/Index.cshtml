@@ -9,7 +9,7 @@
 <style type="text/css">
     p{
         text-indent:2em;
-        margin-top:10px;
+        margin-top:-8px;
         line-height:30px;
     }
     h2 {
@@ -29,8 +29,19 @@
     }
 
     .muButton {
-        width: 125px;
+        width: 100px;
         background-size: 125px 27px;
+    }
+    .flex-container {
+        display: flex;
+    }
+
+    .flex-item {
+        margin-right: 20px; /* 可以根据需要调整间距 */
+        width:490px;
+        height:90px;
+        background-color:burlywood;
+
     }
 </style>
 <div class="main" style="font-size:14px;text-align:center;">
@@ -38,26 +49,47 @@
     {
         if (isRequester)
         {
+
+            <div class="flex-container">
+                <div class="flex-item">
+                    <p>SKU Registration System</p>
+                    <p>
+                        @*<label style="font-size: large; font-family: cursive;">SKU Registration System</label>*@<br>
+                        <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                                onmouseout="this.className = 'button muButton'" onclick="loadForm('Creation');">
+                            @(Html.Lang("Creation"))
+                        </button>
+                        <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                                onmouseout="this.className = 'button muButton'" onclick="loadForm('CreationCopy');">
+                            @(Html.Lang("Creation Copy"))
+                        </button>
+                        <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                                onmouseout="this.className = 'button muButton'" onclick="create(2);">
+                            @(Html.Lang("Extension"))
+                        </button>
+                        <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                                onmouseout="this.className = 'button muButton'" onclick="create(3);">
+                            @(Html.Lang("Update"))
+                        </button>
+                    </p>
+                </div>
+                <div class="flex-item">
+                    <p>条形码申请业务</p>
+                    <p>
+                        <br>
+                        <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
+                                onmouseout="this.className = 'button muButton'" onclick="loadFormCode();">
+                            @(Html.Lang("Bar Code"))
+                        </button>
+                    </p>
+                </div>
+            </div>
+
             @*<p style="padding-top: 15px; padding-bottom: 15px; width: 40%; background: #e2e2e2; display: inline-block; float: left; margin-left: 5%; border-style: outset; ">*@
-            <p style="padding-top: 30px;">
-                @*<label style="font-size: large; font-family: cursive;">SKU Registration System</label><br>*@
-                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
-                        onmouseout="this.className = 'button muButton'" onclick="loadForm('Creation');">
-                    @(Html.Lang("Creation"))
-                </button>
-                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
-                        onmouseout="this.className = 'button muButton'" onclick="loadForm('CreationCopy');">
-                    @(Html.Lang("Creation Copy"))
-                </button>
-                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
-                        onmouseout="this.className = 'button muButton'" onclick="create(2);">
-                    @(Html.Lang("Extension"))
-                </button>
-                <button type="button" class="button muButton" onmousedown="this.className='buttonPressed muButton'"
-                        onmouseout="this.className = 'button muButton'" onclick="create(3);">
-                    @(Html.Lang("Update"))
-                </button>
-            </p>
+
+
+            
+
         }
         else
         {
@@ -221,6 +253,11 @@
             
         });
     }
+
+    function loadFormCode() {
+        location.href = getRootUrl() + "BarCode/BarCodeInfo";
+    }
+
     function showNoAccessError() {
         var html = "<span style='font-size:14px;'>Only the nominated requesters from each BU can submit a request</span>";
         pop(html);
