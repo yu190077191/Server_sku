@@ -34,157 +34,175 @@
 
 <div class="center-both">
     <table cellpadding="0" cellspacing="0" width="100%" class="tbl">
-        @if (Model == null)
-        {
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("品牌名称:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CodeName" name="CodeName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("产品通用名称:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("产品类型:")
-                </td>
-                <td class="righttd">
-                    <select name="level1" onchange="showLevel2(this.value)">
-                        <option value="">选择第一级菜单</option>
-                        <option value="1">CN Dairy</option>
-                        <option value="2">CN Confectionary</option>
-                        <option value="3">CN Maggi</option>
-                        <option value="4">CN CPW</option>
-                        <option value="5">CN NIN</option>
-                        <option value="6">CN Ice Cream</option>
-                        <option value="7">CN Wyeth</option>
-                        <option value="8">CN Coffee</option>
-                        <option value="9">CN NPP</option>
-                        <option value="10">CN Water</option>
-                    </select>
-                    <select id="level2" name="level2" onchange="showLevel3(this.value)" style="display:none;">
-                        <option value="">选择第二级菜单</option>
-                    </select>
-
-                    @*<select id="level3" name="level3" style="display:none;">
-                        <option value="">选择第三级菜单</option>
-                    </select>*@
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("是否保密:")
-                </td>
-                <td class="righttd">
-                    <select name="level1" onchange="showLevel2(this.value)">
-                        <option value="0">是</option>
-                        <option value="1">否</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("商品特征:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("净含量:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("净含量单位:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("规格描述:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("产品名称:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("GPC分类描述:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("数据质量评分:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("产品状态:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                    @Html.Lang("产品描述:")
-                </td>
-                <td class="righttd">
-                    <input type="text" id="CurrencyName" name="CurrencyName"  class="inputwh"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lefttd">
-                </td>
-                <td class="righttd" style="float:right">
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="Submit();" style="margin-left:10px;float:left;">
-                        @(Html.Lang("Submit"))
-                    </button>
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="Staging();" style="margin-left:10px;float:left;">
-                        @(Html.Lang("Staging"))
-                    </button>
-                </td>
-            </tr>
-        }
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("BU:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CodeName" name="CodeName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("品牌名称:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        @*<tr>
+            <td class="lefttd">
+                @Html.Lang("产品类型:")
+            </td>
+            <td class="righttd">
+                <select name="level1" onchange="showLevel2(this.value)">
+                    <option value="">选择第一级菜单</option>
+                    <option value="1">CN Dairy</option>
+                    <option value="2">CN Confectionary</option>
+                    <option value="3">CN Maggi</option>
+                    <option value="4">CN CPW</option>
+                    <option value="5">CN NIN</option>
+                    <option value="6">CN Ice Cream</option>
+                    <option value="7">CN Wyeth</option>
+                    <option value="8">CN Coffee</option>
+                    <option value="9">CN NPP</option>
+                    <option value="10">CN Water</option>
+                </select>
+                <select id="level2" name="level2" onchange="showLevel3(this.value)" style="display:none;">
+                    <option value="">选择第二级菜单</option>
+                </select>
+                <select id="level3" name="level3" style="display:none;">
+                    <option value="">选择第三级菜单</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("包装形式:")
+            </td>
+            <td class="righttd">
+                <select name="level1" onchange="showLevel2(this.value)">
+                    <option value="0">运输单元</option>
+                    <option value="1">销售单元</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("运输单元:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("销售单元:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("净含量单位:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("规格描述:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("产品名称:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("GPC分类描述:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("数据质量评分:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("产品状态:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("产品描述:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+            </td>
+            <td class="righttd" style="float:right">
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="Submit();" style="margin-left:10px;float:left;">
+                    @(Html.Lang("Submit"))
+                </button>
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="Staging();" style="margin-left:10px;float:left;">
+                    @(Html.Lang("Staging"))
+                </button>
+            </td>
+        </tr>*@
+    </table>
+</div>
+<div class="center-both" >
+    <h3>填写详细数据</h3>
+    <button onclick="addRow()">添加</button>
+    <table id="myTable">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+        </tr>
     </table>
 </div>
 
 <script type="text/javascript">
+    function addRow() {
+        var table = document.getElementById("myTable");
+        var row = table.insertRow(-1); // -1 表示在表格末尾添加新行
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        cell1.innerHTML = "New Name";
+        cell2.innerHTML = "New Age";
+        cell3.innerHTML = "New City";
+    }
+
     // 第二级菜单选项
     var level2Options = {
         '1': ['奶油（冷冻）', '奶油（易腐坏）', '奶油（耐储存）', '牛奶、黄油、奶油、酸奶、奶酪、鸡蛋或替代品组合装', '牛奶（冷冻）', '牛奶（耐储存）'],
-        '2': ['巧克力和巧克力糖果、糖果组合甜食', '糖果、糖果替代品甜食', ' 甜蛋糕（冷冻）', '甜蛋糕（易腐坏）', ' 甜蛋糕（耐储存）','饼干、曲奇（冷冻）']
+        '2': ['巧克力和巧克力糖果、糖果组合甜食', '糖果、糖果替代品甜食', ' 甜蛋糕（冷冻）', '甜蛋糕（易腐坏）', ' 甜蛋糕（耐储存）', '饼干、曲奇（冷冻）']
     };
 
     // 显示第二级菜单

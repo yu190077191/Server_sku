@@ -1,9 +1,9 @@
 ﻿@using WF.Model;
 @using MVC4Pager;
 @model PagedList<BarCodeInfo>
-    @{
+@{
     ViewBag.Title = "BarCodeList";
-    }
+}
 
 <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
     @{
@@ -12,18 +12,17 @@
             if (Model[0].Id > 0)
             {
                 <thead>
-                        <tr>
-                            <th title="全选/取消全选">
+                    <tr>
+                        @*<th title="全选/取消全选">
                                 <input type="checkbox" id="selectall" onclick="selectAll(this);" />
-                            </th>
-                            <th>NO.</th>
-                            <th>BarCodeName</th>
-                            <th>BarCodeType</th>
-                            <th>审批状态</th>
-                            <th>备案状态</th>
-                            <th>提交时间</th>
-                            <th>Operation</th>
-                        </tr>
+                            </th>*@
+                        <th>ID</th>
+                        <th>提交人</th>
+                        <th>名称</th>
+                        <th>申请时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
                 </thead>
                 foreach (var item in Model)
                 {
@@ -33,20 +32,18 @@
                         <td class="listtd">@(item.BaeType)</td>
                         <td class="listtd"></td>
                         <td class="listtd"></td>
-                        <td class="listtd"></td>
-                        <td class="listtd"></td>
                         <td colspan="7" style="height:50px;" align="center">
                             <button id="SaveButton" onclick="saveSAPEmail(this);">
-                                @(Html.Lang("提交"))
+                                @(Html.Lang("查看"))
                             </button>
                             <button id="SaveButton" onclick="saveSAPEmail(this);">
-                                @(Html.Lang("修改"))
+                                @(Html.Lang("提交"))
                             </button>
                             <button id="SaveButton" onclick="DeleteInfo(@(item.Id));">
                                 @(Html.Lang("删除"))
                             </button>
-                            <button id="SaveButton" onclick="saveSAPEmail(this);">
-                                @(Html.Lang("撤回"))
+                            <button id="SaveButton" onclick="DeleteInfo(@(item.Id));">
+                                @(Html.Lang("删除"))
                             </button>
                             <button id="SaveButton" onclick="keepSave(@(item.Id));">
                                 @(Html.Lang("备案"))
@@ -54,11 +51,40 @@
                         </td>
                     </tr>
                 }
-
             }
         }
     }
 </table>
+<div id="pager" style="margin:5px auto; text-align:center">
+    @Html.AjaxPager(
+          Model,
+          new PagerOptions()
+          {
+              PageIndexParameterName = "pageIndex",
+              ShowDisabledPagerItems = false,
+              AlwaysShowFirstLastPageNumber = true,
+              CurrentPagerItemWrapperFormatString = "<span class=\"currentPage\">{0}</span>",
+              NumericPagerItemWrapperFormatString = "<span class=\"item\">{0}</span>",
+              CssClass = "pages",
+              PrevPageText = (ViewBag.IsChinese == true) ? "上一页" : "Prev",
+              NextPageText = (ViewBag.IsChinese == true) ? "下一页" : "Next",
+              FirstPageText = (ViewBag.IsChinese == true) ? "首页" : "First",
+              LastPageText = (ViewBag.IsChinese == true) ? "尾页" : "Last"
+          },
+          new AjaxOptions
+          {
+              UpdateTargetId = "searchResult"
+          })
+</div>
+
+@if (Model == null || Model.Count == 0)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            show("You do not have any requests to review for the moment!");
+        });
+    </script>
+}
 
 <script type="text/javascript">
     /* 删除 */
@@ -74,5 +100,5 @@
     function keepSave(codeId) {
         location.href = getRootUrl() + "BarCode/KeepInfo?codeId=" + codeId.toString();
     }
-    
+
 </script>

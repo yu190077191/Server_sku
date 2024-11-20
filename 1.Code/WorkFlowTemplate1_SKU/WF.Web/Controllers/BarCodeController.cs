@@ -21,10 +21,7 @@ namespace WF.Web.Controllers
         {
             List<BarCodeInfo> list_info = new List<BarCodeInfo>() 
             { 
-                new Model.BarCodeInfo() { Id = 1, BaeName = "测试1", BaeType = "类型1" }, 
-                new Model.BarCodeInfo() { Id = 2, BaeName = "测试2", BaeType = "类型2" }, 
-                new Model.BarCodeInfo() { Id = 3, BaeName = "测试3", BaeType = "类型3" }, 
-                new Model.BarCodeInfo() { Id = 4, BaeName = "测试4", BaeType = "类型4" }
+                new Model.BarCodeInfo() { Id = 1, BaeName = "测试1", BaeType = "类型1" }
             };
             var model = new PagedList<BarCodeInfo>(list_info, 1,10);
 

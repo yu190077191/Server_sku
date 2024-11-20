@@ -9,14 +9,18 @@
 <div style="padding:30px 50px;line-height:30px;font-size:14px;height:auto;">
     <div id="searchDiv" style="float:left;margin-bottom:5px;">
         <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
-        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="search(1);">@(Html.Lang("Search"))</button>
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="">@(Html.Lang("查询"))</button>
         <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
                 onmouseout="this.className = 'button'" onclick="exportCSV(this);">
-            Export
+            导出产品数据
         </button>
         <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
                 onmouseout="this.className = 'button'" onclick="BarCodeContent(0);">
-            Add Code
+            申请条形码
+        </button>
+        <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className = 'button'" onclick="BarCodeContent(0);">
+            特批
         </button>
     </div>
     <div style="clear:both;"></div>
