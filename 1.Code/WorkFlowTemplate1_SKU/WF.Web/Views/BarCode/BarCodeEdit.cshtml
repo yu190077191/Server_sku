@@ -1,9 +1,10 @@
-﻿@using WF.Model;
+﻿@using WF.Model.BarCode;
 @using System.Data.SqlClient;
-@model BarCodeInfo
 
 @{
     ViewBag.Title = "BarCodeEdit";
+
+    List<SKUBuInfo> BuInfoList = ViewBag.BuInfoList as List<SKUBuInfo>;
 }
 
 <style>
@@ -31,57 +32,88 @@
     }
 </style>
 
-
+@*主体信息*@
 <div class="center-both">
     <table cellpadding="0" cellspacing="0" width="100%" class="tbl">
         <tr>
             <td class="lefttd">
-                @Html.Lang("BU:")
+                @Html.Lang("*BU:")
             </td>
             <td class="righttd">
-                <input type="text" id="CodeName" name="CodeName" class="inputwh" />
+                <select name="level1" id="BUlevel1" onchange="showLevel2(this)"></select>
             </td>
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("品牌名称:")
+                @Html.Lang("*品牌名称:")
             </td>
             <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+                <input type="text" id="BrandName" name="BrandName" class="inputwh" />
             </td>
         </tr>
-        @*<tr>
+    </table>
+</div>
+@*详细信息*@
+<div class="center-both" style="margin-top:10px;" >
+    <h3>填写详细数据</h3>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tbl" id="myTable1">
+        <tr>
             <td class="lefttd">
-                @Html.Lang("产品类型:")
+                @Html.Lang("产品种类（英文）:")
             </td>
             <td class="righttd">
-                <select name="level1" onchange="showLevel2(this.value)">
-                    <option value="">选择第一级菜单</option>
-                    <option value="1">CN Dairy</option>
-                    <option value="2">CN Confectionary</option>
-                    <option value="3">CN Maggi</option>
-                    <option value="4">CN CPW</option>
-                    <option value="5">CN NIN</option>
-                    <option value="6">CN Ice Cream</option>
-                    <option value="7">CN Wyeth</option>
-                    <option value="8">CN Coffee</option>
-                    <option value="9">CN NPP</option>
-                    <option value="10">CN Water</option>
-                </select>
-                <select id="level2" name="level2" onchange="showLevel3(this.value)" style="display:none;">
-                    <option value="">选择第二级菜单</option>
-                </select>
-                <select id="level3" name="level3" style="display:none;">
-                    <option value="">选择第三级菜单</option>
+                <input type="text" id="CodeNameEH" name="CodeNameEH" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("产品种类（中文）:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="CodeNameCH" name="CodeNameCH" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("目标市场:")
+            </td>
+            <td class="righttd">
+                <select name="level1" id="TargetName">
+                    <option>大陆</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("包装形式:")
+                @Html.Lang("工厂名称:")
             </td>
             <td class="righttd">
-                <select name="level1" onchange="showLevel2(this.value)">
+                <select name="Company" id="CompanyId"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("*产品分类:")
+            </td>
+            <td class="righttd">
+                <select name="product" id="BUlevel2">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("净含量/规格:")
+            </td>
+            <td class="righttd">
+                <input type="text" id="specsId" name="specsName" class="inputwh" />
+            </td>
+        </tr>
+        <tr>
+            <td class="lefttd">
+                @Html.Lang("运输单元:")
+            </td>
+            <td class="righttd" >
+                <select name="UnitName" id="UnitId">
                     <option value="0">运输单元</option>
                     <option value="1">销售单元</option>
                 </select>
@@ -89,149 +121,195 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("运输单元:")
+                @Html.Lang("包装形式袋:")
             </td>
             <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+                <input type="text" id="packingId" name="packingName" class="inputwh" />
             </td>
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("销售单元:")
+                @Html.Lang("放大系数:")
             </td>
             <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+                <input type="text" id="ratioId" name="ratioName" class="inputwh" />
             </td>
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("净含量单位:")
+                @Html.Lang("申请原因:")
             </td>
             <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
+                <input type="text" id="remarksId" name="remarksName" class="inputwh" />
             </td>
         </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("规格描述:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("产品名称:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("GPC分类描述:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("数据质量评分:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("产品状态:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-                @Html.Lang("产品描述:")
-            </td>
-            <td class="righttd">
-                <input type="text" id="CurrencyName" name="CurrencyName" class="inputwh" />
-            </td>
-        </tr>
-        <tr>
-            <td class="lefttd">
-            </td>
-            <td class="righttd" style="float:right">
-                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                        onmouseout="this.className='button'" onclick="Submit();" style="margin-left:10px;float:left;">
-                    @(Html.Lang("Submit"))
-                </button>
-                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                        onmouseout="this.className='button'" onclick="Staging();" style="margin-left:10px;float:left;">
-                    @(Html.Lang("Staging"))
-                </button>
-            </td>
-        </tr>*@
     </table>
 </div>
-<div class="center-both" >
-    <h3>填写详细数据</h3>
-    <button onclick="addRow()">添加</button>
-    <table id="myTable">
+<div class="center-both" style="margin-top:10px;">
+    <button onclick="addRow(myTable1)" style="float:right">添加一行</button>
+    <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
         <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>City</th>
+            <th>产品种类（英文）</th>
+            <th>产品种类（中文）</th>
+            <th>净含量/规格</th>
+            <th>包装形式袋</th>
+            <th>放大系数</th>
+            <th>申请原因</th>
+            <th>操作</th>
         </tr>
     </table>
+</div>
+@*业务按钮*@
+<div class="center-both"  style="margin-top:10px;">
+    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+            onmouseout="this.className='button'" onclick="SaveStaging();" style="margin-left:10px;float:left;">
+        @(Html.Lang("保存"))
+    </button>
+    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+            onmouseout="this.className='button'" onclick="Submit();" style="margin-left:10px;float:left;">
+        @(Html.Lang("提交"))
+    </button>
 </div>
 
+
 <script type="text/javascript">
-    function addRow() {
-        var table = document.getElementById("myTable");
-        var row = table.insertRow(-1); // -1 表示在表格末尾添加新行
+    //获取产品分类数据
+    function selectedIndexChanged(obj)
+    {
+        if (obj == null) return;
+        obj.options.length = 0;
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Content("~/BarCode/GetListInfo"))",
+            data: "{parenId: 0 }",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                obj.add(new Option("请选择", -1));
+                for (var i = 0; i < data.length; i++) {
+                    obj.append(new Option(data[i].BuName, data[i].BuCode));
+                }
+            },
+            err: function (err) {
+            }
+        })
+    }
+
+    //获取公司数据
+    function SelectCompanyInfo(obj)
+    {
+        if (obj == null) return;
+        obj.options.length = 0;
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Content("~/BarCode/GetCompanyInfo"))",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                obj.add(new Option("请选择", -1));
+                for (var i = 0; i < data.length; i++) {
+                    obj.append(new Option(data[i].CompanyName, data[i].Id));
+                }
+            },
+            err: function (err) {
+        }
+})
+    }
+
+    //初始化方法
+    $(document).ready(function () {
+        selectedIndexChanged(document.getElementById("BUlevel1"));
+        SelectCompanyInfo(document.getElementById("CompanyId"));
+    });
+
+    //添加行处理方法
+    function addRow(value) {
+        var table = document.getElementById("myTable1");
+        var rows = table.getElementsByTagName("tr");
+        var data = [];
+        for (var i = 0; i < rows.length; i++) { // assuming first row is header
+            var cells = rows[i].getElementsByTagName("td");
+            for (var j = 0; j < cells.length; j++) {
+                var inputElement = cells[j].querySelector('input');
+                if (inputElement) {
+                    data.push(inputElement.value);
+                }
+            }
+        }
+
+        var tableInfo = document.getElementById("myTable");
+        var row = tableInfo.insertRow(-1); // -1 表示在表格末尾添加新行
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
-        cell1.innerHTML = "New Name";
-        cell2.innerHTML = "New Age";
-        cell3.innerHTML = "New City";
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        if (data.length > 0) {
+            cell1.innerHTML = data[0];
+            cell2.innerHTML = data[1];
+            cell3.innerHTML = data[2];
+            cell4.innerHTML = data[3];
+            cell5.innerHTML = data[4];
+            cell6.innerHTML = data[5];
+            cell7.innerHTML = "button1";
+        }
     }
-
-    // 第二级菜单选项
-    var level2Options = {
-        '1': ['奶油（冷冻）', '奶油（易腐坏）', '奶油（耐储存）', '牛奶、黄油、奶油、酸奶、奶酪、鸡蛋或替代品组合装', '牛奶（冷冻）', '牛奶（耐储存）'],
-        '2': ['巧克力和巧克力糖果、糖果组合甜食', '糖果、糖果替代品甜食', ' 甜蛋糕（冷冻）', '甜蛋糕（易腐坏）', ' 甜蛋糕（耐储存）', '饼干、曲奇（冷冻）']
-    };
 
     // 显示第二级菜单
-    function showLevel2(value) {
-        var level2 = document.getElementById('level2');
-        level2.style.display = 'inline';
-        level2.options.length = 1; // 清空原有选项
-        if (value in level2Options) {
-            level2Options[value].forEach(function (option) {
-                var opt = document.createElement('option');
-                opt.value = value + '-' + option;
-                opt.innerHTML = option;
-                level2.appendChild(opt);
-            });
+    function showLevel2(obj) {
+        if (obj.id == "BUlevel1") {
+            var OACity = document.getElementById("BUlevel2");
+            var Province = obj.options[obj.selectedIndex].value;
+            OACity.options.length = 0;
+            if (obj == null) return;
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Content("~/BarCode/GetListInfo"))",
+                    data: "{parenId:" + Province +"}",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        OACity.add(new Option("请选择", -1));
+                        for (var i = 0; i < data.length; i++) {
+                            OACity.append(new Option(data[i].BuName, data[i].BuCode));
+                        }
+                    },
+                    err: function (err) {
+                    }
+            })
         }
     }
-    // 显示第三级菜单
-    function showLevel3(value) {
-        var level3 = document.getElementById('level3');
-        level3.style.display = 'inline';
-        level3.options.length = 1; // 清空原有选项
-        if (value in level3Options) {
-            level3Options[value].forEach(function (option) {
-                var opt = document.createElement('option');
-                opt.value = value + '-' + option;
-                opt.innerHTML = option;
-                level3.appendChild(opt);
-            });
+
+    //提交
+    function Submit(){
+        var BrandName = document.getElementById("BrandName").value; //品牌名称
+        var CodeNameEH = document.getElementById("CodeNameEH").value; //产品英文
+        var CodeNameCH = document.getElementById("CodeNameCH").value; //产品中文
+        var Target = document.getElementById("TargetName");
+        var TargetValue = Target.options[Target.selectedIndex].value;
+        console.log("1", BrandName);
+        console.log("1", CodeNameEH);
+        console.log("1", CodeNameCH);
+        console.log("1", TargetValue);
+        var data = getTableData();
+        console.log("获取数据",data);
+
+    }
+
+    //获取Table数据
+    function getTableData() {
+        var table = document.getElementById('myTable');
+        var rows = table.getElementsByTagName('tr');
+        var tableData = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var rowData = [];
+            for (var j = 0; j < cells.length; j++) {
+                rowData.push(cells[j].textContent.trim());
+            }
+            tableData.push(rowData);
         }
+        return tableData;
     }
 </script>
 
