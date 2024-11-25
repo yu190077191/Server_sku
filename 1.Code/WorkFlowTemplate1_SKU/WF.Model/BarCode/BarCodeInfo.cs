@@ -16,13 +16,26 @@ namespace WF.Model
         /// <summary>
         /// 名称
         /// </summary>
-        [XmlElement("BaeName")]
-        public string BaeName { get; set; }
+        [XmlElement("BarName")]
+        public string BarName { get; set; }
         /// <summary>
         /// 分类
         /// </summary>
         [XmlElement("BaeType")]
-        public string BaeType { get; set; }
+        public string BarType { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public string CreteTime { get; set; }
+        /// <summary>
+        /// 创建人Id
+        /// </summary>
+        [XmlElement("UserId")]
+        public Guid UserId { get; set; }
 
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int State { get; set; }
     }
 }

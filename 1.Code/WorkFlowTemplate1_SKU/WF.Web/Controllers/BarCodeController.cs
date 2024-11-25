@@ -11,6 +11,8 @@ using WF.Model;
 using WF.DataAccess;
 using WF.Model.BarCode;
 using Newtonsoft.Json;
+using WF.Framework.Helper;
+using WF.Framework;
 
 namespace WF.Web.Controllers
 {
@@ -24,10 +26,23 @@ namespace WF.Web.Controllers
         /// <returns></returns>
         public ActionResult BarCodeInfo()
         {
-            List<BarCodeInfo> list_info = new List<BarCodeInfo>() 
-            { 
-                new Model.BarCodeInfo() { Id = 1, BaeName = "测试1", BaeType = "类型1" }
-            };
+            var db_Info = BaseDao.ExecuteDataSet("select * from Request where type = 'BarCodeNew' and RecordStatus = 0",null,CommandType.Text).Tables[0].Rows;
+
+            List<BarCodeInfo> list_info = new List<BarCodeInfo>();
+            int index = 1;
+            foreach (DataRow item in db_Info)
+            {
+                list_info.Add(
+                    new Model.BarCodeInfo() {
+                        Id = index++, 
+                        UserId = (Guid)item["CreatedBy"],
+                        BarName = "条形码申请",
+                        CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM-dd"),
+                        State =Convert.ToInt32(item["State"]),
+                        BarType = item["CustomerName"].ToString() }
+                );
+            }
+            
             var model = new PagedList<BarCodeInfo>(list_info, 1,10);
 
             return View(model);
@@ -49,7 +64,7 @@ namespace WF.Web.Controllers
             }
             else //修改
             {
-                var barInfo = new Model.BarCodeInfo() { Id = 1, BaeName = "测试1", BaeType = "类型1" };
+                var barInfo = new Model.BarCodeInfo() { Id = 1, BarName = "测试1", BarType = "类型1" };
                 return View(barInfo);
             }
         }
@@ -120,9 +135,40 @@ namespace WF.Web.Controllers
         /// 插入申请数据
         /// </summary>
         /// <returns></returns>
-        public int SKUBucodeCreateInfo()
+        public int SKUBucodeCreateInfo(string json,int state)
         {
-            return 0;
+            try
+            {
+                var jsonInfo = JsonHelper.DeserializeJson<List<SKUBarCodeDetailsInfo>>(json);
+                int index = 0;
+                if (jsonInfo.Count > 0)
+                {
+                    //插入[Request]表中进行审批或暂存
+                    var sqlRequest = @"INSERT INTO [Request]([Type],[State],[CustomerNumber],[CustomerName],[RecordStatus],[CreatedBy],[CreatedTime])
+                        VALUES ('BarCodeNew'," + state + "," + jsonInfo.First().BuCode + ",N'" + jsonInfo.First().BarName + "'," +
+                            "0,'" + Operation.OperationBy + "','" + DateTime.Now + "')Select @@Identity";
+                    var requstId = BaseDao.ExecuteScalar(sqlRequest, null, CommandType.Text);
+                    if (Convert.ToInt32(requstId) > 0)
+                    {
+                        //插入对应子表
+                        foreach (var item in jsonInfo)
+                        {
+                            var sqlDetail = @"INSERT INTO SKUBarCodeDetailsInfo ([RequestId],[CodeNameEH],[CodeNameCH],[TargetId],[CompanyId],[BuCodeId],[SpecsName],[UnitId],[PackingName],[RatioName],[RremarksName] ,[KeepType]) 
+                                VALUES(" + requstId + ",N'" + item.CodeNameEH + "',N'" + item.CodeNameCH + "'" +
+                                ",N'" + item.TargetId + "'," + item.CompanyId + "," + item.BuCodeId + "" +
+                                ",N'" + item.SpecsName + "'," + item.UnitId + ",N'" + item.PackingName + "'" +
+                                ",N'" + item.RatioName + "','" + item.RremarksName + "',0)Select @@Identity";
+                            index += Convert.ToInt32(BaseDao.ExecuteScalar(sqlDetail, null, CommandType.Text));
+                        }
+                    }
+                }
+                return index;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+   
         }
 
     }

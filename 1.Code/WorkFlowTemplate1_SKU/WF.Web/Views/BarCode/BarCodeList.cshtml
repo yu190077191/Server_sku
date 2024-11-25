@@ -28,25 +28,13 @@
                 {
                     <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
                         <td class="listtd">@(item.Id)</td>
-                        <td class="listtd">@(item.BaeName)</td>
-                        <td class="listtd">@(item.BaeType)</td>
-                        <td class="listtd"></td>
-                        <td class="listtd"></td>
+                        <td class="listtd">@(item.UserId)</td>
+                        <td class="listtd">@(item.BarName)</td>
+                        <td class="listtd">@(item.CreteTime)</td>
+                        <td class="listtd">@(item.State == 0 ? "草稿" : "审批中")</td>
                         <td colspan="7" style="height:50px;" align="center">
                             <button id="SaveButton" onclick="saveSAPEmail(this);">
-                                @(Html.Lang("查看"))
-                            </button>
-                            <button id="SaveButton" onclick="saveSAPEmail(this);">
-                                @(Html.Lang("提交"))
-                            </button>
-                            <button id="SaveButton" onclick="DeleteInfo(@(item.Id));">
-                                @(Html.Lang("删除"))
-                            </button>
-                            <button id="SaveButton" onclick="DeleteInfo(@(item.Id));">
-                                @(Html.Lang("删除"))
-                            </button>
-                            <button id="SaveButton" onclick="keepSave(@(item.Id));">
-                                @(Html.Lang("备案"))
+                                @(Html.Lang("详情"))
                             </button>
                         </td>
                     </tr>
