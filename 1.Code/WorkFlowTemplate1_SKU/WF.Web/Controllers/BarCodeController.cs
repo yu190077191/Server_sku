@@ -34,7 +34,8 @@ namespace WF.Web.Controllers
             {
                 list_info.Add(
                     new Model.BarCodeInfo() {
-                        Id = index++, 
+                        Id = index++,
+                        CodeId = Convert.ToInt32(item["Id"]),
                         UserId = (Guid)item["CreatedBy"],
                         BarName = "条形码申请",
                         CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM-dd"),
@@ -170,6 +171,25 @@ namespace WF.Web.Controllers
             }
    
         }
+
+        /// <summary>
+        /// 获取相关信息
+        /// </summary>
+        /// <param name="CodeId"></param>
+        /// <returns></returns>
+        public List<SKUBarCodeDetailsInfo> GetSKUBarCodeDetailsInfo(int CodeId)
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
     }
 }
