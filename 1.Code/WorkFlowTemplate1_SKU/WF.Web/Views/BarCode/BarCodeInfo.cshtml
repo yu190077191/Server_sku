@@ -8,8 +8,23 @@
 
 <div style="padding:30px 50px;line-height:30px;font-size:14px;height:auto;">
     <div id="searchDiv" style="float:left;margin-bottom:5px;">
-        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
-        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="">@(Html.Lang("查询"))</button>
+        <select id="keyword" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" >
+            <option value="0">申请名称</option>
+            <option value="1">条形码申请</option>
+            <option value="2">条形码变更</option>
+            <option value="3">条形码特批</option>
+        </select>
+        <select id="keyword" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" >
+            <option value="-1">提交状态</option>
+            <option value="0">草稿</option>
+            <option value="1">审批中</option>
+            <option value="2">驳回</option>
+            <option value="3">通过</option>
+            <option value="4">备案中</option>
+            <option value="5">备案完成</option>
+        </select>
+        @*<input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />*@
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="selectInfo()">@(Html.Lang("查询"))</button>
         <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
                 onmouseout="this.className = 'button'" onclick="exportCSV(this);">
             导出产品数据
@@ -35,6 +50,11 @@
 <script type="text/javascript">
     function BarCodeContent(codeId) {
         location.href = getRootUrl() + "BarCode/BarCodeEdit?codeId=" + codeId.toString();
+    }
+
+    //查询方法
+    function selectInfo() {
+
     }
 
 </script>

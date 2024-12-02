@@ -1,11 +1,10 @@
 ﻿@using WF.Model.BarCode;
-@using System.Data.SqlClient;
-
-
+@model List<SKUBarCodeDetailsInfo>
 @{
     ViewBag.Title = "BarCodeEdit";
 
-    List<SKUBuInfo> BuInfoList = ViewBag.BuInfoList as List<SKUBuInfo>;
+    //List<SKUBuInfo> BuInfoList = ViewBag.BuInfoList as List<SKUBuInfo>;
+
 
     //List<SKUBarCodeDetailsInfo> DetailInfo = new List<SKUBarCodeDetailsInfo>();
 }
@@ -35,8 +34,12 @@
         width: 200px;
         height: 25px;
     }
-    .buttonT {
 
+    .buttonT {
+    }
+
+    .TextOne {
+        color:red;
     }
 </style>
 @*详细信息*@
@@ -45,7 +48,7 @@
     <table cellpadding="0" cellspacing="0" width="100%" class="tbl" id="myTable1">
         <tr>
             <td class="lefttd">
-                @Html.Lang("*BU:")
+                <text class="TextOne">*</text>@Html.Lang("BU:")
             </td>
             <td class="righttd">
                 <select name="level1" id="BUlevel1" onchange="showLevel2(this)" class="inputwh"></select>
@@ -53,7 +56,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("*品牌名称:")
+                <text class="TextOne">*</text>@Html.Lang("品牌名称:")
             </td>
             <td class="righttd">
                 <input type="text" id="BrandName" name="BrandName" class="inputwh" />
@@ -61,7 +64,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("目标市场:")
+                <text class="TextOne">*</text>@Html.Lang("目标市场:")
             </td>
             <td class="righttd">
                 <select name="level1" id="TargetName" class="inputwh">
@@ -74,7 +77,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("产品名称（英文）:")
+                <text class="TextOne">*</text>@Html.Lang("产品名称（英文）:")
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameEH" name="CodeNameEH" class="inputwh" />
@@ -82,7 +85,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("产品名称（中文）:")
+                <text class="TextOne">*</text>@Html.Lang("产品名称（中文）:")
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameCH" name="CodeNameCH" class="inputwh" />
@@ -91,7 +94,7 @@
 
         <tr>
             <td class="lefttd">
-                @Html.Lang("工厂名称:")
+                <text class="TextOne">*</text>@Html.Lang("工厂名称:")
             </td>
             <td class="righttd">
                 <select name="Company" id="CompanyId" class="inputwh"></select>
@@ -99,7 +102,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("*产品分类:")
+                <text class="TextOne">*</text>@Html.Lang("产品分类:")
             </td>
             <td class="righttd">
                 <select name="product" id="BUlevel2" class="inputwh">
@@ -108,7 +111,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("净含量/规格:")
+                <text class="TextOne">*</text>@Html.Lang("净含量/规格:")
             </td>
             <td class="righttd">
                 <input type="text" id="specsId" name="specsName" class="inputwh" />
@@ -116,7 +119,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("作为销售单元/运输单元:")
+                <text class="TextOne">*</text>@Html.Lang("作为销售单元/运输单元:")
             </td>
             <td class="righttd">
                 <select name="UnitName" id="UnitId" class="inputwh">
@@ -127,7 +130,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("包装形式袋:")
+                <text class="TextOne">*</text>@Html.Lang("包装形式袋:")
             </td>
             <td class="righttd">
                 <input type="text" id="packingId" name="packingName" class="inputwh" />
@@ -135,7 +138,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("放大系数:")
+                <text class="TextOne">*</text>@Html.Lang("放大系数:")
             </td>
             <td class="righttd">
                 <input type="text" id="ratioId" name="ratioName" class="inputwh" />
@@ -143,7 +146,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                @Html.Lang("申请原因:")
+                <text class="TextOne">*</text>@Html.Lang("申请原因:")
             </td>
             <td class="righttd">
                 <input type="text" id="remarksId" name="remarksName" class="inputwh" />
@@ -152,26 +155,83 @@
     </table>
 </div>
 <div class="center-both" style="margin-top:10px;">
-    <button onclick="addRow(myTable1)" style="float:right">添加一行</button>
-    <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
-        <tr>
-            @*hidden="hidden"*@
-            @*<th style="display:none">序号</th>*@
-            <th style="display:none">BU</th>
-            <th style="display:none">品牌</th>
-            <th>种类（英文）</th>
-            <th>种类（中文）</th>
-            <th>市场</th>
-            <th style="display:none">工厂</th>
-            <th style="display:none">分类</th>
-            <th>净含量</th>
-            <th>运输</th>
-            <th>包装</th>
-            <th>系数</th>
-            <th>申请原因</th>
-            <th>操作</th>
-        </tr>
-    </table>
+    @{
+        if (Model != null && Model.Count > 0)
+        {
+        <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+            <thead>
+                <tr>
+                    @*hidden="hidden"*@
+                    <th style="display:none">序号</th>
+                    <th style="display:none">BU</th>
+                    <th style="display:none">品牌</th>
+                    <th>种类（英文）</th>
+                    <th>种类（中文）</th>
+                    <th>市场</th>
+                    <th style="display:none">工厂</th>
+                    <th style="display:none">分类</th>
+                    <th>净含量</th>
+                    <th>运输</th>
+                    <th>包装</th>
+                    <th>系数</th>
+                    <th>申请原因</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            @{
+                foreach (var item in Model)
+                {
+                        <tr>
+                            <td class="listtd" style="display:none">@(item.Id)</td>
+                            <td class="listtd" style="display:none">@(item.BuCode)</td>
+                            <td class="listtd" style="display:none">@(item.BarName)</td>
+                            <td class="listtd">@(item.CodeNameEH)</td>
+                            <td class="listtd">@(item.CodeNameCH)</td>
+                            <td class="listtd">@(item.TargetId)</td>
+                            <td class="listtd" style="display:none">@(item.CompanyId)</td>
+                            <td class="listtd" style="display:none">@(item.BuCodeId)</td>
+                            <td class="listtd">@(item.SpecsName)</td>
+                            <td class="listtd">@(item.UnitId)</td>
+                            <td class="listtd">@(item.PackingName)</td>
+                            <td class="listtd">@(item.RatioName)</td>
+                            <td class="listtd">@(item.RremarksName)</td>
+                            <td colspan="7" style="height:50px;" align="center">
+                                @if (item.State == 0)
+                                {
+                                    <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
+                                    <button class="buttonT" onclick="">编辑</button>
+                                }
+                            </td>
+                        </tr>
+                }
+            }
+        </table>
+        }
+        else
+        {
+            <button onclick="addRow(myTable1)" style="float:right">添加一行</button>
+            <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+                <tr>
+                    @*hidden="hidden"*@
+                    @*<th style="display:none">序号</th>*@
+                    <th style="display:none">BU</th>
+                    <th style="display:none">品牌</th>
+                    <th>种类（英文）</th>
+                    <th>种类（中文）</th>
+                    <th>市场</th>
+                    <th style="display:none">工厂</th>
+                    <th style="display:none">分类</th>
+                    <th>净含量</th>
+                    <th>运输</th>
+                    <th>包装</th>
+                    <th>系数</th>
+                    <th>申请原因</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        }
+    }
+
 </div>
 @*业务按钮*@
 <div class="center-both" style="margin-top:10px;">
@@ -228,12 +288,20 @@
         })
     }
 
+ 
+    function DeleteInfo() {
+            console.log("获取:")
+    }
+
+
     //初始化方法
     $(document).ready(function () {
         selectedIndexChanged(document.getElementById("BUlevel1"));
         SelectCompanyInfo(document.getElementById("CompanyId"));
     });
     var index = 0;
+
+
     //添加行处理方法
     function addRow(value) {
         var table = document.getElementById("myTable1");
@@ -242,9 +310,9 @@
         if (rows.length > 0 ) {
             //data.push(index++);
         }
-        for (var i = 0; i < rows.length; i++) { 
+        for (var i = 0; i < rows.length; i++) {
             var cells = rows[i].getElementsByTagName("td");
-            for (var j = 0; j < cells.length; j++) { 
+            for (var j = 0; j < cells.length; j++) {
                 var textClass = cells[j].querySelector('[class="inputwh"]')
                 if (textClass == null) {
                     continue;
@@ -265,8 +333,8 @@
                 }
             }
         }
-        
-        
+
+
         var strhtml = "";
         strhtml = '<tr>'
             //+ '<td style="display:none">' + data[0] + '</td>'
@@ -282,7 +350,7 @@
             + '<td>' + data[9] + '</td>'
             + '<td>' + data[10] + '</td>'
             + '<td>' + data[11] + '</td>'
-            + '<td><button class="buttonT" onclick="Delete(this);">删除</button><button class="buttonT" onclick="Delete(this);">备案</button></td></tr > ';
+            + '<td><button class="buttonT" onclick="Delete(this,-1,-1);">删除</button><button class="buttonT" onclick="Delete(this,-1,-1);">备案</button></td></tr> ';
         $("#myTable").append(strhtml);
     }
 
@@ -332,9 +400,8 @@
                 model.RatioName = data[i][10];
                 model.RremarksName = data[i][11];
                 listModel.push(model);
-            } 
+            }
         }
-        console.log('查看1', listModel);
         var json = $.toJSON(listModel);
         $.post(getRootUrl() + "BarCode/SKUBucodeCreateInfo", { json: json, state: index },
             function (data) {
@@ -364,10 +431,22 @@
     }
 
     //删除相关数据
-    function Delete(val) {
-        var row = val.parentNode.parentNode;
-        var table = document.getElementById("myTable");
-        table.deleteRow(row.rowIndex);
+    function Delete(val,index,codeid) {
+        if (index > 0) {
+            $.post(getRootUrl() + "BarCode/DeleteDetailsInfo", { index: index, requestId: codeid },
+                function (data) {
+                    if (data > 0) {
+                        setTimeout(function () {
+                            location.href = getRootUrl() + "BarCode/BarCodeEdit?codeId=" + codeid +"";
+                        }, 1000);
+                    }
+                });
+        }
+        else {
+            var row = val.parentNode.parentNode;
+            var table = document.getElementById("myTable");
+            table.deleteRow(row.rowIndex);
+        }
     }
 
     //备案相关

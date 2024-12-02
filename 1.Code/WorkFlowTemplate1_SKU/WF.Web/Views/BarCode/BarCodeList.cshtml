@@ -35,8 +35,8 @@
                         <td class="listtd">@(item.CreteTime)</td>
                         <td class="listtd">@(item.State == 0 ? "草稿" : "审批中")</td>
                         <td colspan="7" style="height:50px;" align="center">
-                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
-                                @(Html.Lang("详情"))
+                            <button id="SaveButton"  onclick="Details(@(item.CodeId));">
+                                <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)">  @(Html.Lang("详情"))</a>
                             </button>
                         </td>
                     </tr>
@@ -92,8 +92,8 @@
         console.log('详情id', val)
         $.ajax({
             type: "POST",
-            url: "@(Url.Content("~/BarCode/GetSKUBarCodeDetailsInfo"))",
-            data: "{CodeId:" + val +"}",
+            url: "@(Url.Content("~/BarCode/BarCodeEdit"))",
+            data: "{codeId:" + val +"}",
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 
