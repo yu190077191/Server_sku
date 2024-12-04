@@ -37,10 +37,5 @@ namespace WF.Model
         /// 状态
         /// </summary>
         public int State { get; set; }
-
-        /// <summary>
-        /// 申请id
-        /// </summary>
-        public int CodeId { get; set; }
     }
 }

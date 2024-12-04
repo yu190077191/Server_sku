@@ -12,15 +12,9 @@ namespace WF.Model.BarCode
     /// </summary>
     public class SKUBarCodeDetailsInfo
     {
-        public int Id { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string BuCode { get; set; }
-        /// <summary>
-        /// 品牌
-        /// </summary>
         public string BarName { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 条形码主键
         /// </summary>
@@ -69,10 +63,6 @@ namespace WF.Model.BarCode
         /// 申请原因
         /// </summary>
         public string RremarksName { get; set; }
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public int State { get; set; }
 
     }
 }

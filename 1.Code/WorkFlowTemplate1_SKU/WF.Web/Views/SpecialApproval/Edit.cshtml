@@ -1,0 +1,402 @@
+﻿@using WF.Model.SpecialApproval;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <script type="text/javascript" src="@Url.Content("~/Nestle/Scripts/jquery-1.8.2.js")"></script>
+    <script type="text/javascript" src="~/Nestle/Scripts/nestle.json.js"></script>
+    <style>
+        button {
+            cursor: pointer;
+        }
+
+            button:hover {
+                border-color: #000000;
+            }
+
+        .titlediv {
+            line-height: 50px;
+            text-align: center;
+            font-size: xxx-large;
+            margin-top: 30px;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #d7d7d7;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .formdiv {
+            line-height: 30px;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-size: x-large;
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #d7d7d7;
+            border-radius: 5px;
+        }
+
+        .desdiv {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .addrowbtndiv {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
+
+            .addrowbtndiv button {
+                width: 80px;
+            }
+
+        .tablediv {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #d7d7d7;
+            border-collapse: collapse;  
+            padding: 5px;
+        }
+
+        .formspan {
+            display: block;
+            padding: 10px
+        }
+
+        textarea {
+            width: 98%;
+            height: 100%;
+            resize: none;
+            padding: 5px;
+            border: 1px solid #d7d7d7;
+        }
+
+        input {
+            width: 85%;
+            height: 100%;
+            resize: none;
+            padding: 5px;
+            border: 1px solid #d7d7d7;
+        }
+
+        .newInfodes {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btndiv {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        button {
+            padding: 5px;
+            background-color: white;
+            border: 1px solid #d7d7d7;
+            border-radius: 3px;
+        }
+
+        .btndiv button {
+            margin: 20px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:100%">
+        <div class="titlediv">
+            SKU Registration System
+        </div>
+        <div class="formdiv">
+            <span class="formspan"> Barcode ExceptionalApprove Form </span>
+        </div>
+        <div class="desdiv">
+            <div>
+                Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle
+                Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle
+            </div>
+            <br>
+            <div> Business:</div>
+            <br>
+            <div> BusinessJustification:</div>
+            <div> The Bar Code associatedto Material code is maintained data:</div>
+        </div>
+        <div class="addrowbtndiv">
+            <button onclick="addrow('0');">加一行</button>
+        </div>
+        <div class="tablediv">
+            <table id="oldDataTable">
+                <tr>
+                    <td style="width:3%">Id</td>
+                    <td style="width: 3%">Number</td>
+                    <td style="width:3%">SKUCode</td>
+                    <td>SKUDescription</td>
+                    <td style="width:5%">NetWeight</td>
+                    <td style="width:5%">Packing</td>
+                    <td style="width:10%">BarCode</td>
+                    <td style="width:5%">Length</td>
+                    <td style="width:5%">Width</td>
+                    <td style="width:5%">Height</td>
+                    <td style="width:5%">ShelfLife</td>
+                    <td style="width:5%">GrossWeight</td>
+                    <td style="width:8%;text-align:center" class="op">操作</td>
+                </tr>
+            </table>
+        </div>
+        <div class="newInfodes">
+            <div>As Buiness internal transformation , there is change toexisting bar code need to be modified as :</div>
+        </div>
+        <div class="tablediv" id="updateDateDiv">
+            <table id="updateDateTable">
+                <tr id="updateDatetr">
+                    <td style="width:3%">Id</td>
+                    <td style="width: 3%">Number</td>
+                    <td style="width:3%">SKUCode</td>
+                    <td>SKUDescription</td>
+                    <td style="width:5%">NetWeight</td>
+                    <td style="width:5%">Packing</td>
+                    <td style="width:10%">BarCode</td>
+                    <td style="width:5%">Length</td>
+                    <td style="width:5%">Width</td>
+                    <td style="width:5%">Height</td>
+                    <td style="width:5%">ShelfLife</td>
+                    <td style="width:5%">GrossWeight</td>
+                </tr>
+            </table>
+        </div>
+        <div class="btndiv">
+            <button id="save" onclick="save('0')">保 存</button>
+            <button id="submit" onclick="save('1')">提 交</button>
+            <button id="cancel">撤 回</button>
+            <button id="submitBak">提交备案</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+      function getRootUrl() {
+         return "@(Url.Content("~/"))";
+      }
+    $(document).ready(function () {
+        //如果后台有异常，前端进行提示
+        var msg = '@ViewBag.msg';
+        if ( msg != '') {
+            alert(msg);
+        }
+
+        //填充数据
+        getData();
+
+        //根据状态显示按钮
+        var requestStates = '@ViewBag.requestStates';
+        if (requestStates == "0") {
+           //$("#oldDataTable .op").remove();
+        }
+    });
+
+    function getData() {
+        var oldDataSqe = 1;
+        var newDataSqe = 1;
+        var modelStr = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.SpecialApprovalModel));
+        var modelObj = JSON.parse(modelStr);
+        //新增
+        if (modelObj.Id == 0) {
+            addrow(modelObj.Id);
+        }
+        //编辑或者查看
+        else {
+            for (var i = 0; i < modelObj.ListSpecialApprovalItemModel.length; i++) {
+                var item = modelObj.ListSpecialApprovalItemModel[i];
+                //更新的数据
+                if (item.DataIsNew) {
+                    var oldDataHtml = getTempLateHtml(item.Id, oldDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight);
+                    $("#updateDateTable").append(oldDataHtml);
+                    oldDataSqe++;
+                }
+                else {
+                    var newDataHtml = getTempLateHtml(item.Id, newDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight);
+                    $("#oldDataTable").append(newDataHtml);
+                    newDataSqe++;
+                }
+            }
+        }
+    }
+
+    function getTempLateHtml(id, number, isNewData, code, desc, netwht, pak, bar, len, wd, hg, sl, gw) {
+        var tempLateHtml = "<tr class=\"data\" dataType=\"" + isNewData+"\"><td style = \"width: 3%;\">" + id + "</td>";
+        tempLateHtml += "<td style=\"width: 3%;\"><input class=\"Number\" onchange=\"handleChange(this)\"  type=\"text\" readonly value ='" + number +"'></td>";
+        tempLateHtml += "<td style=\"width: 3%;\"><input class=\"SKUCode\" oninput=\"handleChange(this)\"  type=\"text\" value=\"" + code +"\"></td>";
+        tempLateHtml += " <td><textarea oninput=\"handleChange(this)\" class=\"SKUDescription\" value =\"" + desc + "\">" + desc+"</textarea></td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"NetWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + netwht+"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"Packing\"  oninput=\"handleChange(this)\" type=\"text\" value=\"" + pak +"\"> </td>";
+        tempLateHtml += " <td style=\"width:10% \"><input class=\"BarCode\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + bar +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"Length\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + len +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"Width\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + wd +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"Height\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + hg +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"GrossWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + gw +"\"> </td>";
+        if (isNewData == "0") {
+            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button onclick=\"addrow('0',this)\">复制</button> <button onclick=\"delrow(this)\">删除</button></td></tr>";
+        }
+        return tempLateHtml;
+    }
+    function addrow(id,el) {
+        //获取选中行的值
+        var code = '';
+        var desc = '';
+        var netwht = '';
+        var pak = '';
+        var bar = '';
+        var len = '';
+        var wd = '';
+        var hg = '';
+        var sl = '';
+        var gw = '';
+        if (el != undefined) {
+            var currenttr = $(el).parent().parent();
+            code = $(currenttr).find('.SKUCode').val();
+            desc = $(currenttr).find('.SKUDescription').val();
+            netwht = $(currenttr).find('.NetWeight').val();
+            pak = $(currenttr).find('.Packing').val();
+            bar = $(currenttr).find('.BarCode').val();
+            len = $(currenttr).find('.Length').val();
+            wd = $(currenttr).find('.Width').val();
+            hg = $(currenttr).find('.Height').val();
+            sl = $(currenttr).find('.ShelfLife').val();
+            gw = $(currenttr).find('.GrossWeight').val();
+        }
+        debugger
+        var maxNumber = getMaxNumber();
+        var tempLateOldDataStr = getTempLateHtml(id, (maxNumber + 1), '0', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw );
+        var tempLateUpdateStr =  getTempLateHtml(id, (maxNumber + 1), '1', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw );
+        $("#oldDataTable").append(tempLateOldDataStr);
+        $("#updateDateTable").append(tempLateUpdateStr);
+    }
+    function copyrow(el) {
+        debugger
+        var clonedRow = $(el).parent().parent().clone();
+        //更新number
+        var number = getMaxNumber();
+        var numbertdDOM = $(clonedRow).children()[1];
+        var numberinputDOM = $(numbertdDOM).children();
+        $(numberinputDOM).val((number));
+        $('#oldDataTable').append(clonedRow);
+        //删除最后操作列
+        debugger
+        var updateRowClone = $(el).parent().parent().clone();
+        updateRowClone.children()[updateRowClone.children().length - 1].remove();
+        var updatenumbertdDOM = $(updateRowClone).children()[1];
+        var updatenumberinputDOM = $(updatenumbertdDOM).children();
+        $(updatenumberinputDOM).val((number));
+        $("#updateDateTable").append(updateRowClone);
+    }
+    function delrow(el) {
+        debugger
+        //旧数据DOM
+        var trDOMOld = $(el).parent().parent();
+        //取出number删除新数据DOM
+        var numbertrDOM = $(el).parent().siblings()[1];
+        var numbertdDOM = $(numbertrDOM).children();
+        var numberOldData = $(numbertdDOM).val();
+        //删除dom
+        trDOMOld.remove();
+        var updatetrDOM = $("#updateDateTable input[value='" + numberOldData + "']").parent().parent();
+        $(updatetrDOM).remove();
+     }
+    function getMaxNumber() {
+        var trLength = $('#oldDataTable tr').length;
+        if (trLength == 1) {
+            return 0;
+        }
+        else {
+            var elLasttrDOM = $('#oldDataTable tr')[trLength - 1];
+            var eltdDOM = $(elLasttrDOM).children()[1];
+            var numberValue = $($(eltdDOM).children()[0]).val();
+            return parseInt(numberValue);
+        }
+    }
+    function save(State) {
+        var model = new Object();
+        listModel = [];
+        model.Id = '@ViewBag.id';
+        model.State = State;
+        //保存 status =1 ; 提交status =0;
+        $(".data").each(function (index, ele) {
+           var modelItem = new Object();
+            var el = $(ele);
+            var dataType = el.attr('dataType');
+            var code = el.find('.SKUCode').val();
+            var des = el.find('.SKUDescription').val();
+            var netwht = el.find('.NetWeight').val();
+            var pak = el.find('.Packing').val();
+            var bar = el.find('.BarCode').val();
+            var len = el.find('.Length').val();
+            var wd = el.find('.Width').val();
+            var hg = el.find('.Height').val();
+            var sl = el.find('.ShelfLife').val();
+            var gw = el.find('.GrossWeight').val();
+
+            modelItem.number = (index+1);
+            modelItem.DataIsNew = dataType;
+            modelItem.SKUCode = code;
+            modelItem.SKUDescription = des;
+            modelItem.NetWeight = netwht;
+            modelItem.Packing = pak;
+            modelItem.BarCode = bar;
+            modelItem.Length = len;
+            modelItem.Width = wd;
+            modelItem.Height = hg;
+            modelItem.ShelfLife = sl;
+            modelItem.GrossWeight = gw;
+
+            listModel.push(modelItem);
+        });
+        model.ListSpecialApprovalItemModel = listModel;
+        var jsondata = $.toJSON(model);
+        $.post(getRootUrl() + "SpecialApproval/SaveSpecialApproval", { jsonmodel: jsondata  },
+            function (data) {
+               if (data.Status == 1) {
+                    alert(data.Message);
+                    //刷新页面
+                    location.href = getRootUrl() + "SpecialApproval/edit?id="+data.Data;
+                }
+         });
+    }
+    function handleChange(el) {
+      //找到该元素的class
+        var ch = $(el).parent().parent();
+        var isNew = $(ch).attr('dataType');
+        if (isNew =="0") {
+            var rownumber = $(ch).find('.Number').val();
+            var clsName = $(el).attr('class');
+            var elValue = $(el).val();
+            $($("#updateDateTable ." + clsName)[rownumber - 1]).val(elValue);
+        }
+    }
+</script>

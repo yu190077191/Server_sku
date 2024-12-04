@@ -13,7 +13,6 @@ using WF.Model.BarCode;
 using Newtonsoft.Json;
 using WF.Framework.Helper;
 using WF.Framework;
-using System.Reflection.Emit;
 
 namespace WF.Web.Controllers
 {
@@ -35,8 +34,7 @@ namespace WF.Web.Controllers
             {
                 list_info.Add(
                     new Model.BarCodeInfo() {
-                        Id = index++,
-                        CodeId = Convert.ToInt32(item["Id"]),
+                        Id = index++, 
                         UserId = (Guid)item["CreatedBy"],
                         BarName = "条形码申请",
                         CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM-dd"),
@@ -58,7 +56,7 @@ namespace WF.Web.Controllers
         /// <returns></returns>
         public ActionResult BarCodeEdit(int? codeId)
         {
-            ViewBag.BuInfoList = JsonConvert.SerializeObject(GetBuInfo(0));
+            ViewBag.BuInfoList = JsonConvert.SerializeObject( GetBuInfo(0));
             //添加
             if (codeId <= 0)
             {
@@ -66,38 +64,8 @@ namespace WF.Web.Controllers
             }
             else //修改
             {
-
-                List<SKUBarCodeDetailsInfo> DetailsInfo = new List<SKUBarCodeDetailsInfo>();
-                //定义查询子数据
-                var select_sql = "select b.Id as DetailsId,* from Request a left " +
-                    "join SKUBarCodeDetailsInfo b on a.id = b.RequestId " +
-                    "where a.Type = 'BarCodeNew' and a.RecordStatus = 0 and b.RecordStatus = 0 and a.id = " + codeId + "";
-
-                var db_Infos = BaseDao.ExecuteDataSet(select_sql, null, CommandType.Text);
-
-                foreach (DataRow item in db_Infos.Tables[0].Rows)
-                {
-                    DetailsInfo.Add(new SKUBarCodeDetailsInfo()
-                    {
-                        Id = Convert.ToInt32(item["DetailsId"]), //详情id
-                        BuCode = item["CustomerNumber"].ToString(), // buID
-                        BarName = item["CustomerName"].ToString(), //品牌
-                        CodeNameEH = item["CodeNameEH"].ToString(), // 英文
-                        CodeNameCH = item["CodeNameCH"].ToString(), // 英文
-                        TargetId = item["TargetId"].ToString(), // 市场
-                        CompanyId = Convert.ToInt32(item["CompanyId"]), // 工厂
-                        BuCodeId = Convert.ToInt32(item["BuCodeId"]), // 分类
-                        SpecsName = item["SpecsName"].ToString(), // 净含量
-                        UnitId = Convert.ToInt32(item["UnitId"]), // 运输
-                        PackingName = item["PackingName"].ToString(), // 包装形式
-                        RatioName = item["RatioName"].ToString(), // 系数
-                        RremarksName = item["RremarksName"].ToString(), // 原因
-                        State = Convert.ToInt32(item["State"]),
-                        RequestId = Convert.ToInt32(item["RequestId"])
-                    });
-                }
-                
-                return View(DetailsInfo);
+                var barInfo = new Model.BarCodeInfo() { Id = 1, BarName = "测试1", BarType = "类型1" };
+                return View(barInfo);
             }
         }
 
@@ -185,11 +153,11 @@ namespace WF.Web.Controllers
                         //插入对应子表
                         foreach (var item in jsonInfo)
                         {
-                            var sqlDetail = @"INSERT INTO SKUBarCodeDetailsInfo ([RequestId],[CodeNameEH],[CodeNameCH],[TargetId],[CompanyId],[BuCodeId],[SpecsName],[UnitId],[PackingName],[RatioName],[RremarksName] ,[KeepType],[RecordStatus]) 
+                            var sqlDetail = @"INSERT INTO SKUBarCodeDetailsInfo ([RequestId],[CodeNameEH],[CodeNameCH],[TargetId],[CompanyId],[BuCodeId],[SpecsName],[UnitId],[PackingName],[RatioName],[RremarksName] ,[KeepType]) 
                                 VALUES(" + requstId + ",N'" + item.CodeNameEH + "',N'" + item.CodeNameCH + "'" +
                                 ",N'" + item.TargetId + "'," + item.CompanyId + "," + item.BuCodeId + "" +
                                 ",N'" + item.SpecsName + "'," + item.UnitId + ",N'" + item.PackingName + "'" +
-                                ",N'" + item.RatioName + "','" + item.RremarksName + "',0,0)Select @@Identity";
+                                ",N'" + item.RatioName + "','" + item.RremarksName + "',0)Select @@Identity";
                             index += Convert.ToInt32(BaseDao.ExecuteScalar(sqlDetail, null, CommandType.Text));
                         }
                     }
@@ -203,56 +171,5 @@ namespace WF.Web.Controllers
    
         }
 
-        /// <summary>
-        /// 获取相关信息
-        /// </summary>
-        /// <param name="CodeId"></param>
-        /// <returns></returns>
-        public List<SKUBarCodeDetailsInfo> GetSKUBarCodeDetailsInfo(int CodeId)
-        {
-            try
-            {
-                return null;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="index">详情id</param>
-        /// <param name="RequestId">RequestId</param>
-        /// <returns></returns>
-        public int DeleteDetailsInfo(int index,int requestId)
-        {
-            try
-            {
-                string sql = string.Empty;
-                sql = "update SKUBarCodeDetailsInfo set RecordStatus = 1 where id = " + index + "";
-                var vIndex =  BaseDao.ExecuteNonQuery(sql, null, CommandType.Text);
-                if (vIndex > 0)
-                {
-                    sql = "select * from SKUBarCodeDetailsInfo where RequestId = "+ requestId + " and RecordStatus = 0";
-                    var countInfo = Convert.ToInt32(BaseDao.ExecuteDataSet(sql, null, CommandType.Text).Tables[0].Rows.Count);
-
-                    if (countInfo == 0)
-                    {
-                        sql = "update Request set RecordStatus = 1 where id = " + requestId + "";
-                        BaseDao.ExecuteNonQuery(sql, null, CommandType.Text);
-                    }
-                }
-
-                return vIndex;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
     }
 }

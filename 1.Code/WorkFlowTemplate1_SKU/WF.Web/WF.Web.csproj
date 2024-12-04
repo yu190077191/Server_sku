@@ -180,6 +180,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\SpecialApprovalController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Controllers\WorkFlowAPIController.cs" />
@@ -1540,6 +1541,9 @@
     <Content Include="Views\BarCode\BarCodeInfo.cshtml" />
     <Content Include="Views\BarCode\BarCodeEdit.cshtml" />
     <Content Include="Views\BarCode\KeepInfo.cshtml" />
+    <Content Include="Views\SpecialApproval\List.cshtml" />
+    <Content Include="Views\SpecialApproval\Index.cshtml" />
+    <Content Include="Views\SpecialApproval\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
