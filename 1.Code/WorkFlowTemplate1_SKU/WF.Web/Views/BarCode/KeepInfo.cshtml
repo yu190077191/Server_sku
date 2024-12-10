@@ -1,13 +1,45 @@
-﻿@{
+﻿@using WF.Model.BarCode;
+@{
     ViewBag.Title = "KeepInfo";
 }
+@model List<SKUBarCodeDetailsInfo>
 
-<div>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="imageUpload">选择图片上传:</label>
-        <input type="file" id="imageUpload" name="image" accept="image/*">
-        <label for="imageUpload">备注信息:</label><input type="text" value="">
-        <input type="submit" value="上传">
-        <input type="submit" value="取消">
+<script type="text/javascript" src="@(Url.Content("~/Scripts/Common/field.js?" + DateTime.Now.ToString()))"></script>
+<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
+    @*<form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="imageUpload">选择图片上传:</label>
+            <input type="file" id="imageUpload" name="image" accept="image/*">
+            <label for="imageUpload">备注信息:</label><input type="text" value="">
+            <input type="submit" value="上传">
+        </form>*@
+    <form id="attachementUpload1" enctype="multipart/form-data" method="post" class="attachmentForm">
+        <input type="file" id="File_1" name="File_1" class="file" />
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'" id="fileButton1"
+                onmouseout="this.className='button'" onclick="uploadFile('1');">
+            @(Html.Lang("Upload"))
+        </button>
+        <label id="lbl1" style="font-weight: normal; font-size: 12px;">
+            @if (1 != 1)
+            {
+                @*string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string line in array)
+                    {
+                        string[] arr = line.Split('|');
+                        string guid = arr[0];
+                        string name = arr[1];
+
+                        <div id='trFile@(guid)'>
+                            <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
+                                @(name) [download]<a>
+                                    <a style='cursor:pointer;color:red;' onclick='deleteAttachment("@(guid)");'>[delete]</a>
+                        </div>
+                    }*@
+            }
+        </label>
+        <input type="submit" id="uploadButton1" name="uploadButton1" style="visibility: hidden;width: 1px;" value="uploadButton1" class="submit" />
     </form>
 </div>
+
+<script type="text/javascript">
+
+</script>

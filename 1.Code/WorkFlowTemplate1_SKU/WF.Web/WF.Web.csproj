@@ -1541,9 +1541,9 @@
     <Content Include="Views\BarCode\BarCodeInfo.cshtml" />
     <Content Include="Views\BarCode\BarCodeEdit.cshtml" />
     <Content Include="Views\BarCode\KeepInfo.cshtml" />
-    <Content Include="Views\SpecialApproval\List.cshtml" />
-    <Content Include="Views\SpecialApproval\Index.cshtml" />
     <Content Include="Views\SpecialApproval\Edit.cshtml" />
+    <Content Include="Views\SpecialApproval\Index.cshtml" />
+    <Content Include="Views\SpecialApproval\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

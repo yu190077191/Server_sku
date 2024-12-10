@@ -14,7 +14,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 75%; /* 或者具体宽度 */
+        width: 85%; /* 或者具体宽度 */
         /*background-color: burlywood;*/
     }
 
@@ -158,54 +158,68 @@
     @{
     if (Model != null && Model.Count > 0)
     {
-    <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
-        <thead>
-            <tr>
-                @*hidden="hidden"*@
-                <th style="display:none">序号</th>
-                <th style="display:none">BU</th>
-                <th style="display:none">品牌</th>
-                <th>种类（英文）</th>
-                <th>种类（中文）</th>
-                <th>市场</th>
-                <th style="display:none">工厂</th>
-                <th style="display:none">分类</th>
-                <th>净含量</th>
-                <th>运输</th>
-                <th>包装</th>
-                <th>系数</th>
-                <th>申请原因</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        @{
-        foreach (var item in Model)
-        {
-        <tr>
-            <td class="listtd" style="display:none">@(item.Id)</td>
-            <td class="listtd" style="display:none">@(item.BuCode)</td>
-            <td class="listtd" style="display:none">@(item.BarName)</td>
-            <td class="listtd">@(item.CodeNameEH)</td>
-            <td class="listtd">@(item.CodeNameCH)</td>
-            <td class="listtd">@(item.TargetId)</td>
-            <td class="listtd" style="display:none">@(item.CompanyId)</td>
-            <td class="listtd" style="display:none">@(item.BuCodeId)</td>
-            <td class="listtd">@(item.SpecsName)</td>
-            <td class="listtd">@(item.UnitId)</td>
-            <td class="listtd">@(item.PackingName)</td>
-            <td class="listtd">@(item.RatioName)</td>
-            <td class="listtd">@(item.RremarksName)</td>
-            <td colspan="7" style="height:50px;" align="center">
-                @if (item.State == 0)
+        <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+            <thead>
+                    <tr>
+                        @*hidden="hidden"*@
+                        <th style="display:none">序号</th>
+                        <th style="display:none">BU</th>
+                        <th style="display:none">品牌</th>
+                        <th>种类（英文）</th>
+                        <th>种类（中文）</th>
+                        <th>市场</th>
+                        <th style="display:none">工厂</th>
+                        <th style="display:none">分类</th>
+                        <th>净含量</th>
+                        <th style="display:none">运输</th>
+                        <th>包装</th>
+                        <th>系数</th>
+                        <th>长(mm)</th>
+                        <th>宽(mm)</th>
+                        <th>高(mm)</th>
+                        <th>条形码</th>
+                        <th>申请原因</th>
+                        <th>操作</th>
+                    </tr>
+            </thead>
+            @{
+                foreach (var item in Model)
                 {
-                <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
-                @*<button class="buttonT" onclick="">编辑</button>*@
+                        <tr>
+                            <td class="listtd" style="display:none">@(item.Id)</td>
+                            <td class="listtd" style="display:none">@(item.BuCode)</td>
+                            <td class="listtd" style="display:none">@(item.BarName)</td>
+                            <td class="listtd">@(item.CodeNameEH)</td>
+                            <td class="listtd">@(item.CodeNameCH)</td>
+                            <td class="listtd">@(item.TargetId)</td>
+                            <td class="listtd" style="display:none">@(item.CompanyId)</td>
+                            <td class="listtd" style="display:none">@(item.BuCodeId)</td>
+                            <td class="listtd">@(item.SpecsName)</td>
+                            <td class="listtd" style="display:none">@(item.UnitId)</td>
+                            <td class="listtd">@(item.PackingName)</td>
+                            <td class="listtd">@(item.RatioName)</td>
+                            <td class="listtd">@(item.Length)</td>
+                            <td class="listtd">@(item.Width)</td>
+                            <td class="listtd">@(item.Height)</td>
+                            <td class="listtd">@(item.BarCodeNum)</td>
+                            <td class="listtd">@(item.RremarksName)</td>
+                            <td colspan="7" style="height:50px;" align="center">
+                                @switch (item.State)
+                                {
+                                    case 0: //草稿
+                                        <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
+                                        break;
+                                    case 2: //完成
+                                        <button class="buttonT"><a href="/BarCode/KeepInfo?json=@Json.Encode(item)">@(Html.Lang("备案"))</a></button>
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            </td>
+                        </tr>
                 }
-            </td>
-        </tr>
-        }
-        }
-    </table>
+            }
+        </table>
     }
     else
     {
@@ -254,12 +268,19 @@
                     break;
                 case 1: //提交
                     <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId));" style="margin-left:10px;float:left;">
+                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),5);" style="margin-left:10px;float:left;">
                         @(Html.Lang("撤回"))
                     </button>
                     break;
                 case 2: //通过
-
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),7);" style="margin-left:10px;float:left;">
+                        @(Html.Lang("提交备案"))
+                    </button>
+                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="" style="margin-left:10px;float:left;">
+                        @(Html.Lang("变更"))
+                    </button>
                     break;
                 case 3:
                     break;
@@ -334,12 +355,6 @@
         }
         })
     }
-
-
-    function DeleteInfo() {
-            console.log("获取:")
-    }
-
 
     //初始化方法
     $(document).ready(function () {
@@ -500,6 +515,7 @@
     //备案相关
     function KeepInfo(val) {
         console.log("备案id", val)
+
     }
 
     //处理详情信息
@@ -521,8 +537,8 @@
     }
 
     //撤销信息
-    function RevokeState(val) {
-        $.post(getRootUrl() + "BarCode/UpdateStateInfo", { buCodeId: val },
+    function RevokeState(val,buType) {
+        $.post(getRootUrl() + "BarCode/UpdateStateInfo", { buCodeId: val, btType: buType },
             function (data) {
                 if (data > 0) {
                     popOK();

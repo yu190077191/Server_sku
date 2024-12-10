@@ -9,18 +9,19 @@
     <div id="searchDiv" style="float:left;margin-bottom:5px;">
         <select id="keyName" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;">
             <option value="">申请名称</option>
-            <option value="0">条形码申请</option>
-            <option value="1">条形码变更</option>
-            <option value="2">条形码特批</option>
+            <option value="0">条码申请</option>
+            <option value="1">条码变更</option>
+            <option value="2">条码特批</option>
         </select>
         <select id="keyState" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;">
             <option value="">提交状态</option>
             <option value="0">草稿</option>
             <option value="1">审批中</option>
-            <option value="2">驳回</option>
-            <option value="3">通过</option>
-            <option value="4">备案中</option>
-            <option value="5">备案完成</option>
+            <option value="2">审批通过</option>
+            <option value="3">审批拒绝</option>
+            <option value="5">撤回</option>
+            <option value="7">备案中</option>
+            <option value="8">备案完成</option>
         </select>
         @*<input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />*@
         <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="selectInfo()">@(Html.Lang("查询"))</button>

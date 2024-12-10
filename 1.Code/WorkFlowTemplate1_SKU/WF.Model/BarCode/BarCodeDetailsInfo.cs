@@ -70,7 +70,7 @@ namespace WF.Model.BarCode
         /// <summary>
         /// 条形码号码
         /// </summary>
-        public Int64 BarCodeNum { get; set; }
+        public string BarCodeNum { get; set; }
         /// <summary>
         /// 长度
         /// </summary>

@@ -25,39 +25,39 @@
                 </thead>
                 foreach (var item in Model)
                 {
-<tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
-    <td class="listtd" style="display:none">@(item.CodeId)</td>
-    <td class="listtd">@(item.Id)</td>
-    <td class="listtd">@(item.DisplayName)</td>
-    <td class="listtd">@(item.BarName)</td>
-    <td class="listtd">@(item.CreteTime)</td>
-    @switch (item.State)
-    {
-        case 0:
-            <td class="listtd">草稿</td>
-            break;
-        case 1:
-            <td class="listtd">审批中</td>
-            break;
-        case 2:
-            <td class="listtd">已通过</td>
-            break;
-        case 3:
-            <td class="listtd">拒绝</td>
-            break;
-        case 5:
-            <td class="listtd">撤回</td>
-            break;
-        default:
-            break;
-    }
+                    <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+                        <td class="listtd" style="display:none">@(item.CodeId)</td>
+                        <td class="listtd">@(item.Id)</td>
+                        <td class="listtd">@(item.DisplayName)</td>
+                        <td class="listtd">@(item.BarName)</td>
+                        <td class="listtd">@(item.CreteTime)</td>
+                        @switch (item.State)
+                        {
+                            case 0:
+                                <td class="listtd">草稿</td>
+                                break;
+                            case 1:
+                                <td class="listtd">审批中</td>
+                                break;
+                            case 2:
+                                <td class="listtd">审批通过</td>
+                                break;
+                            case 3:
+                                <td class="listtd">审批拒绝</td>
+                                break;
+                            case 5:
+                                <td class="listtd">撤回</td>
+                                break;
+                            default:
+                                break;
+                        }
 
-    <td colspan="7" style="height:50px;" align="center">
-        <button id="SaveButton" onclick="Details(@(item.CodeId));">
-            <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)">  @(Html.Lang("详情"))</a>
-        </button>
-    </td>
-</tr>
+                        <td colspan="7" style="height:50px;" align="center">
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
+                                <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)">@(Html.Lang("详情"))</a>
+                            </button>
+                        </td>
+                    </tr>
                 }
             }
         }

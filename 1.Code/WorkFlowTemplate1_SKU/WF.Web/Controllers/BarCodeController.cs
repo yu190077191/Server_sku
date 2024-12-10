@@ -31,18 +31,9 @@ namespace WF.Web.Controllers
         /// <returns></returns>
         public ActionResult BarCodeInfo(int? pageIndex = 1,int? selectElement1 = null, int? selectElement2 = null)
         {
-            string sqlInfo = "select a.Id,b.DisplayName,a.CreatedTime,a.State,a.CustomerName,a.CustomerNumber from Request a " +
-                "inner join [Employee] b on a.CreatedBy = b.id where a.type = 'BarCodeNew' and a.RecordStatus = 0";
-            ////进行查询
-            //if (selectElement1 > -1 )
-            //{
-            //    sqlInfo += " and a.State = "+ selectElement1 + "";
-            //}
-            //else if (selectElement2 > -1)
-            //{
-            //    sqlInfo += " and a.State = " + selectElement2 + "";
-            //}
-
+            string sqlInfo = "select a.Id,b.DisplayName,a.CreatedTime,a.State,a.type,a.CustomerName,a.CustomerNumber from Request a " +
+                "inner join [Employee] b on a.CreatedBy = b.id where a.type = 'BarCodeNew' or a.type = 'BarCodeSpecialApp' and a.RecordStatus = 0";
+           
             var db_Info = BaseDao.ExecuteDataSet(sqlInfo, null, CommandType.Text).Tables[0].Rows;
             List<BarCodeInfo> list_info = new List<BarCodeInfo>();
             int index = 1;
@@ -53,24 +44,30 @@ namespace WF.Web.Controllers
                         Id = index++,
                         CodeId = Convert.ToInt32(item["Id"]),
                         DisplayName = item["DisplayName"].ToString(),
-                        BarName = "条形码申请",
+                        BarName = item["type"].ToString().Equals("BarCodeNew") ? "条码申请" : (item["type"].ToString().Equals("BarCodeSpecialApp") ? "条码特批" : "条码变更"),
                         CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM dd"),
                         State =Convert.ToInt32(item["State"]),
                         BarType = item["CustomerName"].ToString() }
                 );
             }
+
+            //if (selectElement1 > -1 )
+            //{
+            //    sqlInfo += " and a.State = "+ selectElement1 + "";
+            //}
             if (selectElement2 > -1)
             {
                 list_info = list_info.Where(o => o.State == selectElement2).ToList();
             }
 
-            var model = new PagedList<BarCodeInfo>(list_info, Convert.ToInt32(pageIndex), 2, list_info.Count);
+            var model = new PagedList<BarCodeInfo>(list_info, Convert.ToInt32(pageIndex), 10);
             if (Request.IsAjaxRequest())
             {
                 return PartialView("BarCodeList", model);
             }
             else 
             {
+
                 return View(model);
             }
         }
@@ -117,6 +114,10 @@ namespace WF.Web.Controllers
                         PackingName = item["PackingName"].ToString(), // 包装形式
                         RatioName = item["RatioName"].ToString(), // 系数
                         RremarksName = item["RremarksName"].ToString(), // 原因
+                        Length = !string.IsNullOrEmpty(item["Length"].ToString()) ? float.Parse(item["Length"].ToString() ) : 0, //长
+                        Width = !string.IsNullOrEmpty(item["Width"].ToString()) ? float.Parse(item["Width"].ToString()) : 0, //宽
+                        Height = !string.IsNullOrEmpty(item["Height"].ToString()) ? float.Parse(item["Height"].ToString()) : 0, //高
+                        BarCodeNum = item["BarCodeNum"].ToString(), //条形码
                         State = Convert.ToInt32(item["State"]),
                         RequestId = Convert.ToInt32(item["RequestId"])
                     });
@@ -131,9 +132,10 @@ namespace WF.Web.Controllers
         /// </summary>
         /// <param name="codeId"></param>
         /// <returns></returns>
-        public ActionResult KeepInfo(int? codeId)
+        public ActionResult KeepInfo(string json)
         {
-            return View();
+            var jsonInfo = JsonHelper.DeserializeJson<List<SKUBarCodeDetailsInfo>>(json);
+            return View(jsonInfo);
         }
 
         /// <summary>
@@ -283,13 +285,24 @@ namespace WF.Web.Controllers
         /// 撤销
         /// </summary>
         /// <param name="buCodeId">buId</param>
+        /// <param name="btType">逻辑类型</param>
         /// <returns></returns>
-        public int UpdateStateInfo(int buCodeId)
+        public int UpdateStateInfo(int buCodeId,int btType)
         {
             try
             {
                 string sql = string.Empty;
-                sql = "update Request set State = 5  where Id = " + buCodeId + "";
+                switch (btType)
+                {
+                    case 5: //撤回
+                        sql = "update Request set State = "+ btType+ "  where Id = " + buCodeId + "";
+                        break;
+                    case 7: //备案
+                        sql = "update Request set State = " + btType + "  where Id = " + buCodeId + "";
+                        break;
+                    default:
+                        break;
+                }
                 return BaseDao.ExecuteNonQuery(sql, null, CommandType.Text);
             }
             catch (Exception ex)
