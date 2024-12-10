@@ -32,10 +32,19 @@ namespace WF.Model
         /// </summary>
         [XmlElement("UserId")]
         public Guid UserId { get; set; }
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string DisplayName{ get; set; }
 
         /// <summary>
         /// 状态
         /// </summary>
         public int State { get; set; }
+
+        /// <summary>
+        /// 申请id
+        /// </summary>
+        public int CodeId { get; set; }
     }
 }

@@ -5,11 +5,25 @@
     ViewBag.Title = "BarCodeInfo";
 }
 <link href="@Url.Content("~/Content/list.css")" rel="Stylesheet" type="text/css" />
-
 <div style="padding:30px 50px;line-height:30px;font-size:14px;height:auto;">
     <div id="searchDiv" style="float:left;margin-bottom:5px;">
-        <input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />
-        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="">@(Html.Lang("查询"))</button>
+        <select id="keyName" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;">
+            <option value="">申请名称</option>
+            <option value="0">条形码申请</option>
+            <option value="1">条形码变更</option>
+            <option value="2">条形码特批</option>
+        </select>
+        <select id="keyState" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;">
+            <option value="">提交状态</option>
+            <option value="0">草稿</option>
+            <option value="1">审批中</option>
+            <option value="2">驳回</option>
+            <option value="3">通过</option>
+            <option value="4">备案中</option>
+            <option value="5">备案完成</option>
+        </select>
+        @*<input id="keyword" type="text" class="keyword" style="width:130px;margin-right:10px;float:left;margin-top:3px;" />*@
+        <button style="float:left;" type="button" class="button" onmousedown="this.className='buttonPressed'" onmouseout="this.className='button'" onclick="selectInfo()">@(Html.Lang("查询"))</button>
         <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
                 onmouseout="this.className = 'button'" onclick="exportCSV(this);">
             导出产品数据
@@ -36,8 +50,31 @@
     function BarCodeContent(codeId) {
         location.href = getRootUrl() + "BarCode/BarCodeEdit?codeId=" + codeId.toString();
     }
+
+    //查询方法
+    function selectInfo() {
+        //search(1);
+        //获取名称下拉
+        var selectElement1 = document.getElementById("keyName");
+        var selectedValue1 = selectElement1.options[selectElement1.selectedIndex].value;
+        //获取状态下拉
+        var selectElement2 = document.getElementById("keyState");
+        var selectedValue2 = selectElement2.options[selectElement2.selectedIndex].value;
+        //请求数据
+        $.post(getRootUrl() + "BarCode/BarCodeInfo", { selectElement1: selectedValue1, selectElement2: selectedValue2 },
+            function (data) {
+                $("#searchResult").html(data); 
+                //if (data > 0) {
+                //    popOK();
+                //    //setTimeout(function () {
+                //    //    location.href = getRootUrl() + "BarCode/BarCodeInfo";
+                //    //}, 1000);
+                //}
+            });
+    }
+
     function SpecialApproval() {
-        /*location.href = getRootUrl() + "SpecialApproval/index?id=19593";*/
         location.href = getRootUrl() + "SpecialApproval/edit?id=0";
     }
+
 </script>

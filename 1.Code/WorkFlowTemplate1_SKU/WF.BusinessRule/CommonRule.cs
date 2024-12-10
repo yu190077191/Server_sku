@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Text;
 using WF.DataAccess;
 using WF.Framework;
@@ -289,6 +290,103 @@ namespace WF.BusinessRule
         {
             return PackagingDAL.AddPackagingJson(model);
         }
+
+
+        #region 条码生成
+        /// <summary>
+        /// 生产条码
+        /// </summary>
+        /// <param name="requestId">Bu主键</param>
+        /// <param name="codeType">0:非咖啡产品，1:咖啡产品</param>
+        /// <returns></returns>
+        public static int SetBarCodeNumber(int requestId,string codeType)
+        {
+            try
+            {
+                int indexUp = 0;
+                if (requestId > 0)
+                {
+                    string sql = "select *  from SKUBarCodeDetailsInfo ";
+                    var tableInfo = BaseDao.ExecuteDataSet(sql+" where requestId = "+ requestId + " and RecordStatus = 0", null, CommandType.Text).Tables[0];
+                    
+                    foreach (DataRow item in tableInfo.Rows)
+                    {
+                        #region 请求数据
+                        string codeNumber = string.Empty;
+                        var info = BaseDao.ExecuteDataSet(sql, null, CommandType.Text).Tables[0];
+                        var maxValue = info.AsEnumerable()
+                            .Where(row => row.Field<int?>("Number").HasValue)
+                                 .Select(row => row.Field<int>("Number"))
+                                 .DefaultIfEmpty()
+                                 .Max().ToString();
+
+                        if (string.IsNullOrEmpty(maxValue) && maxValue.Length < 5)
+                        {
+                            //初始化
+                            maxValue = "10000";
+                        }
+                        else
+                        {
+                            maxValue = (Convert.ToInt32(maxValue) + 1).ToString();
+                        }
+                        #endregion
+
+                        #region 产品逻辑判断
+                        //非咖啡产品逻辑
+                        if (!codeType.Equals("6"))
+                        {
+                            codeNumber = "6917878" + maxValue;
+                        }
+                        else//咖啡产品逻辑
+                        {
+                            codeNumber = "6918551" + maxValue;
+                        }
+                        #endregion
+
+                        #region 更新数据
+                        string sqlUp = "update SKUBarCodeDetailsInfo set BarCodeNum = '" + codeNumber + GetNumBer(codeNumber).ToString() + "',Number = "+ maxValue + " where id = "+ Convert.ToInt32(item["Id"]) + "";
+                        indexUp += BaseDao.ExecuteNonQuery(sqlUp, null, CommandType.Text);
+                        #endregion
+                    }
+                }
+                return indexUp;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 计算条码最后一位
+        /// </summary>
+        /// <param name="codeNumber"></param>
+        /// <returns></returns>
+        public static int GetNumBer(string codeNumber)
+        {
+            //奇数
+            int oddUum = 3 * codeNumber.Where((o, index) => index % 2 == 1)
+                .Sum(o => (int)char.GetNumericValue(o));
+
+            //偶数
+            int evenSum = codeNumber.Where((o, index) => index % 2 == 0)
+                .Sum(o => (int)char.GetNumericValue(o));
+            //取余
+            int mod = (oddUum + evenSum) % 10;
+
+            int sumIndex = 10 - mod;
+            if (sumIndex == 10)
+            {
+                return 0;
+            }
+            else
+            {
+                return sumIndex;
+            }
+            
+        }
+        #endregion
+
 
     }
 }

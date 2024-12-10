@@ -12,9 +12,15 @@ namespace WF.Model.BarCode
     /// </summary>
     public class SKUBarCodeDetailsInfo
     {
-        public string BuCode { get; set; }
-        public string BarName { get; set; }
         public int Id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BuCode { get; set; }
+        /// <summary>
+        /// 品牌
+        /// </summary>
+        public string BarName { get; set; }
         /// <summary>
         /// 条形码主键
         /// </summary>
@@ -67,26 +73,6 @@ namespace WF.Model.BarCode
         /// 状态
         /// </summary>
         public int State { get; set; }
-        /// <summary>
-        /// 条形码号码
-        /// </summary>
-        public Int64 BarCodeNum { get; set; }
-        /// <summary>
-        /// 长度
-        /// </summary>
-        public float Length { get; set; }
-        /// <summary>
-        /// 宽度
-        /// </summary>
-        public float Width { get; set; }
-        /// <summary>
-        /// 高度
-        /// </summary>
-        public float Height { get; set; }
-        /// <summary>
-        /// number
-        /// </summary>
-        public int Number { get; set; }
 
     }
 }
