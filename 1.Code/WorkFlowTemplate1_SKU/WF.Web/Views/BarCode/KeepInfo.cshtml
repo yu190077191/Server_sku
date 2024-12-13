@@ -1,45 +1,58 @@
 ﻿@using WF.Model.BarCode;
-@{
-    ViewBag.Title = "KeepInfo";
-}
-@model List<SKUBarCodeDetailsInfo>
+@model SKUFileUpload
 
-<script type="text/javascript" src="@(Url.Content("~/Scripts/Common/field.js?" + DateTime.Now.ToString()))"></script>
-<div style="padding:30px 50px;line-height:30px;font-size:12px;height:auto;">
-    @*<form action="/upload" method="post" enctype="multipart/form-data">
-            <label for="imageUpload">选择图片上传:</label>
-            <input type="file" id="imageUpload" name="image" accept="image/*">
-            <label for="imageUpload">备注信息:</label><input type="text" value="">
-            <input type="submit" value="上传">
-        </form>*@
-    <form id="attachementUpload1" enctype="multipart/form-data" method="post" class="attachmentForm">
-        <input type="file" id="File_1" name="File_1" class="file" />
-        <button type="button" class="button" onmousedown="this.className='buttonPressed'" id="fileButton1"
-                onmouseout="this.className='button'" onclick="uploadFile('1');">
-            @(Html.Lang("Upload"))
-        </button>
-        <label id="lbl1" style="font-weight: normal; font-size: 12px;">
-            @if (1 != 1)
-            {
-                @*string[] array = item.Files.Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (string line in array)
-                    {
-                        string[] arr = line.Split('|');
-                        string guid = arr[0];
-                        string name = arr[1];
+<script type="text/javascript" src="@(Url.Content("~/Scripts/WriteOff/upload.js?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))"></script>
+<div class="main" style="padding:20px;color:black;">
+    <table cellpadding="0" cellspacing="0" class="tbl">
 
-                        <div id='trFile@(guid)'>
-                            <a id='uploaded@(item.Id.ToString())' href='@(Url.Content("~/Request/Download?id=" + guid))' target='_blank' style='text-decoration:underline;color:blue;'>
-                                @(name) [download]<a>
-                                    <a style='cursor:pointer;color:red;' onclick='deleteAttachment("@(guid)");'>[delete]</a>
-                        </div>
-                    }*@
-            }
-        </label>
-        <input type="submit" id="uploadButton1" name="uploadButton1" style="visibility: hidden;width: 1px;" value="uploadButton1" class="submit" />
-    </form>
+        <tr>
+            <td class="lefttd">
+                文件备案
+            </td>
+            <td class="righttd">
+                <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left;margin-left:5px;margin-right:5px;">
+                    <input id="Type" type="hidden" value="BuCodeInfoFile" />
+                   
+                    @*详情id*@
+                    <input type="text123" id="Description123" name="Description123" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.CodeDetailsId)" />
+
+                    <label for="Description" style="float: left; height: 27px;margin-right: 5px;">描述:</label>
+                    <input type="text" id="Description" name="Description" style="float: left; height: 22px;margin-right: 5px;" />
+                    <br />
+                    <input type="file" id="file1" name="file1" style="float: left; height: 27px; margin-right: 25px; margin-top: 10px; margin-left:35px;" />
+                    <button id="uploadButton1" style="float: left;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                            onmouseout="this.className='button'" onclick="upload();">
+                        @(Html.Lang("上传"))
+                    </button>
+
+                    <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;"></label>
+                    <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
+                                width: 1px;" value="uploadButton" class="submit" />
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div id="progressBarDiv" style="display:none;">
+        <div style="background:#efefef;height:18px;width:250px;">
+            <div id="progressBarId" style="background:Green;width:1%;height:100%;"></div>
+        </div>
+        <div>
+            <span id="timeCounter"></span>
+            <span id="progressBarMessageId">文件正在上传中，请稍候...</span>
+        </div>
+    </div>
+    <div style="clear:both;">&nbsp;</div>
+    @*<div id="searchResult">
+    </div>*@
+    <div id="paddingDiv" style="height: 50px; clear: both;">
+        &nbsp;
+    </div>
 </div>
 
+<input type="hidden" id="tableId" value="StandardCost" />
 <script type="text/javascript">
-
+    function uploadCallback() {
+        console.log("获取",uploadResult);
+        //$("#searchResult").html("MD5=" + uploadResult.replace('|', ' SHA1='));
+    }
 </script>

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WF.BusinessRule;
+using WF.DataAccess;
 using WF.Framework;
 using WF.Model;
 
@@ -54,6 +57,7 @@ namespace WF.Web.Controllers
                         string error = string.Empty;
                         
                         string type = Request.Form["type"];
+
                         if (type == "MD5")
                         {
                             string md5 = MD5SHA1Rule.GetMd5Hash(fileFullPath);
@@ -142,6 +146,50 @@ namespace WF.Web.Controllers
                             if (AttachmentRule.InsertAttachment(model) > 0)
                             {
                                 return id.ToString() + "|" + model.Id.ToString();
+                            }
+                        }
+                        else if (Request.Form["type"] == "BuCodeInfoFile")
+                        {
+                           
+                            Attachment model = new Attachment();
+                            model.Id = Guid.NewGuid();
+                            //BarInfo：只有条码业务所用
+                            model.TypeCode = "BarCodeNew";
+                            //详情Id
+                            model.RequestVersionId = Convert.ToInt32(Request.Form["Description123"]);
+                            //文件名称
+                            model.Description = fileData.FileName;
+                            //文件路径
+                            model.FilePath = AttachmentRule.GetVirtualPath(fileFullPath);
+                            //备案描述
+                            model.SubCode = Request.Form["Description"];
+
+                            var info = AttachmentRule.GetAttachment(model.RequestVersionId, "BarInfo").Where(o=>o.TypeCode == "BarInfo").ToList();
+
+                            if (info.Count > 0)
+                            {
+                                //更新
+                                string UpSql = "update Attachment " +
+                                    "set Id='"+ model.Id + "',SubCode='" + model.SubCode + "',Description='"+ model.Description + "'," +
+                                    "FilePath = '"+ model.FilePath + "',ModifiedBy = '"+ Operation.OperationBy + "',ModifiedOn = '"+ System.DateTime.Now + "' " +
+                                    "where RequestVersionId = "+ model.RequestVersionId + " and TypeCode ='BarInfo' and RecordStatus = 0";
+                                if (BaseDao.ExecuteNonQuery(UpSql, null, CommandType.Text) > 0)
+                                {
+                                    return id.ToString() + "|" + model.Id.ToString();
+                                }
+                            }
+                            else
+                            {
+                                if (AttachmentRule.InsertAttachment(model) > 0)
+                                {
+                                    //再次更新CodeDetails信息
+                                    string sql = "update SKUBarCodeDetailsInfo set KeepType = 1 where id = " + model.RequestVersionId + "";
+                                    if (BaseDao.ExecuteNonQuery(sql, null, CommandType.Text) > 0)
+                                    {
+                                        return id.ToString() + "|" + model.Id.ToString();
+                                    }
+
+                                }
                             }
                         }
 

@@ -54,7 +54,7 @@
 
                         <td colspan="7" style="height:50px;" align="center">
                             <button id="SaveButton" onclick="Details(@(item.CodeId));">
-                                <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)">@(Html.Lang("详情"))</a>
+                                <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)&&barName=@(item.BarName)">@(Html.Lang("详情"))</a>
                             </button>
                         </td>
                     </tr>
