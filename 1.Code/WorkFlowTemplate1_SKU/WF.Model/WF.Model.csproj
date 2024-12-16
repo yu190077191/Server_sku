@@ -85,6 +85,8 @@
     <Compile Include="DataResult.cs" />
     <Compile Include="DepartmentRole.cs" />
     <Compile Include="FieldIdsResult.cs" />
+    <Compile Include="GeneralChanges\GeneralChangesItemModel.cs" />
+    <Compile Include="GeneralChanges\GeneralChangesModel.cs" />
     <Compile Include="MsgInfo.cs" />
     <Compile Include="PackagingJson.cs" />
     <Compile Include="ProductResult.cs" />

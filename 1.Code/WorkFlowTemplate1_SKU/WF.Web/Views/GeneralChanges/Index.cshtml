@@ -1,5 +1,4 @@
-﻿@using WF.Model.SpecialApproval;
-@{
+﻿@{
     Layout = null;
 }
 
@@ -72,7 +71,7 @@
 
         table, th, td {
             border: 1px solid #d7d7d7;
-            border-collapse: collapse;  
+            border-collapse: collapse;
             padding: 5px;
         }
 
@@ -130,6 +129,26 @@
             padding: 3px;
             border: 1px solid #d7d7d7;
         }
+
+        .chek {
+            width: 15px;
+            width: 15px;
+            height: 15px;
+            padding: 0px;
+            border: 1px solid #d7d7d7
+        }
+
+        input  {
+            width: 85%;
+            height: 100%;
+            resize: none;
+            padding: 5px;
+            /*border: 1px solid #d7d7d7;*/
+            border: none
+        }
+        textarea {
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -142,20 +161,22 @@
         </div>
         <div class="desdiv">
             <div>
-                Nestlé will follow the GS1 Standards and GB 12904 on GTIN Allocation rulcs. Any decision to deviate
-                from the rules will be a business decision with a clear business case and the fuil understanding of the
-                bencfits and risks, as exception business is asking to modify existing Bar Code in physicat data even that
-                already have archived in Bar code bureau should start the special process:
+                <div> 因业务需求产品生产变更等原因，我们提出以下条码变更申请：</div>
+                <div> 我确认本次需要变更的的条形码：</div>
+                <div style="margin-top:15px"> <input type="radio" disabled="disabled" id="BarcodeInfoType1" class="chek" name="BarcodeInfoType"> 没有在条形码官方系统“中国商品信息服务平台” 通报</div>
+                <div>
+                    <input type="radio"  disabled="disabled" id="BarcodeInfoType2" class="chek" name="BarcodeInfoType"> 条形码已经在官方系统“中国商品信息服务平台” 通报并且完成子公司的备案，但是该产品完全没有产生过任何交易数据，变更后的数据与产品的生产，以及产品包实物包装上标示的数据相同
+                </div>
             </div>
             <br>
-            <div> Business:  <select id="selBusiness"><option>请选择</option></select></div>
+            <div> Business:  <select id="selBusiness" disabled="disabled"><option>请选择</option></select></div>
             <br>
-            <div><span style="color:red">*</span>  BusinessJustification: <input type="text" id="inputBusinessJustification" style="width:15%;"/></div>
+            <div><span style="color:red">*</span>  BusinessJustification: <input type="text" id="inputBusinessJustification" style="width:15%;" /></div>
             <div> The Bar Code associated to Material code is maintained data:</div>
         </div>
-        <div class="addrowbtndiv">
+        @*<div class="addrowbtndiv">
             <button onclick="addrow('0');">加一行</button>
-        </div>
+        </div>*@
         <div class="tablediv">
             <table id="oldDataTable">
                 <tr>
@@ -172,13 +193,13 @@
                     <td style="width:5%">Height</td>
                     <td style="width:5%;display:none">ShelfLife</td>
                     <td style="width:5%">GrossWeight</td>
-                    <td style="width:8%;text-align:center" class="op">操作</td>
+                    @*<td style="width:8%;text-align:center" class="op">操作</td>*@
                 </tr>
             </table>
         </div>
         <div class="newInfodes">
             <div>
-                As Buiness internal transformation , there is change toexisting bar code need to be modified as :<br/>
+                As Buiness internal transformation , there is change toexisting bar code need to be modified as :<br />
                 Business should be aware of the further potential risk e.g. Market complaint or penalty caused by bar
                 code information change.
             </div>
@@ -209,10 +230,10 @@
                 Supply Chain in consultation with Sales & Marketing, Legal, Regulatory and Scientific Affairs, Quality
                 Management and the Market Data Manager.
             </div>
-             
+
         </div>
 
-        <div class="newInfodes">
+        <div class="newInfodes" style="margin-bottom:5%">
             <div>
                 特别提醒：如果条码数据需要在外部“条码中心”系统更新，则请：
                 请准备中文版本的“条码形产品信息变更申明”，清晰的描述条形码变更需求，加盖“雀巢中国有限公司”
@@ -220,12 +241,12 @@
             </div>
         </div>
 
-        <div class="btndiv">
+        @*<div class="btndiv">
             <button id="save" onclick="save('0')">保 存</button>
             <button id="submit" onclick="save('1')">提 交</button>
             <button id="cancel">撤 回</button>
             <button id="submitBak">提交备案</button>
-        </div>
+        </div>*@
     </div>
 </body>
 </html>
@@ -240,7 +261,7 @@
         if ( msg != '') {
             alert(msg);
         }
-         
+
         //获取BU
         getBU($("#selBusiness"));
 
@@ -265,8 +286,8 @@
         }
         //编辑或者查看
         else {
-            for (var i = 0; i < modelObj.ListSpecialApprovalItemModel.length; i++) {
-                var item = modelObj.ListSpecialApprovalItemModel[i];
+            for (var i = 0; i < modelObj.ListGeneralChangesItemModel.length; i++) {
+                var item = modelObj.ListGeneralChangesItemModel[i];
                 //更新的数据
                 if (item.DataIsNew) {
                     var oldDataHtml = getTempLateHtml(item.Id, oldDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight, item.Brand);
@@ -281,11 +302,18 @@
             }
         }
         debugger
-        //选中BU                           
+        //选中BU
         $("#selBusiness option[value='" + modelObj.BUCode + "']").prop('selected', true);
         //填充BusinessJustification
-        if (modelObj.ListSpecialApprovalItemModel != null) {
-            $("#inputBusinessJustification").val(modelObj.ListSpecialApprovalItemModel[0].BusinessJustification);
+        if (modelObj.ListGeneralChangesItemModel != null) {
+            $("#inputBusinessJustification").val(modelObj.ListGeneralChangesItemModel[0].BusinessJustification);
+            //选中的条形码信息
+            if (modelObj.ListGeneralChangesItemModel[0].BarCodeInfoType == "1") {
+                $('#BarcodeInfoType1').prop('checked', true);
+            }
+            else if (modelObj.ListGeneralChangesItemModel[0].BarCodeInfoType == "2") {
+                $('#BarcodeInfoType2').prop('checked', true);
+            }
         }
     }
 
@@ -303,9 +331,9 @@
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"Height\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + hg +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% ;display:none \"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"GrossWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + gw +"\"> </td>";
-        if (isNewData == "0") {
-            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button onclick=\"addrow('0',this)\">复制</button> <button onclick=\"delrow(this)\">删除</button></td></tr>";
-        }
+        //if (isNewData == "0") {
+        //    tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button onclick=\"addrow('0',this)\">复制</button> <button onclick=\"delrow(this)\">删除</button></td></tr>";
+        //}
         return tempLateHtml;
     }
     function addrow(id,el) {
@@ -387,11 +415,21 @@
         }
     }
     function save(State) {
-        //必填项判断
         //必填校验
+        var bu = $("#selBusiness").val();
+        if (bu == '' || bu == undefined) {
+            alert("请填写：BU");
+            return;
+        }
+
         var businessJustificationValue = $("#inputBusinessJustification").val();
         if (businessJustificationValue == '' || businessJustificationValue == undefined) {
-            alert("请填写：" + BusinessJustification);
+            alert("请填写：BusinessJustification");
+            return;
+        }
+        var chekRes =  checkResult();
+        if (!chekRes) {
+            alert("请选则条码信息"  );
             return;
         }
 
@@ -402,6 +440,14 @@
         model.BUCode = $("#selBusiness").val();
         model.BUName = $('#selBusiness option:selected').text();
         model.BusinessJustification = businessJustificationValue;
+
+        var BarCodeInfoType = "";
+        if ($("#BarcodeInfoType1").is(':checked')) {
+            BarCodeInfoType = "1";
+        }
+        else if ($("#BarcodeInfoType2").is(':checked')) {
+            BarCodeInfoType = "2";
+        }
         //保存 status =1 ; 提交status =0;
         $(".data").each(function (index, ele) {
            var modelItem = new Object();
@@ -434,19 +480,20 @@
             modelItem.Brand = bd;
 
             modelItem.BUCode = $("#selBusiness").val();;
-            modelItem.BUName = $('#selBusiness option:selected').text();;
-            modelItem.BusinessJustification = businessJustificationValue; 
+            modelItem.BUName = $('#selBusiness option:selected').text();
+            modelItem.BusinessJustification = businessJustificationValue;
+            modelItem.BarCodeInfoType = BarCodeInfoType;
 
             listModel.push(modelItem);
         });
-        model.ListSpecialApprovalItemModel = listModel;
+        model.ListGeneralChangesItemModel = listModel;
         var jsondata = $.toJSON(model);
-        $.post(getRootUrl() + "SpecialApproval/SaveSpecialApproval", { jsonmodel: jsondata  },
+        $.post(getRootUrl() + "GeneralChanges/SaveGeneralChanges", { jsonmodel: jsondata  },
             function (data) {
                 if (data.Status == 1) {
                     alert(data.Message);
                     //刷新页面
-                    location.href = getRootUrl() + "SpecialApproval/edit?id=" + data.Data;
+                    location.href = getRootUrl() + "GeneralChanges/edit?id=" + data.Data;
                 }
                 else {
                     alert(data.Message);
@@ -484,5 +531,13 @@
          err: function (err) {
          }
      })
+    }
+
+    function checkResult() {
+        var res = false;
+        if ($("#BarcodeInfoType1").is(':checked') || $("#BarcodeInfoType2").is(':checked')) {
+            res = true
+        }
+        return res;
     }
 </script>

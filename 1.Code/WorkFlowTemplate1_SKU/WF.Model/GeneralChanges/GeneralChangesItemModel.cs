@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace WF.Model.SpecialApproval
+namespace WF.Model.GeneralChanges
 {
-   public class SpecialApprovalItemModel
+    public class GeneralChangesItemModel
     {
         [XmlElement("Id")]
         public int Id { get; set; }
@@ -29,13 +29,13 @@ namespace WF.Model.SpecialApproval
 
         [XmlElement("BarCode")]
         public string BarCode { get; set; }
-         
+
         [XmlElement("Length")]
         public string Length { get; set; }
 
         [XmlElement("Width")]
         public string Width { get; set; }
-         
+
         [XmlElement("Height")]
         public string Height { get; set; }
         [XmlElement("ShelfLife")]
@@ -44,14 +44,14 @@ namespace WF.Model.SpecialApproval
         public string GrossWeight { get; set; }
 
         [XmlElement("DataIsNew")]
-        public int  DataIsNew { get; set; }
+        public int DataIsNew { get; set; }
 
         [XmlElement("CreatedBy")]
         public Guid? CreatedBy { get; set; }
 
         [XmlElement("CreatedTime")]
         public DateTime? CreatedTime { get; set; }
-         
+
         [XmlElement("ModifiedBy")]
         public Guid? ModifiedBy { get; set; }
 
@@ -60,7 +60,7 @@ namespace WF.Model.SpecialApproval
 
         [XmlElement("requestStates")]
         public string requestStates { get; set; }
-         
+
         [XmlElement("Brand")]
         public string Brand { get; set; }
         [XmlElement("BUCode")]
@@ -71,5 +71,8 @@ namespace WF.Model.SpecialApproval
 
         [XmlElement("BusinessJustification")]
         public string BusinessJustification { get; set; }
+
+        [XmlElement("BarCodeInfoType")]
+        public int BarCodeInfoType { get; set; }
     }
 }

@@ -130,6 +130,11 @@
             margin: 20px;
             width: 100px;
         }
+
+        select {
+            padding: 3px;
+            border: 1px solid #d7d7d7;
+        }
     </style>
 </head>
 <body>
@@ -142,14 +147,16 @@
         </div>
         <div class="desdiv">
             <div>
-                Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle
-                Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle  Nestle  Nestle Nestle Nestle Nestle Nestle
+                Nestlé will follow the GS1 Standards and GB 12904 on GTIN Allocation rulcs. Any decision to deviate
+                from the rules will be a business decision with a clear business case and the fuil understanding of the
+                bencfits and risks, as exception business is asking to modify existing Bar Code in physicat data even that
+                already have archived in Bar code bureau should start the special process:
             </div>
             <br>
-            <div> Business:</div>
+            <div> Business:   <select id="selBusiness" disabled="disabled"><option>请选择</option></select></div>
             <br>
-            <div> BusinessJustification:</div>
-            <div> The Bar Code associatedto Material code is maintained data:</div>
+            <div><span style="color:red">*</span> BusinessJustification:<input type="text" id="inputBusinessJustification" style="width: 15%; border: 1px solid #d7d7d7;" readonly /></div>
+            <div> The Bar Code associated to Material code is maintained data:</div>
         </div>
         <div class="addrowbtndiv">
             @*<button onclick="addrow('0');">加一行</button>*@
@@ -157,43 +164,66 @@
         <div class="tablediv">
             <table id="oldDataTable">
                 <tr>
-                    <td style="width:3%">Id</td>
+                    <td style="width: 3%; display: none">Id</td>
                     <td style="width: 3%">Number</td>
                     <td style="width:3%">SKUCode</td>
-                    <td>SKUDescription</td>
+                    <td>SKUDescription(中英双文)</td>
+                    <td style="width:3%"> Brand</td>
                     <td style="width:5%">NetWeight</td>
                     <td style="width:5%">Packing</td>
                     <td style="width:10%">BarCode</td>
                     <td style="width:5%">Length</td>
                     <td style="width:5%">Width</td>
                     <td style="width:5%">Height</td>
-                    <td style="width:5%">ShelfLife</td>
+                    <td style="width:5%;display:none">ShelfLife</td>
                     <td style="width:5%">GrossWeight</td>
                     @*<td style="width:8%;text-align:center" class="op">操作</td>*@
                 </tr>
             </table>
         </div>
         <div class="newInfodes">
-            <div>As Buiness internal transformation , there is change toexisting bar code need to be modified as :</div>
+            <div>
+                As Buiness internal transformation , there is change toexisting bar code need to be modified as :</br>
+                Business should be aware of the further potential risk e.g. Market complaint or penalty caused by bar
+                code information change.
+            </div>
         </div>
         <div class="tablediv" id="updateDateDiv">
             <table id="updateDateTable">
                 <tr id="updateDatetr">
-                    <td style="width:3%">Id</td>
+                    <td style="width: 3%;display:none">Id</td>
                     <td style="width: 3%">Number</td>
                     <td style="width:3%">SKUCode</td>
                     <td>SKUDescription</td>
+                    <td style="width:3%"> Brand</td>
                     <td style="width:5%">NetWeight</td>
                     <td style="width:5%">Packing</td>
                     <td style="width:10%">BarCode</td>
                     <td style="width:5%">Length</td>
                     <td style="width:5%">Width</td>
                     <td style="width:5%">Height</td>
-                    <td style="width:5%">ShelfLife</td>
-                    <td style="width:5%" >GrossWeight</td>
+                    <td style="width:5%;display:none">ShelfLife</td>
+                    <td style="width:5%">GrossWeight</td>
                 </tr>
             </table>
         </div>
+
+        <div class="newInfodes">
+            <div>
+                The decision to not follow the GS1 GTIN and GB 12904 allocation rules must be made by the Head of
+                Supply Chain in consultation with Sales & Marketing, Legal, Regulatory and Scientific Affairs, Quality
+                Management and the Market Data Manager.
+            </div>
+        </div>
+
+        <div class="newInfodes" style="margin-bottom: 5%;">
+            <div>
+                特别提醒：如果条码数据需要在外部“条码中心”系统更新，则请：
+                请准备中文版本的“条码形产品信息变更申明”，清晰的描述条形码变更需求，加盖“雀巢中国有限公司”
+                工章，寄送到中国物品编码中心；地址：北京市朝阳区和平里东街20号标准大厦3层条码室，收件人：谢先生；联系电话：010-64298962”
+            </div>
+        </div>
+
         <div class="btndiv">
             @*<button  id="save" onclick="save('0')">保 存</button>
             <button  id="submit" onclick="save('1')">提 交</button>
@@ -214,6 +244,9 @@
         if ( msg != '') {
             alert(msg);
         }
+
+        //获取BU
+        getBU($("#selBusiness"));
 
         //填充数据
         getData();
@@ -240,31 +273,41 @@
                 var item = modelObj.ListSpecialApprovalItemModel[i];
                 //更新的数据
                 if (item.DataIsNew) {
-                    var oldDataHtml = getTempLateHtml(item.Id, oldDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight);
+                    var oldDataHtml = getTempLateHtml(item.Id, oldDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight,  item.Brand);
                     $("#updateDateTable").append(oldDataHtml);
                     oldDataSqe++;
                 }
                 else {
-                    var newDataHtml = getTempLateHtml(item.Id, newDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight);
+                    var newDataHtml = getTempLateHtml(item.Id, newDataSqe, item.DataIsNew, item.SKUCode, item.SKUDescription, item.NetWeight, item.Packing, item.BarCode, item.Length, item.Width, item.Height, item.ShelfLife, item.GrossWeight,  item.Brand);
                     $("#oldDataTable").append(newDataHtml);
                     newDataSqe++;
                 }
             }
         }
+        debugger
+        //选中BU                           
+        $("#selBusiness option[value='" + modelObj.BUCode + "']").prop('selected', true);
+        //填充BusinessJustification
+        if (modelObj.ListSpecialApprovalItemModel != null) {
+            $("#inputBusinessJustification").val(modelObj.ListSpecialApprovalItemModel[0].BusinessJustification);
+        }
     }
 
-    function getTempLateHtml(id, number, isNewData, code, desc, netwht, pak, bar, len, wd, hg, sl, gw) {
-        var tempLateHtml = "<tr class=\"data\" dataType=\"" + isNewData+"\"><td style = \"width: 3%;\">" + id + "</td>";
+    function getTempLateHtml(id, number, isNewData, code, desc, netwht, pak, bar, len, wd, hg, sl, gw, bd) {
+        var tempLateHtml = "<tr class=\"data\" dataType=\"" + isNewData +"\"><td style = \"width: 3%;display:none\">" + id + "</td>";
         tempLateHtml += "<td style=\"width: 3%;\"><input class=\"Number\" onchange=\"handleChange(this)\"  type=\"text\" readonly value ='" + number +"'></td>";
         tempLateHtml += "<td style=\"width: 3%;\"><input class=\"SKUCode\" oninput=\"handleChange(this)\"  type=\"text\" value=\"" + code +"\"></td>";
-        tempLateHtml += " <td><textarea oninput=\"handleChange(this)\" class=\"SKUDescription\" value =\"" + desc + "\">" + desc+"</textarea></td>";
+        tempLateHtml += " <td><textarea oninput=\"handleChange(this)\" class=\"SKUDescription\" value =\"" + desc + "\">" + desc + "</textarea></td>";
+
+        tempLateHtml += " <td style=\"width: 5% \"><input class=\"Brand\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + bd + "\"> </td>";
+
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"NetWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + netwht+"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"Packing\"  oninput=\"handleChange(this)\" type=\"text\" value=\"" + pak +"\"> </td>";
         tempLateHtml += " <td style=\"width:10% \"><input class=\"BarCode\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + bar +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"Length\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + len +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"Width\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + wd +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"Height\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + hg +"\"> </td>";
-        tempLateHtml += " <td style=\"width: 5% \"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
+        tempLateHtml += " <td style=\"width: 5% ;display:none\"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"GrossWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + gw +"\"> </td>";
         /*tempLateHtml += " <td style=\"width: 5% \"><input type=\"text\" value=\"" + gw +"\"></td>";*/
         //if (isNewData == "0") {
@@ -284,6 +327,8 @@
         var hg = '';
         var sl = '';
         var gw = '';
+        var bd = '';
+        debugger
         if (el != undefined) {
             var currenttr = $(el).parent().parent();
             code = $(currenttr).find('.SKUCode').val();
@@ -296,11 +341,12 @@
             hg = $(currenttr).find('.Height').val();
             sl = $(currenttr).find('.ShelfLife').val();
             gw = $(currenttr).find('.GrossWeight').val();
+            bd = $(currenttr).find('.Brand').val();
         }
-        debugger
+
         var maxNumber = getMaxNumber();
-        var tempLateOldDataStr = getTempLateHtml(id, (maxNumber + 1), '0', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw );
-        var tempLateUpdateStr =  getTempLateHtml(id, (maxNumber + 1), '1', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw );
+        var tempLateOldDataStr = getTempLateHtml(id, (maxNumber + 1), '0', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw ,bd);
+        var tempLateUpdateStr =  getTempLateHtml(id, (maxNumber + 1), '1', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw ,bd);
         $("#oldDataTable").append(tempLateOldDataStr);
         $("#updateDateTable").append(tempLateUpdateStr);
     }
@@ -348,9 +394,16 @@
         }
     }
     function save(State) {
+       //必填校验
+        var businessJustificationValue = $("#inputBusinessJustification").val();
+        if (businessJustificationValue == '' || businessJustificationValue == undefined) {
+            alert("请填写：BusinessJustification"  );
+            return;
+        }
+
         var model = new Object();
         listModel = [];
-        model.Id = '@ViewBag.id';   
+        model.Id = '@ViewBag.id';
         model.State = State;
         //保存 status =1 ; 提交status =0;
         $(".data").each(function (index, ele) {
@@ -367,6 +420,7 @@
             var hg = el.find('.Height').val();
             var sl = el.find('.ShelfLife').val();
             var gw = el.find('.GrossWeight').val();
+            var bd = el.find('.Brand').val();
 
             modelItem.number = (index+1);
             modelItem.DataIsNew = dataType;
@@ -380,6 +434,7 @@
             modelItem.Height = hg;
             modelItem.ShelfLife = sl;
             modelItem.GrossWeight = gw;
+            modelItem.Brand = bd;
 
             listModel.push(modelItem);
         });
@@ -405,4 +460,25 @@
             $($("#updateDateTable ." + clsName)[rownumber - 1]).val(elValue);
         }
     }
+
+   function getBU(obj)
+   {
+    if (obj == null) return;
+    //obj.options.length = 0;
+    $.ajax({
+        type: "POST",
+        url: "@(Url.Content("~/BarCode/GetListInfo"))",
+        data: "{parenId: 0 }",
+        async: false,
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            obj.add(new Option("请选择", -1));
+            for (var i = 0; i < data.length; i++) {
+                obj.append(new Option(data[i].BuName, data[i].BuCode));
+            }
+        },
+        err: function (err) {
+        }
+    })
+   }
 </script>

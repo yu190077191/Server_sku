@@ -30,6 +30,9 @@ namespace WF.Web.Controllers
                     specialApproval.ListSpecialApprovalItemModel = GetModelByRequestId(id);
                     if (specialApproval.ListSpecialApprovalItemModel.Count>0)
                     {
+                        specialApproval.BUCode = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BUCode;
+                        specialApproval.BUName = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BUName;
+                        specialApproval.BusinessJustification = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BusinessJustification;
                         ViewBag.requestStates = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().requestStates;
                     }
                 }
@@ -57,6 +60,9 @@ namespace WF.Web.Controllers
                     specialApproval.ListSpecialApprovalItemModel = GetModelByRequestId(id);
                     if (specialApproval.ListSpecialApprovalItemModel.Count > 0)
                     {
+                        specialApproval.BUCode = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BUCode;
+                        specialApproval.BUName = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BUName;
+                        specialApproval.BusinessJustification = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().BusinessJustification;
                         ViewBag.requestStates = specialApproval.ListSpecialApprovalItemModel.FirstOrDefault().requestStates;
                     }
                 }
@@ -150,6 +156,12 @@ namespace WF.Web.Controllers
                     specialApprovalItem.GrossWeight = dt.Rows[i]["GrossWeight"] + "";
                     specialApprovalItem.DataIsNew =  (dt.Rows[i]["DataIsNew"] + "").ToLower()=="true"?1:0 ;
                     specialApprovalItem.requestStates = dt.Rows[i]["requestStates"] + "";
+
+                    specialApprovalItem.Brand = dt.Rows[i]["Brand"] + "";
+                    specialApprovalItem.BUCode = dt.Rows[i]["BUCode"] + "";
+                    specialApprovalItem.BUName = dt.Rows[i]["BUName"] + "";
+                    specialApprovalItem.BusinessJustification = dt.Rows[i]["BusinessJustification"] + "";
+
                     listSpecialApprovalItem.Add(specialApprovalItem);
                 }
             }
@@ -160,7 +172,7 @@ namespace WF.Web.Controllers
         {
             //插入主表
             var sqlRequest = @"INSERT INTO [Request]([Type],[State],[CustomerNumber],[CustomerName],[RecordStatus],[CreatedBy],[CreatedTime])
-                             VALUES ('BarCodeSpecialApp','" + model.State + "',NULL,NULL,'0','" + Operation.OperationBy + "','" + DateTime.Now + "')Select @@Identity";
+                             VALUES ('BarCodeSpecialApp','" + model.State + "','"+model.BUCode+"','"+model.BUName+"','0','" + Operation.OperationBy + "','" + DateTime.Now + "')Select @@Identity";
             var requstId = BaseDao.ExecuteScalar(sqlRequest, null, CommandType.Text);
             int intRequestId = Convert.ToInt32(requstId);
             //插入详细表
@@ -226,7 +238,11 @@ namespace WF.Web.Controllers
                                      SET
                                       [State] = '"+ model.State+ "'"
                                      + " ,[ModifiedBy] = '"+ Operation.OperationBy +"'"
-                                     +",[ModifiedOn] = getdate() WHERE id = "+ model.Id;
+
+                                     + " ,[CustomerNumber] = '" + model.BUCode + "'"
+                                     + " ,[CustomerName] = '" + model.BUName + "'"
+
+                                     + ",[ModifiedOn] = getdate() WHERE id = "+ model.Id;
 
             BaseDao.ExecuteScalar(updateRequest, null, CommandType.Text);
 
@@ -261,6 +277,10 @@ namespace WF.Web.Controllers
                                  ,[CreatedTime]
                                  ,[ModifiedBy]
                                  ,[ModifiedOn] 
+                                 ,[Brand]
+                                 ,[BUCode]
+                                 ,[BUName] 
+                                 ,[BusinessJustification] 
                                   ) 
                                 VALUES("
                       + requstId
@@ -279,7 +299,12 @@ namespace WF.Web.Controllers
                       + ",'" + Operation.OperationBy + "'"
                       + ",'" + DateTime.Now + "'"
                       + ",null"
-                    + ",'" + DateTime.Now + "') ;";
+                      + ",'" + DateTime.Now + "'"
+                         + ",'" + item.Brand + "'"
+                      + ",'" + item.BUCode + "'"
+                      + ",'" + item.BUName + "'"
+                      + ",'" + item.BusinessJustification + "'"
+                      +") ;";
             }
             BaseDao.ExecuteScalar(sqlDetail, null, CommandType.Text);
         }

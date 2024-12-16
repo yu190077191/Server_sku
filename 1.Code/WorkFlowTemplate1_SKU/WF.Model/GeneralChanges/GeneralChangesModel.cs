@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using WF.Model.SpecialApproval;
 
-namespace WF.Model.SpecialApproval
+namespace WF.Model.GeneralChanges
 {
     [Serializable]
-    [XmlType("SpecialApprovalModel")]
-    public class SpecialApprovalModel
+    [XmlType("GeneralChangesModel")]
+    public class GeneralChangesModel
     {
         [XmlElement("Id")]
         public int Id { get; set; }
@@ -40,7 +41,7 @@ namespace WF.Model.SpecialApproval
 
         [XmlElement("ModifiedOn")]
         public DateTime? ModifiedOn { get; set; }
-         
+
         [XmlElement("BUCode")]
         public string BUCode { get; set; }
 
@@ -50,7 +51,7 @@ namespace WF.Model.SpecialApproval
         [XmlElement("BusinessJustification")]
         public string BusinessJustification { get; set; }
 
-        [XmlElement("ListSpecialApprovalItemModel")]
-        public List<SpecialApprovalItemModel> ListSpecialApprovalItemModel { get; set; }
+        [XmlElement("GeneralChangesItemModel")]
+        public List<GeneralChangesItemModel> ListGeneralChangesItemModel { get; set; }
     }
 }
