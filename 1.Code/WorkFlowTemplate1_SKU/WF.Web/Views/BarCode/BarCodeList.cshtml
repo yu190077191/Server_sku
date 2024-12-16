@@ -31,6 +31,7 @@
                         <td class="listtd">@(item.DisplayName)</td>
                         <td class="listtd">@(item.BarName)</td>
                         <td class="listtd">@(item.CreteTime)</td>
+                      
                         @switch (item.State)
                         {
                             case 0:
@@ -52,11 +53,28 @@
                                 break;
                         }
 
-                        <td colspan="7" style="height:50px;" align="center">
+                    <td colspan="7" style="height:50px;" align="center">
+                        @if (item.BarName.Equals("条码申请"))
+                        {
+
                             <button id="SaveButton" onclick="Details(@(item.CodeId));">
                                 <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)&&barName=@(item.BarName)">@(Html.Lang("详情"))</a>
                             </button>
-                        </td>
+                        }
+                        else if (item.BarName.Equals("条码特批"))
+                        {
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
+                                <a href="/SpecialApproval/edit?id=@(item.CodeId)">@(Html.Lang("详情"))</a>
+                            </button>
+                        }
+                        else if (item.BarName.Equals("条码变更"))
+                        {
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
+                                <a href="/SpecialApproval/edit?id=@(item.CodeId)">@(Html.Lang("详情"))</a>
+                            </button>
+                        }
+
+                    </td>
                     </tr>
                 }
             }

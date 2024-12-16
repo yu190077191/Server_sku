@@ -33,7 +33,7 @@ namespace WF.Web.Controllers
         public ActionResult BarCodeInfo(int? pageIndex = 1,int? selectElement1 = null, int? selectElement2 = null)
         {
             string sqlInfo = "select a.Id,b.DisplayName,a.CreatedTime,a.State,a.type,a.CustomerName,a.CustomerNumber from Request a " +
-                "inner join [Employee] b on a.CreatedBy = b.id where a.type = 'BarCodeNew' or a.type = 'BarCodeSpecialApp' and a.RecordStatus = 0";
+                "inner join [Employee] b on a.CreatedBy = b.id where (a.type = 'BarCodeNew' or a.type = 'BarCodeSpecialApp' or a.type = 'BarCodeGeneralApp' ) and a.RecordStatus = 0";
            
             var db_Info = BaseDao.ExecuteDataSet(sqlInfo, null, CommandType.Text).Tables[0].Rows;
             List<BarCodeInfo> list_info = new List<BarCodeInfo>();
