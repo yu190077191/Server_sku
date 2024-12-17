@@ -1547,6 +1547,7 @@
     <Content Include="Views\SpecialApproval\List.cshtml" />
     <Content Include="Views\GeneralChanges\Index.cshtml" />
     <Content Include="Views\GeneralChanges\Edit.cshtml" />
+    <Content Include="Views\BarCode\PartialBarCodeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

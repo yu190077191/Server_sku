@@ -1,0 +1,51 @@
+﻿@using WF.BusinessRule;
+@using WF.Framework;
+@using WF.Framework.Helper;
+@using WF.Model;
+
+@model List<BarCodeEmail>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+        @{
+        if (Model != null && Model.Count > 0)
+        {
+        if (Model[0].Id > 0)
+        {
+        <thead>
+            <tr>
+                <th title="全选/取消全选">
+                    <input type="checkbox" id="selectall" onclick="selectAll(this);" />
+                </th>
+                <th>NO.</th>
+                <th>BuName</th>
+                <th>StepName</th>
+                <th>Category_Classification</th>
+                <th>DisplayName</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        foreach (BarCodeEmail item in Model)
+        {
+        <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
+            <td class="listtd">
+                @if (item.Checked)
+                {
+                <input type="checkbox" id="checkbox@(item.Id.ToString())" checked="checked" />
+                }
+                else
+                {
+                <input type="checkbox" id="checkbox@(item.Id.ToString())" />
+                }
+
+            </td>
+            <td class="listtd">@(item.StepNumber)</td>
+            <td class="listtd">@(item.BuName)</td>
+            <td class="listtd">@(item.EventContainerName)</td>
+            <td class="listtd">@(item.Category_Classification)</td>
+            <td class="listtd">@(item.DisplayName)</td>
+            <td class="listtd">@(item.mail)</td>
+        </tr>
+        }
+        }
+        }
+        }
+    </table>
