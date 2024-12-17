@@ -37,6 +37,10 @@
                 onmouseout="this.className = 'button'" onclick="SpecialApproval();">
             特批
         </button>
+        <button style="float:left;margin-left:5px;" type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className = 'button'" onclick="BarCodeGeneralApp();">
+            变更
+        </button>
     </div>
     <div style="clear:both;"></div>
     <hr />
@@ -74,8 +78,14 @@
             });
     }
 
+    //特批
     function SpecialApproval() {
         location.href = getRootUrl() + "SpecialApproval/edit?id=0";
+    }
+
+    //变更
+    function BarCodeGeneralApp() {
+        location.href = getRootUrl() + "GeneralChanges/Edit?id=0";
     }
 
 </script>

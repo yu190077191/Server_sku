@@ -161,6 +161,7 @@ namespace WF.Web.Controllers
                             model.Description = fileData.FileName;
                             //文件路径
                             model.FilePath = AttachmentRule.GetVirtualPath(fileFullPath);
+
                             //上市时间
                             model.SubCode =Convert.ToDateTime(Request.Form["uploadDateTime"]).ToString("yyyy-MM-dd");
 

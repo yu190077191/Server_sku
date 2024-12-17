@@ -11,6 +11,7 @@
                         @{
                             <input type="text" id="Description123" name="Description123" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.CodeDetailsId)" />
                             <input id="Type" type="hidden" value="BuCodeInfoFile" />
+                            <input type="text" id="vType" style="display:none; float: left; height: 22px;margin-right: 5px;"  value="@Html.Raw(Model.VType)" />
                             <label for="file">上传图片：</label>
                             <div class="form-group" style=" background-color:antiquewhite">
                                 <label class="form-text text-muted">
@@ -94,8 +95,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         var info = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model));
         if (info != null && info.FilePath != null) {
-            // 设置默认图片URL
-            var defaultImageUrl = 'D:\\NET8Server\\SKU\\20241101sku_git\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\' + info.FilePath;
+            // 设置默认图片URL 域名：window.location.origin
+            var defaultImageUrl = 'https://wfpreprod.nestlechinese.com/SKURegistrationTest/uploads/2024-02-28/5973bea8-4a27-430e-8f7a-0d744d9883f3.png';
             document.getElementById('previewImage').src = defaultImageUrl;
         }
     });

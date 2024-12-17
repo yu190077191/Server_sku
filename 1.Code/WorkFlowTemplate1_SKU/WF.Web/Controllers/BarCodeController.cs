@@ -145,6 +145,7 @@ namespace WF.Web.Controllers
         {
             //var jsonInfo = JsonHelper.DeserializeJson<List<SKUBarCodeDetailsInfo>>(json);
             SKUFileUpload info = new SKUFileUpload();
+            info.VType = vType;
             string sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
                 "inner join Attachment b on a.Id = b.RequestVersionId" +
                 " where a.id = " + codeId + "";

@@ -253,6 +253,7 @@
             case "-1"://创建
                 document.getElementById("cancel").style.display = 'none';
                 document.getElementById("submitBak").style.display = 'none';
+                $(".btopKe").hide();
                 break;
             case "0": //草稿
             case "5": //撤回
@@ -260,6 +261,7 @@
                 document.getElementById("submitBak").style.display = 'none';
                 document.getElementById("btSa").style.display = 'none';
                 $(".btop").hide();
+                $(".btopKe").hide();
                 break;
             case "1": //审批
                 document.getElementById("save").style.display = 'none';
@@ -267,10 +269,12 @@
                 document.getElementById("submitBak").style.display = 'none';
                 $(".op").hide();
                 break;
-            case "1": //通过
+            case "2": //通过
                 document.getElementById("save").style.display = 'none';
                 document.getElementById("submit").style.display = 'none';
                 document.getElementById("cancel").style.display = 'none';
+                $(".btop").hide();
+                $(".btopDe").hide();
                 break;
             default:
                 break;
@@ -328,7 +332,7 @@
         tempLateHtml += " <td style=\"width: 5% ;display:none \"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"GrossWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + gw +"\"> </td>";
         if (isNewData == "0") {
-            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button class=\"btop\" onclick=\"addrow('0',this)\">复制</button> <button onclick=\"delrow(this)\">删除</button></td></tr>";
+            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button class=\"btop\" onclick=\"addrow('0',this)\">复制</button> <button class=\"btopDe\" onclick=\"delrow(this)\">删除</button></tr>";
         }
         return tempLateHtml;
     }
@@ -367,6 +371,12 @@
         $("#oldDataTable").append(tempLateOldDataStr);
         $("#updateDateTable").append(tempLateUpdateStr);
     }
+
+    //备案
+    function XXX(val) {
+
+    }
+
     function copyrow(el) {
 
         var clonedRow = $(el).parent().parent().clone();
