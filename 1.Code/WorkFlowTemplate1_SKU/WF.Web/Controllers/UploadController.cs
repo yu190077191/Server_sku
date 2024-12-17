@@ -161,8 +161,8 @@ namespace WF.Web.Controllers
                             model.Description = fileData.FileName;
                             //文件路径
                             model.FilePath = AttachmentRule.GetVirtualPath(fileFullPath);
-                            //备案描述
-                            model.SubCode = Request.Form["Description"];
+                            //上市时间
+                            model.SubCode =Convert.ToDateTime(Request.Form["uploadDateTime"]).ToString("yyyy-MM-dd");
 
                             var info = AttachmentRule.GetAttachment(model.RequestVersionId, "BarInfo").Where(o=>o.TypeCode == "BarInfo").ToList();
 

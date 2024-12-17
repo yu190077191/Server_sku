@@ -236,7 +236,14 @@
                                         <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
                                         break;
                                     case 2: //完成
-                                        <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)">@(Html.Lang("备案"))</a></button>
+                                        if (item.KeepType > 0)
+                                        {
+                                            <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("查看"))</a></button>
+                                        }
+                                        else
+                                        {
+                                            <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("备案"))</a></button>
+                                        }
                                         break;
                                     default:
                                         break;
@@ -302,10 +309,6 @@
                     <button type="button" class="button" onmousedown="this.className='buttonPressed'"
                             onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),7);" style="margin-left:10px;float:left;">
                         @(Html.Lang("提交备案"))
-                    </button>
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="" style="margin-left:10px;float:left;">
-                        @(Html.Lang("变更"))
                     </button>
                     break;
                 case 3:

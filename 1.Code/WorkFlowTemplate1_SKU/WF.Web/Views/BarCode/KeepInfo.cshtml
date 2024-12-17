@@ -4,32 +4,39 @@
 <script type="text/javascript" src="@(Url.Content("~/Scripts/WriteOff/upload.js?time=" + DateTime.Now.ToString("yyyyMMddHHmmss")))"></script>
 <div class="main" style="padding:20px;color:black;">
     <table cellpadding="0" cellspacing="0" class="tbl">
-
         <tr>
-            <td class="lefttd">
-                文件备案
-            </td>
-            <td class="righttd">
-                <form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left;margin-left:5px;margin-right:5px;">
-                    <input id="Type" type="hidden" value="BuCodeInfoFile" />
-                   
-                    @*详情id*@
-                    <input type="text123" id="Description123" name="Description123" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.CodeDetailsId)" />
-
-                    <label for="Description" style="float: left; height: 27px;margin-right: 5px;">描述:</label>
-                    <input type="text" id="Description" name="Description" style="float: left; height: 22px;margin-right: 5px;" />
-                    <br />
-                    <input type="file" id="file1" name="file1" style="float: left; height: 27px; margin-right: 25px; margin-top: 10px; margin-left:35px;" />
-                    <button id="uploadButton1" style="float: left;" type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="upload();">
-                        @(Html.Lang("上传"))
-                    </button>
-
-                    <label id="lbl" style="float: left; font-weight: normal; font-size: 12px;"></label>
-                    <input type="submit" id="uploadButton" name="uploadButton" style="visibility: hidden;
-                                width: 1px;" value="uploadButton" class="submit" />
-                </form>
-            </td>
+            
+                <td class="righttd">
+                    <form form id="attachementUpload" enctype="multipart/form-data" method="post" style="float: left;margin-left:5px;margin-right:5px;">
+                        @{
+                            <input type="text" id="Description123" name="Description123" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.CodeDetailsId)" />
+                            <input id="Type" type="hidden" value="BuCodeInfoFile" />
+                            <label for="file">上传图片：</label>
+                            <div class="form-group" style=" background-color:antiquewhite">
+                                <label class="form-text text-muted">
+                                    &nbsp;&nbsp;&nbsp; 要求：产品必须占图片的2/3以上，不能包含水印、文本；图片必须为jpg或png格式，图片大小不得超过5M。
+                                    <br />
+                                    &nbsp;&nbsp;&nbsp; 建议：至少上传主图及标签图，图片不低于800*800像素，图片背景为纯白色。
+                                </label>
+                                <br />
+                            </div>
+                            <label for="file">选择图片文件：</label>
+                            <input type="file" id="file1" name="file1" accept=".jpg,.png" required />
+                            <br />
+                            <div class="form-group">
+                                <label for="uploadDate">预计上市日期：</label>
+                                <input type="date" id="uploadDateTime" name="uploadDateTime" class="form-control" value="@Model.SubCode" required />
+                            </div>
+                            <div class="form-group">
+                                <img id="previewImage" src="" style="max-width: 100%; display: block;" />
+                            </div>
+                            if (string.IsNullOrEmpty(Model.FilePath) && string.IsNullOrEmpty(Model.SubCode))
+                            {
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            }
+                        }
+                    </form>
+                </td>
         </tr>
     </table>
     <div id="progressBarDiv" style="display:none;">
@@ -52,7 +59,45 @@
 <input type="hidden" id="tableId" value="StandardCost" />
 <script type="text/javascript">
     function uploadCallback() {
-        console.log("获取",uploadResult);
+
         //$("#searchResult").html("MD5=" + uploadResult.replace('|', ' SHA1='));
     }
+    //图片处理
+    document.getElementById('file1').addEventListener('change', function () {
+        alert("ghihk");
+        var file = this.files[0];
+        if (file) {
+            var fileSize = file.size / 1024 / 1024; // Convert to MB
+            if (fileSize > 5) {
+                alert('图片大小不得超过5M。');
+                this.value = ''; // Clear the input field
+                return;
+            }
+
+            var fileType = file.type;
+            if (fileType !== 'image/jpeg' && fileType !== 'image/png') {
+                alert('图片必须为jpg或png格式。');
+                this.value = ''; // Clear the input field
+                return;
+            }
+
+            // 预览图片
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewImage').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    //默认加载图片
+    document.addEventListener('DOMContentLoaded', function () {
+        var info = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model));
+        if (info != null && info.FilePath != null) {
+            // 设置默认图片URL
+            var defaultImageUrl = 'D:\\NET8Server\\SKU\\20241101sku_git\\1.Code\\WorkFlowTemplate1_SKU\\WF.Web\\' + info.FilePath;
+            document.getElementById('previewImage').src = defaultImageUrl;
+        }
+    });
+
 </script>

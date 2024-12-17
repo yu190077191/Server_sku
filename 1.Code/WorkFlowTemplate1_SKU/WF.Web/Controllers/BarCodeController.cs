@@ -139,17 +139,37 @@ namespace WF.Web.Controllers
         /// 备案方法
         /// </summary>
         /// <param name="codeId"></param>
+        /// <param name="vType">页面标识(0:新建进入；1:特批进入;2:一般变更进入)</param>
         /// <returns></returns>
-        public ActionResult KeepInfo(int codeId)
+        public ActionResult KeepInfo(int codeId,string vType)
         {
             //var jsonInfo = JsonHelper.DeserializeJson<List<SKUBarCodeDetailsInfo>>(json);
             SKUFileUpload info = new SKUFileUpload();
-            string sql = "select * from SKUBarCodeDetailsInfo where id = " + codeId + "";
+            string sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
+                "inner join Attachment b on a.Id = b.RequestVersionId" +
+                " where a.id = " + codeId + "";
+
+            if (vType.Equals("1"))
+            {
+                sql += " and b.TypeCode = 'BarInfo'";
+            }
+            else if (vType.Equals("2"))
+            {
+                sql += " and b.TypeCode = 'BarInfo'";
+            }
+            else
+            {
+                sql += " and b.TypeCode = 'BarInfo'";
+            }
+
             var db_Infos = BaseDao.ExecuteDataSet(sql, null, CommandType.Text).Tables[0];
             foreach (DataRow item in db_Infos.Rows)
             {
                 info.CodeDetailsId = item.Field<int>("Id");
                 info.RequestId = item.Field<int>("RequestId");
+                info.TypeCode = item.Field<string>("TypeCode");
+                info.FilePath = item.Field<string>("FilePath");
+                info.SubCode = item.Field<string>("SubCode");
             }
             return View(info);
         }

@@ -16,7 +16,23 @@ namespace WF.Model.BarCode
         /// 详情Id
         /// </summary>
         public int CodeDetailsId { get; set; }
-        
+
+        /// <summary>
+        /// 业务标识
+        /// </summary>
+        public string TypeCode { get; set; }
+
+        /// <summary>
+        /// 文件路径
+        /// </summary>
+        public string FilePath { get;set; }
+
+        /// <summary>
+        /// 上市时间
+        /// </summary>
+        public string SubCode { get; set; }
+
+
 
     }
 }
