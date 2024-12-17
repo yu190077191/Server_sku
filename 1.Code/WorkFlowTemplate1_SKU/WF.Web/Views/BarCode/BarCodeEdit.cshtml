@@ -47,18 +47,20 @@
     <table cellpadding="0" cellspacing="0" width="100%" class="tbl" id="myTable1">
         <tr>
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("BU:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("BU:")</label> 
             </td>
             <td class="righttd">
                 <select name="level1" id="BUlevel1" onchange="showLevel2(this)" class="inputwh"></select>
+                <text>请选择发起申请的业务单元</text>
             </td>
         </tr>
         <tr>
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("品牌名称:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("品牌名称:")</label> 
             </td>
             <td class="righttd">
                 <input type="text" id="BrandName" name="BrandName" class="inputwh" />
+                <text>由于条码须在官方备案，而官方只接受中文材料，所以，请填写产品包装上标示的产品名称，以保证条码备案信息的准确性。</text>
             </td>
         </tr>
         <tr class="content_tr">
@@ -66,7 +68,7 @@
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("目标市场:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("目标市场:")</label>
             </td>
             <td class="righttd">
                 <select name="level1" id="TargetName" class="inputwh">
@@ -74,82 +76,104 @@
                     <option value="1">台湾</option>
                     <option value="2">香港</option>
                 </select>
+                <text>产品销售目的地</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("产品名称（英文）:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（英文）:")</label> 
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameEH" name="CodeNameEH" class="inputwh" />
+                <text>*英文名称（不能用缩写）和中文名称要逐字对照，并且和GLOBE（finished goods material master create /change request form)申请表中的中/英文名称一致</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("产品名称（中文）:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（中文）:")</label> 
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameCH" name="CodeNameCH" class="inputwh" />
+                <text>由于条码须在官方备案，而官方只接受中文材料，所以，请填写产品包装上标示的产品名称，以保证条码备案信息的准确性。 </text>
+
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("工厂名称:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("工厂名称:")</label> 
             </td>
             <td class="righttd">
                 <select name="Company" id="CompanyId" class="inputwh"></select>
+                <text>产品的产工厂</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("产品分类:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品分类:")</label>
             </td>
             <td class="righttd">
-                <select name="product" id="BUlevel2" class="inputwh">
-                </select>
+                <select name="product" id="BUlevel2" class="inputwh"></select>
+                <text>产品基本属性</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("净含量/规格:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("净含量/规格:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="specsId" name="specsName" class="inputwh" />
+                <text>
+                    单件预包装食品有如下标示形式：
+                    净含量（或净含量/规格）：450g；
+                    同一预包装内含有多件同种类的预包装食品有如下标示形式：
+                    净含量（或净含量/规格）：200g（40g×5）；
+                    净含量（或净含量/规格）：200g（100g+50g×2）；
+                    同一预包装内含有多件不同种类的预包装食品有如下标示形式：
+                    净含量（或净含量/规格）：200g（A 产品40g×3，B 产品40g×2）；
+                    净含量（或净含量/规格）：200g（A 产品40g×3，B 产品40g×2）+200ml（C 产品40ml×3，D 产品40ml×2）；
+                </text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("作为销售单元/运输单元:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("作为销售单元/运输单元:")</label>
             </td>
             <td class="righttd">
                 <select name="UnitName" id="UnitId" class="inputwh">
                     <option value="0">运输单元</option>
                     <option value="1">销售单元</option>
                 </select>
+                <text>运输单元不需要在外部条码中心系统通报，备案； 如果运输包装(纸箱等)也计划在超市作为零售单元，应申请13位条形码，并在上表“作为销售单元/运输单元？”选择销售单元</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("包装形式袋:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("包装形式袋:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="packingId" name="packingName" class="inputwh" />
+                <text>袋，瓶，罐，箱，盒等包装形式</text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("放大系数:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("放大系数:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="ratioId" name="ratioName" class="inputwh" />
+                <text>
+                    零售包裝上13位条形码的放大系数一般申請為0.9,設計包裝应至少预留34.16mm x 29.31mm (window for 13 digits barcode)空白区域；
+                    运输包裝箱14位码放大系数一般申请为0.8，设计包裝应预留158mm x 37mm (window for 14 digit barcode, for carton)空白区域；
+                </text>
             </td>
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text>@Html.Lang("申请原因:")
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("申请原因:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="remarksId" name="remarksName" class="inputwh" />
+                <text>请填写业务需求</text>
             </td>
         </tr>
     </table>

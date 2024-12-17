@@ -46,7 +46,7 @@ namespace WF.Web.Controllers
                         CodeId = Convert.ToInt32(item["Id"]),
                         DisplayName = item["DisplayName"].ToString(),
                         BarName = item["type"].ToString().Equals("BarCodeNew") ? "条码申请" : (item["type"].ToString().Equals("BarCodeSpecialApp") ? "条码特批" : "条码变更"),
-                        CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM dd"),
+                        CreteTime =Convert.ToDateTime(item["CreatedTime"]).ToString("yyyy-MM-dd"),
                         State =Convert.ToInt32(item["State"]),
                         BarType = item["CustomerName"].ToString() }
                 );
@@ -61,7 +61,7 @@ namespace WF.Web.Controllers
                 list_info = list_info.Where(o => o.State == selectElement2).ToList();
             }
 
-            var model = new PagedList<BarCodeInfo>(list_info, Convert.ToInt32(pageIndex), 10);
+            var model = new PagedList<BarCodeInfo>(list_info.OrderByDescending(o=>o.Id).ToList(), Convert.ToInt32(pageIndex), 10);
             if (Request.IsAjaxRequest())
             {
                 return PartialView("BarCodeList", model);

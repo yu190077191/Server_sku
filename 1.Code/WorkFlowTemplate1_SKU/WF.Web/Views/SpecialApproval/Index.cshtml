@@ -284,7 +284,7 @@
                 }
             }
         }
-        debugger
+        
         //选中BU                           
         $("#selBusiness option[value='" + modelObj.BUCode + "']").prop('selected', true);
         //填充BusinessJustification
@@ -328,7 +328,7 @@
         var sl = '';
         var gw = '';
         var bd = '';
-        debugger
+        
         if (el != undefined) {
             var currenttr = $(el).parent().parent();
             code = $(currenttr).find('.SKUCode').val();
@@ -351,7 +351,7 @@
         $("#updateDateTable").append(tempLateUpdateStr);
     }
     function copyrow(el) {
-        debugger
+        
         var clonedRow = $(el).parent().parent().clone();
         //更新number
         var number = getMaxNumber();
@@ -360,7 +360,7 @@
         $(numberinputDOM).val((number));
         $('#oldDataTable').append(clonedRow);
         //删除最后操作列
-        debugger
+        
         var updateRowClone = $(el).parent().parent().clone();
         updateRowClone.children()[updateRowClone.children().length - 1].remove();
         var updatenumbertdDOM = $(updateRowClone).children()[1];
@@ -369,7 +369,7 @@
         $("#updateDateTable").append(updateRowClone);
     }
     function delrow(el) {
-        debugger
+        
         //旧数据DOM
         var trDOMOld = $(el).parent().parent();
         //取出number删除新数据DOM

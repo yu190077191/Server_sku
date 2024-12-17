@@ -303,7 +303,7 @@ namespace WF.Web.Controllers
                          + ",'" + item.Brand + "'"
                       + ",'" + item.BUCode + "'"
                       + ",'" + item.BUName + "'"
-                      + ",'" + item.BusinessJustification + "'"
+                      + ",N'" + item.BusinessJustification + "'"
                       +") ;";
             }
             BaseDao.ExecuteScalar(sqlDetail, null, CommandType.Text);
