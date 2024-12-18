@@ -32,6 +32,11 @@ namespace WF.Model.BarCode
         /// </summary>
         public string SubCode { get; set; }
 
+        /// <summary>
+        /// 页面类型
+        /// </summary>
+        public string VType { get;set; }
+
 
 
     }

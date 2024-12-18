@@ -273,8 +273,7 @@
                 document.getElementById("save").style.display = 'none';
                 document.getElementById("submit").style.display = 'none';
                 document.getElementById("cancel").style.display = 'none';
-                $(".btop").hide();
-                $(".btopDe").hide();
+                $(".op").hide();
                 break;
             default:
                 break;
@@ -334,6 +333,9 @@
         if (isNewData == "0") {
             tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button class=\"btop\" onclick=\"addrow('0',this)\">复制</button> <button class=\"btopDe\" onclick=\"delrow(this)\">删除</button></tr>";
         }
+        else {
+            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"opBt\"><button class=\"opBtKeep\" onclick=\"KeepInfo("+id+")\">备案</button></tr>";
+        }
         return tempLateHtml;
     }
     function addrow(id,el) {
@@ -373,8 +375,9 @@
     }
 
     //备案
-    function XXX(val) {
-
+    function KeepInfo(val) {
+        console.log("查看", val);
+        location.href = getRootUrl() + "BarCode/KeepInfo?codeId=" + val+"&&vType=1";
     }
 
     function copyrow(el) {

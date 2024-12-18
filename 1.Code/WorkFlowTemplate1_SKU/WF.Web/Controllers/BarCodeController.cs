@@ -146,27 +146,30 @@ namespace WF.Web.Controllers
             //var jsonInfo = JsonHelper.DeserializeJson<List<SKUBarCodeDetailsInfo>>(json);
             SKUFileUpload info = new SKUFileUpload();
             info.VType = vType;
-            string sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
-                "inner join Attachment b on a.Id = b.RequestVersionId" +
-                " where a.id = " + codeId + "";
-
+            info.CodeDetailsId = codeId;
+            string sql = string.Empty;
             if (vType.Equals("1"))
             {
-                sql += " and b.TypeCode = 'BarInfo'";
+                sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
+                "inner join Attachment b on a.Id = b.RequestVersionId" +
+                " where a.id = " + codeId + " and b.TypeCode = 'BarCodeSpecialApp'";
             }
             else if (vType.Equals("2"))
             {
-                sql += " and b.TypeCode = 'BarInfo'";
+                sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from GeneralChangesItem a " +
+                "inner join Attachment b on a.Id = b.RequestVersionId" +
+                " where a.id = " + codeId + " and b.TypeCode = 'BarCodeGeneralApp'";
             }
             else
             {
-                sql += " and b.TypeCode = 'BarInfo'";
+                sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
+                "inner join Attachment b on a.Id = b.RequestVersionId" +
+                " where a.id = " + codeId + " and b.TypeCode = 'BarCodeNew'";
             }
 
             var db_Infos = BaseDao.ExecuteDataSet(sql, null, CommandType.Text).Tables[0];
             foreach (DataRow item in db_Infos.Rows)
             {
-                info.CodeDetailsId = item.Field<int>("Id");
                 info.RequestId = item.Field<int>("RequestId");
                 info.TypeCode = item.Field<string>("TypeCode");
                 info.FilePath = item.Field<string>("FilePath");

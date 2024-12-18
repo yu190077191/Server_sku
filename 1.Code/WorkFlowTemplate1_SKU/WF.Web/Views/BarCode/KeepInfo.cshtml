@@ -11,7 +11,7 @@
                         @{
                             <input type="text" id="Description123" name="Description123" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.CodeDetailsId)" />
                             <input id="Type" type="hidden" value="BuCodeInfoFile" />
-                            <input type="text" id="vType" style="display:none; float: left; height: 22px;margin-right: 5px;"  value="@Html.Raw(Model.VType)" />
+                            <input type="text" id="vType"  name="vType" style="display:none; float: left; height: 22px;margin-right: 5px;" value="@Html.Raw(Model.VType)" />
                             <label for="file">上传图片：</label>
                             <div class="form-group" style=" background-color:antiquewhite">
                                 <label class="form-text text-muted">
@@ -65,7 +65,6 @@
     }
     //图片处理
     document.getElementById('file1').addEventListener('change', function () {
-        alert("ghihk");
         var file = this.files[0];
         if (file) {
             var fileSize = file.size / 1024 / 1024; // Convert to MB

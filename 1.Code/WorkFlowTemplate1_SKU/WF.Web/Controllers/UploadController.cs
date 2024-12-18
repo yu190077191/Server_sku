@@ -153,8 +153,19 @@ namespace WF.Web.Controllers
                            
                             Attachment model = new Attachment();
                             model.Id = Guid.NewGuid();
-                            //BarInfo：只有条码业务所用
-                            model.TypeCode = "BarCodeNew";
+                            string vType = Request.Form["vType"].ToString();
+                            if (vType.Equals("1")) //特批
+                            {
+                                model.TypeCode = "BarCodeSpecialApp";
+                            }
+                            else if (vType.Equals("2")) //变更
+                            {
+                                model.TypeCode = "BarCodeGeneralApp";
+                            }
+                            else
+                            {
+                                model.TypeCode = "BarCodeNew";
+                            }
                             //详情Id
                             model.RequestVersionId = Convert.ToInt32(Request.Form["Description123"]);
                             //文件名称
@@ -165,7 +176,7 @@ namespace WF.Web.Controllers
                             //上市时间
                             model.SubCode =Convert.ToDateTime(Request.Form["uploadDateTime"]).ToString("yyyy-MM-dd");
 
-                            var info = AttachmentRule.GetAttachment(model.RequestVersionId, "BarInfo").Where(o=>o.TypeCode == "BarInfo").ToList();
+                            var info = AttachmentRule.GetAttachment(model.RequestVersionId, "BarCodeNew").Where(o=>o.TypeCode == "BarInfo").ToList();
 
                             if (info.Count > 0)
                             {
@@ -183,13 +194,22 @@ namespace WF.Web.Controllers
                             {
                                 if (AttachmentRule.InsertAttachment(model) > 0)
                                 {
-                                    //再次更新CodeDetails信息
-                                    string sql = "update SKUBarCodeDetailsInfo set KeepType = 1 where id = " + model.RequestVersionId + "";
-                                    if (BaseDao.ExecuteNonQuery(sql, null, CommandType.Text) > 0)
+                                    string sql = string.Empty;
+                                    if (vType.Equals("1"))
                                     {
-                                        return id.ToString() + "|" + model.Id.ToString();
-                                    }
 
+                                    }
+                                    else if (vType.Equals("2")) //变更
+                                    {
+                                        
+                                    }
+                                    else
+                                    {
+                                        //再次更新CodeDetails信息
+                                        sql = "update SKUBarCodeDetailsInfo set KeepType = 1 where id = " + model.RequestVersionId + "";
+                                        BaseDao.ExecuteNonQuery(sql, null, CommandType.Text);
+                                    }
+                                    return id.ToString() + "|" + model.Id.ToString();
                                 }
                             }
                         }
