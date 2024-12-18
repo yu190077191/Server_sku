@@ -59,10 +59,6 @@ function uploadAttachmentSubmit() {
                     uploadCallback();
                     return;
                 }
-                else if ($("#Type").val() == "BuCodeInfoFile") {
-                    uploadCallback();
-                    return;
-                }
 
                 var arr = msg.split('|');
                 var guid = arr[0];

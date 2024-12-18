@@ -176,7 +176,7 @@ namespace WF.Web.Controllers
                             //上市时间
                             model.SubCode =Convert.ToDateTime(Request.Form["uploadDateTime"]).ToString("yyyy-MM-dd");
 
-                            var info = AttachmentRule.GetAttachment(model.RequestVersionId, model.TypeCode).Where(o=>o.TypeCode == model.TypeCode).ToList();
+                            var info = AttachmentRule.GetAttachment(model.RequestVersionId, "BarCodeNew").Where(o=>o.TypeCode == "BarInfo").ToList();
 
                             if (info.Count > 0)
                             {

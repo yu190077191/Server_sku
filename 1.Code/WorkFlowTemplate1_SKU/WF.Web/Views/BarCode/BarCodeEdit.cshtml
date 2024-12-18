@@ -235,18 +235,14 @@
                                     case 0: //草稿
                                         <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
                                         break;
-                                    case 2: //备案完成
+                                    case 2: //完成
                                         if (item.KeepType > 0)
                                         {
                                             <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("查看"))</a></button>
                                         }
                                         else
                                         {
-                                            //运输单元(0:运输单元 1:销售单元)
-                                            if (item.UnitId == 0)
-                                            {
-                                                <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("备案"))</a></button>
-                                            }
+                                            <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("备案"))</a></button>
                                         }
                                         break;
                                     default:
@@ -311,7 +307,7 @@
                     break;
                 case 2: //通过
                     <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),8);" style="margin-left:10px;float:left;">
+                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),7);" style="margin-left:10px;float:left;">
                         @(Html.Lang("提交备案"))
                     </button>
                     break;

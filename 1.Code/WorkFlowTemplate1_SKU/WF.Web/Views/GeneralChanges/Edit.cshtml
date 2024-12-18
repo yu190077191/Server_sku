@@ -164,7 +164,7 @@
                 <div> The Bar Code associated to Material code is maintained data:</div>
             </div>
             <div class="addrowbtndiv">
-                <button id="btSa" onclick="addrow('0');">加一行</button>
+                <button onclick="addrow('0');">加一行</button>
             </div>
             <div class="tablediv">
                 <table id="oldDataTable">
@@ -231,16 +231,16 @@
             </div>
 
             <div class="btndiv">
-                <button id="save"   onclick="save('0')">保 存</button>
+                <button id="save" onclick="save('0')">保 存</button>
                 <button id="submit" onclick="save('1')">提 交</button>
-                <button id="cancel" onclick="RevokeState(5)">撤 回</button>
-                <button id="submitBak" onclick="RevokeState(8)">提交备案</button>
+                <button id="cancel">撤 回</button>
+                <button id="submitBak">提交备案</button>
             </div>
         </div>
     </body>
 </html>
 
-    <script type="text/javascript">
+<script type="text/javascript">
       function getRootUrl() {
          return "@(Url.Content("~/"))";
       }
@@ -259,33 +259,8 @@
 
         //根据状态显示按钮
         var requestStates = '@ViewBag.requestStates';
-        switch (requestStates) {
-            case "-1"://创建
-                document.getElementById("cancel").style.display = 'none';
-                document.getElementById("submitBak").style.display = 'none';
-                break;
-            case "0": //草稿
-            case "5": //撤回
-                document.getElementById("cancel").style.display = 'none';
-                document.getElementById("submitBak").style.display = 'none';
-                document.getElementById("btSa").style.display = 'none';
-                $(".btop").hide();
-                break;
-            case "1": //审批
-                document.getElementById("save").style.display = 'none';
-                document.getElementById("submit").style.display = 'none';
-                document.getElementById("submitBak").style.display = 'none';
-                $(".op").hide();
-                break;
-            case "2": //通过
-                document.getElementById("save").style.display = 'none';
-                document.getElementById("submit").style.display = 'none';
-                document.getElementById("cancel").style.display = 'none';
-                $(".op").hide();
-                $(".opBtKeep").show();
-                break;
-            default:
-                break;
+        if (requestStates == "0") {
+           //$("#oldDataTable .op").remove();
         }
     });
 
@@ -315,7 +290,7 @@
                 }
             }
         }
-
+        
         //选中BU
         $("#selBusiness option[value='" + modelObj.BUCode + "']").prop('selected', true);
         //填充BusinessJustification
@@ -346,10 +321,7 @@
         tempLateHtml += " <td style=\"width: 5% ;display:none \"><input class=\"ShelfLife\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + sl +"\"> </td>";
         tempLateHtml += " <td style=\"width: 5% \"><input class=\"GrossWeight\" oninput=\"handleChange(this)\" type=\"text\" value=\"" + gw +"\"> </td>";
         if (isNewData == "0") {
-            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button class=\"btop\" onclick=\"addrow('0',this)\">复制</button> <button class=\"btopDe\" onclick=\"delrow(this)\">删除</button></td></tr>";
-        }
-        else {
-            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"opBt\"><button class=\"opBtKeep\" style=\"display:none\" onclick=\"KeepInfo(" + id + ")\">备案</button></tr>";
+            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button onclick=\"addrow('0',this)\">复制</button> <button onclick=\"delrow(this)\">删除</button></td></tr>";
         }
         return tempLateHtml;
     }
@@ -381,7 +353,7 @@
             gw = $(currenttr).find('.GrossWeight').val();
             bd = $(currenttr).find('.Brand').val();
         }
-
+        
         var maxNumber = getMaxNumber();
         var tempLateOldDataStr = getTempLateHtml(id, (maxNumber + 1), '0', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw ,bd);
         var tempLateUpdateStr =  getTempLateHtml(id, (maxNumber + 1), '1', code,  desc , netwht , pak , bar ,  len , wd , hg , sl , gw ,bd);
@@ -389,7 +361,7 @@
         $("#updateDateTable").append(tempLateUpdateStr);
     }
     function copyrow(el) {
-
+        
         var clonedRow = $(el).parent().parent().clone();
         //更新number
         var number = getMaxNumber();
@@ -398,7 +370,7 @@
         $(numberinputDOM).val((number));
         $('#oldDataTable').append(clonedRow);
         //删除最后操作列
-
+        
         var updateRowClone = $(el).parent().parent().clone();
         updateRowClone.children()[updateRowClone.children().length - 1].remove();
         var updatenumbertdDOM = $(updateRowClone).children()[1];
@@ -407,7 +379,7 @@
         $("#updateDateTable").append(updateRowClone);
     }
     function delrow(el) {
-
+        
         //旧数据DOM
         var trDOMOld = $(el).parent().parent();
         //取出number删除新数据DOM
@@ -497,7 +469,7 @@
             modelItem.Brand = bd;
 
             modelItem.BUCode = $("#selBusiness").val();;
-            modelItem.BUName = $('#selBusiness option:selected').text();
+            modelItem.BUName = $('#selBusiness option:selected').text(); 
             modelItem.BusinessJustification = businessJustificationValue;
             modelItem.BarCodeInfoType = BarCodeInfoType;
 
@@ -556,25 +528,5 @@
             res = true
         }
         return res;
-        }
-        
-
-    //撤回信息
-    function RevokeState(buType) {
-        $.post(getRootUrl() + "BarCode/UpdateStateInfo", { buCodeId: @ViewBag.id, btType: buType },
-            function (data) {
-                if (data > 0) {
-                    alert("撤回成功！");
-                    setTimeout(function () {
-                        location.href = getRootUrl() + "BarCode/BarCodeInfo";
-                    }, 1000);
-                }
-            });
-        }
-
-    //备案
-    function KeepInfo(val) {
-            location.href = getRootUrl() + "BarCode/KeepInfo?codeId=" + val + "&&vType=2";
-        }
-
+    }
 </script>

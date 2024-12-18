@@ -57,20 +57,20 @@
                         @if (item.BarName.Equals("条码申请"))
                         {
 
-                            <button id="SaveButton" >
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
                                 <a href="/BarCode/BarCodeEdit?codeId=@(item.CodeId)&&barName=@(item.BarName)">@(Html.Lang("详情"))</a>
                             </button>
                         }
                         else if (item.BarName.Equals("条码特批"))
                         {
-                            <button id="SaveButton" >
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
                                 <a href="/SpecialApproval/edit?id=@(item.CodeId)">@(Html.Lang("详情"))</a>
                             </button>
                         }
                         else if (item.BarName.Equals("条码变更"))
                         {
-                            <button id="SaveButton" >
-                                <a href="/GeneralChanges/edit?id=@(item.CodeId)">@(Html.Lang("详情"))</a>
+                            <button id="SaveButton" onclick="Details(@(item.CodeId));">
+                                <a href="/SpecialApproval/edit?id=@(item.CodeId)">@(Html.Lang("详情"))</a>
                             </button>
                         }
 
@@ -123,7 +123,7 @@
         return false;
     }
 
-    //查看详细信息(暂时删除掉)
+    //查看详细信息
     function Details(val) {
         console.log('详情id', val)
         $.ajax({
