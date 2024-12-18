@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarCodeEmail.cs" />
     <Compile Include="BarCode\BarCodeDetailsInfo.cs" />
     <Compile Include="BarCode\BarCodeInfo.cs" />
     <Compile Include="BarCode\SKUFileUpload.cs" />
