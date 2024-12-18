@@ -156,13 +156,13 @@ namespace WF.Web.Controllers
             }
             else if (vType.Equals("2"))
             {
-                sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from GeneralChangesItem a " +
+                sql = "select a.Id,a.RequstId as RequestId,b.TypeCode,b.FilePath,b.SubCode from GeneralChangesItem a " +
                 "inner join Attachment b on a.Id = b.RequestVersionId" +
                 " where a.id = " + codeId + " and b.TypeCode = 'BarCodeGeneralApp'";
             }
             else
             {
-                sql = "select a.Id,a.RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
+                sql = "select a.Id,a.RequstId as RequestId,b.TypeCode,b.FilePath,b.SubCode from SKUBarCodeDetailsInfo a " +
                 "inner join Attachment b on a.Id = b.RequestVersionId" +
                 " where a.id = " + codeId + " and b.TypeCode = 'BarCodeNew'";
             }
@@ -350,7 +350,7 @@ namespace WF.Web.Controllers
                     case 5: //撤回
                         sql = "update Request set State = "+ btType+ "  where Id = " + buCodeId + "";
                         break;
-                    case 7: //备案
+                    case 8: //备案
                         sql = "update Request set State = " + btType + "  where Id = " + buCodeId + "";
                         break;
                     default:

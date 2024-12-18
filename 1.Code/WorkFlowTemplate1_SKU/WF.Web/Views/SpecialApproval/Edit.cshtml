@@ -223,8 +223,8 @@
         <div class="btndiv">
             <button id="save" onclick="save('0')">保 存</button>
             <button id="submit" onclick="save('1')">提 交</button>
-            <button id="cancel" onclick="RevokeState()">撤 回</button>
-            <button id="submitBak">提交备案</button>
+            <button id="cancel" onclick="RevokeState(5)">撤 回</button>
+            <button id="submitBak" onclick="RevokeState(8)">提交备案</button>
         </div>
     </div>
 </body>
@@ -253,7 +253,6 @@
             case "-1"://创建
                 document.getElementById("cancel").style.display = 'none';
                 document.getElementById("submitBak").style.display = 'none';
-                $(".btopKe").hide();
                 break;
             case "0": //草稿
             case "5": //撤回
@@ -261,7 +260,6 @@
                 document.getElementById("submitBak").style.display = 'none';
                 document.getElementById("btSa").style.display = 'none';
                 $(".btop").hide();
-                $(".btopKe").hide();
                 break;
             case "1": //审批
                 document.getElementById("save").style.display = 'none';
@@ -274,6 +272,7 @@
                 document.getElementById("submit").style.display = 'none';
                 document.getElementById("cancel").style.display = 'none';
                 $(".op").hide();
+                $(".opBtKeep").show();
                 break;
             default:
                 break;
@@ -334,7 +333,7 @@
             tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"op\"><button class=\"btop\" onclick=\"addrow('0',this)\">复制</button> <button class=\"btopDe\" onclick=\"delrow(this)\">删除</button></tr>";
         }
         else {
-            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"opBt\"><button class=\"opBtKeep\" onclick=\"KeepInfo("+id+")\">备案</button></tr>";
+            tempLateHtml += " <td style=\"width: 5% ;text-align:center;\" class=\"opBt\"><button class=\"opBtKeep\" style=\"display:none\" onclick=\"KeepInfo("+id+")\">备案</button></tr>";
         }
         return tempLateHtml;
     }
@@ -524,8 +523,8 @@
     }
 
     //撤回信息
-    function RevokeState() {
-        $.post(getRootUrl() + "BarCode/UpdateStateInfo", { buCodeId: @ViewBag.id, btType: 5 },
+    function RevokeState(buType) {
+        $.post(getRootUrl() + "BarCode/UpdateStateInfo", { buCodeId: @ViewBag.id, btType: buType },
             function (data) {
                 if (data > 0) {
                     alert("撤回成功！");
