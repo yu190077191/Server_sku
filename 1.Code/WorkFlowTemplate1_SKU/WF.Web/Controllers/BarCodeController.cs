@@ -77,6 +77,28 @@ namespace WF.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// 撤回后处理逻辑
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public string EditSubmit(int requestId,int state)
+        {
+            try
+            {
+                if (requestId > 0 && state > 0)
+                {
+                    string sql = "update request set state ="+ state + " where id = "+ requestId + "";
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         /// <summary>
         /// 编辑或者修改

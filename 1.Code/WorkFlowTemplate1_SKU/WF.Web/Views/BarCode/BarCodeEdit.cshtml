@@ -411,14 +411,14 @@
             {
 
                 case 0: //草稿
-        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                onmouseout="this.className='button'" onclick="Submit(0);" style="margin-left:10px;float:left;">
-            @(Html.Lang("保存"))
-        </button>
-        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                onmouseout="this.className='button'" onclick="Submit(1);" style="margin-left:10px;float:left;">
-            @(Html.Lang("提交"))
-        </button>
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="EditSubmit(@Html.Raw(Model[0].RequestId),0);" style="margin-left:10px;float:left;">
+                    @(Html.Lang("保存"))
+                </button>
+                <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                        onmouseout="this.className='button'" onclick="EditSubmit(@Html.Raw(Model[0].RequestId),1);" style="margin-left:10px;float:left;">
+                    @(Html.Lang("提交"))
+                </button>
                     break;
                 case 1: //提交
         <button type="button" class="button" onmousedown="this.className='buttonPressed'"
@@ -601,6 +601,7 @@
     function Submit(index) {
         //var model = new SKUBarCodeDetailsInfo();
         var data = getTableData();
+        console.log("查看：", data);
         var listModel = [];
         if (data != null) {
             data.splice(0, 1);
@@ -675,6 +676,19 @@
                 }, 1000);
             }
         });
+    }
+
+    //有相关数据进行撤回（提交与保存时使用）
+    function EditSubmit(requestId, state) {
+        $.post(getRootUrl() + "BarCode/EditSubmit", { requestId: requestId, state: state },
+            function (data) {
+                if (data > 0) {
+                    popOK();
+                    setTimeout(function () {
+                        location.href = getRootUrl() + "BarCode/BarCodeInfo";
+                    }, 1000);
+                }
+            });
     }
 
     //获取Table数据

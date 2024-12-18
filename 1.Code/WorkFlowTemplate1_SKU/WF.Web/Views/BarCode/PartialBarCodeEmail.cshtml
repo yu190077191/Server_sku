@@ -27,15 +27,7 @@
         {
         <tr onmouseover="this.className='trFocused'" onmouseout="this.className='trCommon'">
             <td class="listtd">
-                @if (item.Checked)
-                {
-                <input type="checkbox" id="checkbox@(item.Id.ToString())" checked="checked" />
-                }
-                else
-                {
-                <input type="checkbox" id="checkbox@(item.Id.ToString())" />
-                }
-
+                <input type="checkbox" id="checkbox@(item.Id.ToString())" data-StepName="@(item.EventContainerName)" />
             </td>
             <td class="listtd">@(item.StepNumber)</td>
             <td class="listtd">@(item.BuName)</td>
