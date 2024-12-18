@@ -1,4 +1,5 @@
 ﻿@using WF.Model.BarCode;
+@using WF.Model;
 @model List<SKUBarCodeDetailsInfo>
 @{
     ViewBag.Title = "BarCodeEdit";
@@ -7,6 +8,8 @@
 
 
     //List<SKUBarCodeDetailsInfo> DetailInfo = new List<SKUBarCodeDetailsInfo>();
+    List<BarCodeEmail> barCodeEmailList = new List<BarCodeEmail>();
+    List<Nestle.WorkFlow.Model.ActionHistory> historyList = ViewBag.historyList as List<Nestle.WorkFlow.Model.ActionHistory>;
 }
 
 <style>
@@ -47,7 +50,7 @@
     <table cellpadding="0" cellspacing="0" width="100%" class="tbl" id="myTable1">
         <tr>
             <td class="lefttd">
-                <text class="TextOne">*</text><label class="labelText">@Html.Lang("BU:")</label> 
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("BU:")</label>
             </td>
             <td class="righttd">
                 <select name="level1" id="BUlevel1" onchange="showLevel2(this)" class="inputwh"></select>
@@ -56,7 +59,7 @@
         </tr>
         <tr>
             <td class="lefttd">
-                <text class="TextOne">*</text><label class="labelText">@Html.Lang("品牌名称:")</label> 
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("品牌名称:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="BrandName" name="BrandName" class="inputwh" />
@@ -81,7 +84,7 @@
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（英文）:")</label> 
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（英文）:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameEH" name="CodeNameEH" class="inputwh" />
@@ -90,7 +93,7 @@
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（中文）:")</label> 
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("产品名称（中文）:")</label>
             </td>
             <td class="righttd">
                 <input type="text" id="CodeNameCH" name="CodeNameCH" class="inputwh" />
@@ -100,7 +103,7 @@
         </tr>
         <tr class="content_tr">
             <td class="lefttd">
-                <text class="TextOne">*</text><label class="labelText">@Html.Lang("工厂名称:")</label> 
+                <text class="TextOne">*</text><label class="labelText">@Html.Lang("工厂名称:")</label>
             </td>
             <td class="righttd">
                 <select name="Company" id="CompanyId" class="inputwh"></select>
@@ -184,103 +187,103 @@
     {
         <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
             <thead>
-                    <tr>
-                        @*hidden="hidden"*@
-                        <th style="display:none">序号</th>
-                        <th style="display:none">BU</th>
-                        <th style="display:none">品牌</th>
-                        <th>种类（英文）</th>
-                        <th>种类（中文）</th>
-                        <th>市场</th>
-                        <th style="display:none">工厂</th>
-                        <th style="display:none">分类</th>
-                        <th>净含量</th>
-                        <th style="display:none">运输</th>
-                        <th>包装</th>
-                        <th>系数</th>
-                        <th>备案状态</th>
-                        <th>长(mm)</th>
-                        <th>宽(mm)</th>
-                        <th>高(mm)</th>
-                        <th>条形码</th>
-                        <th>申请原因</th>
-                        <th>操作</th>
-                    </tr>
+                <tr>
+                    @*hidden="hidden"*@
+                    <th style="display:none">序号</th>
+                    <th style="display:none">BU</th>
+                    <th style="display:none">品牌</th>
+                    <th>种类（英文）</th>
+                    <th>种类（中文）</th>
+                    <th>市场</th>
+                    <th style="display:none">工厂</th>
+                    <th style="display:none">分类</th>
+                    <th>净含量</th>
+                    <th style="display:none">运输</th>
+                    <th>包装</th>
+                    <th>系数</th>
+                    <th>备案状态</th>
+                    <th>长(mm)</th>
+                    <th>宽(mm)</th>
+                    <th>高(mm)</th>
+                    <th>条形码</th>
+                    <th>申请原因</th>
+                    <th>操作</th>
+                </tr>
             </thead>
             @{
                 foreach (var item in Model)
                 {
-                        <tr>
-                            <td class="listtd" style="display:none">@(item.Id)</td>
-                            <td class="listtd" style="display:none">@(item.BuCode)</td>
-                            <td class="listtd" style="display:none">@(item.BarName)</td>
-                            <td class="listtd">@(item.CodeNameEH)</td>
-                            <td class="listtd">@(item.CodeNameCH)</td>
-                            <td class="listtd">@(item.TargetId)</td>
-                            <td class="listtd" style="display:none">@(item.CompanyId)</td>
-                            <td class="listtd" style="display:none">@(item.BuCodeId)</td>
-                            <td class="listtd">@(item.SpecsName)</td>
-                            <td class="listtd" style="display:none">@(item.UnitId)</td>
-                            <td class="listtd">@(item.PackingName)</td>
-                            <td class="listtd">@(item.RatioName)</td>
-                            <td class="listtd">@(item.KeepType == 0 ? "未备案" : "已备案") </td>
-                            <td class="listtd">@(item.Length)</td>
-                            <td class="listtd">@(item.Width)</td>
-                            <td class="listtd">@(item.Height)</td>
-                            <td class="listtd">@(item.BarCodeNum)</td>
-                            <td class="listtd">@(item.RremarksName)</td>
-                            <td colspan="7" style="height:50px;" align="center">
-                                @switch (item.State)
+                <tr>
+                    <td class="listtd" style="display:none">@(item.Id)</td>
+                    <td class="listtd" style="display:none">@(item.BuCode)</td>
+                    <td class="listtd" style="display:none">@(item.BarName)</td>
+                    <td class="listtd">@(item.CodeNameEH)</td>
+                    <td class="listtd">@(item.CodeNameCH)</td>
+                    <td class="listtd">@(item.TargetId)</td>
+                    <td class="listtd" style="display:none">@(item.CompanyId)</td>
+                    <td class="listtd" style="display:none">@(item.BuCodeId)</td>
+                    <td class="listtd">@(item.SpecsName)</td>
+                    <td class="listtd" style="display:none">@(item.UnitId)</td>
+                    <td class="listtd">@(item.PackingName)</td>
+                    <td class="listtd">@(item.RatioName)</td>
+                    <td class="listtd">@(item.KeepType == 0 ? "未备案" : "已备案") </td>
+                    <td class="listtd">@(item.Length)</td>
+                    <td class="listtd">@(item.Width)</td>
+                    <td class="listtd">@(item.Height)</td>
+                    <td class="listtd">@(item.BarCodeNum)</td>
+                    <td class="listtd">@(item.RremarksName)</td>
+                    <td colspan="7" style="height:50px;" align="center">
+                        @switch (item.State)
                                 {
                                     case 0: //草稿
-                                        <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
+                        <button class="buttonT" onclick="Delete(this,@(item.Id),@(item.RequestId));">删除</button>
                                         break;
                                     case 2: //备案完成
                                         if (item.KeepType > 0)
                                         {
-                                            <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("查看"))</a></button>
+                        <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("查看"))</a></button>
                                         }
                                         else
                                         {
                                             //运输单元(0:运输单元 1:销售单元)
                                             if (item.UnitId == 0)
                                             {
-                                                <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("备案"))</a></button>
+                        <button class="buttonT"><a href="/BarCode/KeepInfo?codeId=@(item.Id)&&vType=0">@(Html.Lang("备案"))</a></button>
                                             }
                                         }
                                         break;
                                     default:
                                         break;
                                 }
-                            </td>
-                        </tr>
+                    </td>
+                </tr>
                 }
             }
         </table>
     }
     else
     {
-    <button onclick="addRow(myTable1)" style="float:right">添加一行</button>
-    <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
-        <tr>
-            @*hidden="hidden"*@
-            @*
-            <th style="display:none">序号</th>*@
-            <th style="display:none">BU</th>
-            <th style="display:none">品牌</th>
-            <th>种类（英文）</th>
-            <th>种类（中文）</th>
-            <th>市场</th>
-            <th style="display:none">工厂</th>
-            <th style="display:none">分类</th>
-            <th>净含量</th>
-            <th>运输</th>
-            <th>包装</th>
-            <th>系数</th>
-            <th>申请原因</th>
-            <th>操作</th>
-        </tr>
-    </table>
+        <button onclick="addRow(myTable1)" style="float:right">添加一行</button>
+        <table id="myTable" cellpadding="0" cellspacing="0" width="100%" class="tbl" style="line-height:30px;font-size:14px;">
+            <tr>
+                @*hidden="hidden"*@
+                @*
+                    <th style="display:none">序号</th>*@
+                <th style="display:none">BU</th>
+                <th style="display:none">品牌</th>
+                <th>种类（英文）</th>
+                <th>种类（中文）</th>
+                <th>市场</th>
+                <th style="display:none">工厂</th>
+                <th style="display:none">分类</th>
+                <th>净含量</th>
+                <th>运输</th>
+                <th>包装</th>
+                <th>系数</th>
+                <th>申请原因</th>
+                <th>操作</th>
+            </tr>
+        </table>
     }
     }
 
@@ -288,42 +291,156 @@
 @*业务按钮*@
 <div class="center-both" style="margin-top:10px;">
     @{
+    if (Model != null && Model.Count > 0 && Model[0].State != 0)
+    {
+        <div class="main" style="margin-top:0;padding-top:0;">
+            <table class="tbl" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th colspan="7" align="left" style="background:#efefef;font-size:14px;">
+                            @Html.Lang("Workflow Status:")
+                            @if ((Nestle.WorkFlow.Model.RequestStatus)Model[0].State == Nestle.WorkFlow.Model.RequestStatus.Approved)
+                            {
+                            <b style="color:green;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model[0].State).ToString())</b>
+                            }
+                            else
+                            {
+                            <b style="color:red;">@Html.Lang(((Nestle.WorkFlow.Model.RequestStatus)Model[0].State).ToString())</b>
+                            }
+                        </th>
+                    </tr>
+                </thead>
+                <tr>
+                    @*<td>
+                            @Html.Lang("Sequence")
+                        </td>*@
+                    <td>
+                        @Html.Lang("Step Name")
+                    </td>
+                    <td>
+                        @Html.Lang("Title")
+                    </td>
+                    <td>
+                        @Html.Lang("Name")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Result")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Comment")
+                    </td>
+                    <td>
+                        @Html.Lang("Review Time")
+                    </td>
+                </tr>
+
+                @{
+                    bool someApproversMissing = false;
+                    bool needAutoFixWorkFlow = false;
+                    if (historyList != null)
+                    {
+                        int sequence = 0;
+                        foreach (Nestle.WorkFlow.Model.ActionHistory approver in historyList)
+                        {
+                            string checkResult = string.Empty;
+                            if (!string.IsNullOrEmpty(approver.CheckResult))
+                            {
+                                if (approver.CheckResult.Contains("Add"))
+                                {
+                                    checkResult = " <b style='color:green;'>" + approver.CheckResult + "</b>";
+                                    needAutoFixWorkFlow = true;
+                                }
+                                else if (approver.CheckResult.Contains("Delete"))
+                                {
+                                    checkResult = " <b style='color:red;'>" + approver.CheckResult + "</b>";
+                                    needAutoFixWorkFlow = true;
+                                }
+                                else
+                                {
+                                    checkResult = approver.CheckResult;
+                                }
+                            }
+
+                            if (approver.IsTeamReview && !string.IsNullOrEmpty(approver.Note))
+                            {
+                                approver.Name = approver.Note;
+                            }
+
+                            sequence++;
+
+                            if (approver.IsManuallyAdded)
+                            {
+                                if (!string.IsNullOrEmpty(approver.Remark))
+                                {
+                                    approver.StepName += " (Message: <b style='font-weight:bold;'>" + approver.Remark + "</b>)";
+                                    approver.Remark = string.Empty;
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(approver.Name))
+                            {
+                                someApproversMissing = true;
+                                approver.Name = "<b style='color:Red;'>Sorry, the approver with the title \"" + approver.Title + "\" cannot be found!,pls. raise approver role request via <a style='color:Blue;' target=\"_blank\" href='https://forms.office.com/Pages/ResponsePage.aspx?id=I6-jEmmnVEaEf5WPPUefSm3CMyYi9HxCjpmIYzg-MA1UM0NCRkhVSklNQ0dVNldFTFdMMk0zRDI0TC4u'> SKU Registration MDR Role Application Form(office.com) </a> to fix the issue.</b>";
+                            }
+
+                    <tr id="tr@(approver.IsManuallyAdded ? approver.EmployeeId.ToString() : approver.Sequence.ToString())">
+                        <td>@(Html.Raw(checkResult)) @(Html.Raw(approver.StepName))</td>
+                        <td>@(Html.Raw(approver.Title))</td>
+                        <td>@(Html.Raw(approver.Name))</td>
+                        <td>@(Html.Raw(approver.Action))</td>
+                        <td>@(approver.Remark)</td>
+                        <td>@(approver.Time)</td>
+                    </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    }
+
+        <div class="main" style="clear: both;@Html.Raw((Model != null && Model.Count > 0 && Model[0].State == 0) || Model == null ? "" : "display:none;")">
+            <div id="BarCodeEmailDiv">
+                @{ Html.RenderPartial("PartialBarCodeEmail", barCodeEmailList); }
+            </div>
+        </div>
+
+        <input type="hidden" id="HideInfo" data-RequestId="@Html.Raw(Model != null && Model.Count > 0 ? Model[0].RequestId : 0)" />
         if (Model != null && Model.Count > 0)
         {
             switch (Model[0].State)
             {
 
                 case 0: //草稿
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="Submit(0);" style="margin-left:10px;float:left;">
-                        @(Html.Lang("保存"))
-                    </button>
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="Submit(1);" style="margin-left:10px;float:left;">
-                        @(Html.Lang("提交"))
-                    </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="Submit(0);" style="margin-left:10px;float:left;">
+            @(Html.Lang("保存"))
+        </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="Submit(1);" style="margin-left:10px;float:left;">
+            @(Html.Lang("提交"))
+        </button>
                     break;
                 case 1: //提交
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),5);" style="margin-left:10px;float:left;">
-                        @(Html.Lang("撤回"))
-                    </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),5);" style="margin-left:10px;float:left;">
+            @(Html.Lang("撤回"))
+        </button>
                     break;
                 case 2: //通过
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),8);" style="margin-left:10px;float:left;">
-                        @(Html.Lang("提交备案"))
-                    </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="RevokeState(@Html.Raw(Model[0].RequestId),8);" style="margin-left:10px;float:left;">
+            @(Html.Lang("提交备案"))
+        </button>
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5: //撤回
-                    <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                            onmouseout="this.className='button'" onclick="Test();" style="margin-left:10px;float:left;">
-                        @(Html.Lang("条码算法"))
-                    </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="Test();" style="margin-left:10px;float:left;">
+            @(Html.Lang("条码算法"))
+        </button>
                     break;
                 case 6:
                     break;
@@ -333,14 +450,14 @@
         }
         else
         {
-            <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                    onmouseout="this.className='button'" onclick="Submit(0);" style="margin-left:10px;float:left;">
-                @(Html.Lang("保存"))
-            </button>
-            <button type="button" class="button" onmousedown="this.className='buttonPressed'"
-                    onmouseout="this.className='button'" onclick="Submit(1);" style="margin-left:10px;float:left;">
-                @(Html.Lang("提交"))
-            </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="Submit(0);" style="margin-left:10px;float:left;">
+            @(Html.Lang("保存"))
+        </button>
+        <button type="button" class="button" onmousedown="this.className='buttonPressed'"
+                onmouseout="this.className='button'" onclick="Submit(1);" style="margin-left:10px;float:left;">
+            @(Html.Lang("提交"))
+        </button>
         }
     }
 </div>
@@ -394,6 +511,9 @@
         selectedIndexChanged(document.getElementById("BUlevel1"));
         SelectCompanyInfo(document.getElementById("CompanyId"));
         EndBuCodeInfo();
+        $.post(getRootUrl() + "BarCode/GetBarCodeEmail", { id: $("#HideInfo").attr("data-RequestId"), type: "BarCodeNew", BuName: obj.options[obj.selectedIndex].text }, function (html) {
+            $("#BarCodeEmailDiv").html(html);
+        });
     });
     var index = 0;
 
@@ -471,6 +591,9 @@
                     err: function (err) {
                     }
             })
+            $.post(getRootUrl() + "BarCode/GetBarCodeEmail", { id: $("#HideInfo").attr("data-RequestId"), type: "BarCodeNew", BuName: obj.options[obj.selectedIndex].text }, function (html) {
+                $("#BarCodeEmailDiv").html(html);
+            });
         }
     }
 
@@ -498,8 +621,52 @@
                 listModel.push(model);
             }
         }
+        var dataCheckBox = new Array();
+        var tag = "checkbox";
+        var checkboxArray = getCheckboxList(tag);
+        if (checkboxArray != null && checkboxArray.length > 0) {
+            for (var i = 0; i < checkboxArray.length; i++) {
+                var obj = document.getElementById(tag + checkboxArray[i]);
+                if (obj == null) continue;
+                var modelCheckBox = new Object();
+                modelCheckBox.BarCodeEmailToId = checkboxArray[i];
+                modelCheckBox.EventContainerName = $("#" + tag + checkboxArray[i]).attr("data-StepName");
+                modelCheckBox.Checked = obj.checked;
+                dataCheckBox.push(modelCheckBox);
+            }
+        }
+
+        if (index == 1) { // 用户提交时
+            var isAG, isRSA, isITData = false;
+
+            dataCheckBox.forEach(function (item) {
+                if (item.EventContainerName == "AG - Packaging" && item.Checked) {
+                    isAG = true;
+                }
+                if (item.EventContainerName == "RSA" && item.Checked) {
+                    isRSA = true;
+                }
+                if (item.EventContainerName == "ITData" && item.Checked) {
+                    isITData = true;
+                }
+            });
+            if (!isAG) {
+                alert('请选择【AG - Packaging】审批人！');
+                return;
+            }
+            if (!isRSA) {
+                alert('请选择【RSA】审批人！');
+                return;
+            }
+            if (!isITData) {
+                alert('请选择【ITData】审批人！');
+                return;
+            }
+        }
+
         var json = $.toJSON(listModel);
-        $.post(getRootUrl() + "BarCode/SKUBucodeCreateInfo", { json: json, state: index },
+        var json1 = $.toJSON(dataCheckBox);
+        $.post(getRootUrl() + "BarCode/SKUBucodeCreateInfo", { json: json, state: index, CheckJson: json1 },
             function (data) {
                 if (data > 0) {
                 popOK();

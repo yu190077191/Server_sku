@@ -18,11 +18,15 @@ using System.Web.Helpers;
 using System.Web.Http.OData.Query;
 using WF.BusinessRule;
 using System.Threading.Tasks;
+using Nestle.WorkFlow.BusinessRule;
+using Nestle.WorkFlow.Model;
 
 namespace WF.Web.Controllers
 {
     public class BarCodeController : Controller
     {
+        public static readonly string siteName = System.Configuration.ConfigurationManager.AppSettings["SiteName"];
+        public static readonly System.Guid siteGuid = System.Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["SiteGuid"]);
         WorkFlowAPIController api = new WorkFlowAPIController();
         //
         // GET: /BarCode/
@@ -125,6 +129,9 @@ namespace WF.Web.Controllers
                             RequestId = Convert.ToInt32(item["RequestId"])
                         });
                     }
+                    List<Nestle.WorkFlow.Model.ActionHistory> historyList = GetBarCodeApprovers((int)codeId, (int)codeId, db_Infos.Tables[0].Rows[0]["Type"].ToString(), db_Infos.Tables[0].Rows[0]["CreatedBy"].ToString());
+                    string stepName = string.Empty;
+                    ViewBag.historyList = historyList;
                     return View(DetailsInfo);
                 }
                 else if (!string.IsNullOrEmpty(barName) && barName.Equals("条码特批"))
@@ -133,6 +140,13 @@ namespace WF.Web.Controllers
                 }
                 return View();
             }
+        }
+
+        public List<Nestle.WorkFlow.Model.ActionHistory> GetBarCodeApprovers(int requestId, int id, string typeCode, string CreatedBy)
+        {
+            string storedProcedureName = "GetActionHistory";
+
+            return APIRule.GetActionHistory(requestId, id, siteName, siteGuid, Guid.Parse(CreatedBy), typeCode, false, storedProcedureName);
         }
 
         /// <summary>
@@ -247,7 +261,7 @@ namespace WF.Web.Controllers
         /// 插入申请数据
         /// </summary>
         /// <returns></returns>
-        public int SKUBucodeCreateInfo(string json,int state)
+        public int SKUBucodeCreateInfo(string json,int state, string CheckJson)
         {
             try
             {
@@ -272,6 +286,18 @@ namespace WF.Web.Controllers
                                 ",N'" + item.RatioName + "','" + item.RremarksName + "',0,0)Select @@Identity";
                             index += Convert.ToInt32(BaseDao.ExecuteScalar(sqlDetail, null, CommandType.Text));
                         }
+                    }
+
+                    string xml = JsonHelper.GetXmlString(CheckJson);
+                    List<ExecuteResult> list = CommonDao.Get<ExecuteResult>("SetBarCodeEmail", new[]{
+                        new SqlParameter("@Id",requstId),
+                        new SqlParameter("@xml",xml),
+                        new SqlParameter("@CreatedBy", Operation.OperationBy)
+                    });
+                    bool isSuccess = list.Where(k => k.IsSuccess).Count() > 0;
+                    if (!isSuccess)
+                    {
+                        return -1;
                     }
                 }
                 return index;
@@ -370,7 +396,32 @@ namespace WF.Web.Controllers
         /// <param name="codeType"></param>
         public void SetBarCodeNumber(string codeType)
         {
-            var str = CommonRule.SetBarCodeNumber(19585,codeType);
+            var str = BusinessRule.CommonRule.SetBarCodeNumber(19585,codeType);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetBarCodeEmail(int id, string type, string BuName)
+        {
+            List<BarCodeEmail> list = null;
+            try
+            {
+                list = BusinessRule.CommonRule.Get<BarCodeEmail>("GetBarCodeEmail", new[]{
+                new SqlParameter("@Id",id),
+                new SqlParameter("@type",type),
+                new SqlParameter("@BuName",BuName),
+                new SqlParameter("@CreatedBy", Operation.OperationBy)
+            });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return PartialView("PartialBarCodeEmail", list);
         }
     }
 }
